@@ -1,0 +1,81 @@
+<div class="rubiks-cube-container">
+    <div class="rubiks-cube">
+      <div class="rubiks-face front">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+      <div class="rubiks-face back">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+      <div class="rubiks-face top">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+      <div class="rubiks-face bottom">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+      <div class="rubiks-face left">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+      <div class="rubiks-face right">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      </div>
+    </div>
+  
+    <div class="login-form">
+      <h2>Login</h2>
+      <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" autocomplete="off" novalidate >
+        <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Username" name="username" class="form-control" formControlName="username" required>
+        @if(loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {<span class="form-error">Username is required</span>}
+        </div>
+        <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" class="form-control" name="password" formControlName="password" required>
+        @if(loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {<span class="form-error">Password is required</span>}
+        <button type="submit" class="btn btn-primary center-button">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
