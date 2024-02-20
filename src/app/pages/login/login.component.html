@@ -64,14 +64,14 @@
   
     <div class="login-form">
       <h2>Login</h2>
-      <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" autocomplete="off" novalidate >
+      <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmitForm()" autocomplete="off" novalidate>
         <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" placeholder="Username" name="username" class="form-control" formControlName="username" required>
         @if(loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {<span class="form-error">Username is required</span>}
         </div>
         <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" placeholder="Password" class="form-control" name="password" formControlName="password" required>
         @if(loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {<span class="form-error">Password is required</span>}
         <button type="submit" class="btn btn-primary center-button">Login</button>

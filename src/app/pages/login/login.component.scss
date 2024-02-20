@@ -157,8 +157,18 @@
    
   .center-button
   {
-    margin-left: 130px;
-    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 97%;
+    padding: 10px 20px;
+    margin-left: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
   }
   .login-form button {
     padding: 10px;
