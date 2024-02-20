@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -10,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit
 { 
   avatar=localStorage.getItem("AVATAR");
+  constructor(private router:Router)
+  {
+
+  }
   ngOnInit(): void 
   {
-    alert(this.avatar);     
+  }
+  signOut()
+  {
+    localStorage.removeItem("TOKEN");
+    this.router.navigate(["/login"]);
   }
 } 
 {
