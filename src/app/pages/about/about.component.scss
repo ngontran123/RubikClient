@@ -1,0 +1,218 @@
+.video-section {
+    width: 100%;
+    height: 500px;  
+    top: 0;
+    left: 0;
+    max-width: 100%;
+  }
+//   .full-container
+//   {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 10px 20px;
+//     position:relative;
+//     width: 100%;
+//     height: 100%;
+
+//   }
+  
+  .section {
+    height: 60vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: relative;
+     /* Set height of each section to 20% of viewport height */
+    /* Add other styles for section */
+  }
+  
+  #section1 
+  {
+    background-color: orange;
+   /* Example background color for section 1 */
+  }
+  
+  #section2 
+  {
+    background-color: #FFE100;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  #section3
+  {
+    background-color: green;
+  }
+  #section4
+  {
+    background-color: whitesmoke;
+    position: relative;
+  }
+  #section5
+  {
+    background-color: green;
+  }
+  .container-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .container-4
+  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .left-2 {
+    flex: 1;
+    margin-left: 300px;
+    margin-top: 50px;
+    
+ /* Adjust margin as needed */
+  }
+  
+  .right-2 {
+    flex: 2; 
+    margin-left: 300px;
+    margin-top: 100px;
+    /* Adjust width ratio as needed */
+  }
+  .academy-content
+  {
+    width: 330px;
+    height: 300px;
+    margin-top: 50px;
+    font-size: large;
+    font-family:'Times New Roman', Times, serif;
+    box-sizing: border-box;
+  }
+  
+  .rubik-cube-content
+  {
+    width: 250px;
+    height: 300px;
+    margin-top: 50px;
+    font-size: large;
+    font-family:'Times New Roman', Times, serif;
+    box-sizing: border-box;
+  }
+  .coach-content
+  {
+    width: 600px;
+    height: 300px;
+    margin-top: 50px;
+    font-size: large;
+    font-family:'Times New Roman', Times, serif;
+    box-sizing: border-box;
+    color: white;
+  }
+  
+  .left-2 img {
+    max-width: 100%;
+    height: auto;
+  }
+    
+  .left-3 img {
+    max-width: auto;
+    height: auto;
+  }
+
+  .left-3
+  {
+    flex: 1;
+    margin-left: 500px;
+    margin-top: 50px;
+  }
+
+  .right-3
+  {
+    flex: 2; 
+    margin-left: 200px;
+    margin-top: 100px;
+  }
+
+
+
+  .academy-btn
+  {
+    gap: 10px;
+    min-height: 50px;
+    padding: 0.5rem 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Rubik;
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.8px;
+    width: 150px;
+    height: 50px;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    transition: all 250ms ease 0s;
+    text-decoration: none;
+    background-color:#0053a1;
+  }
+
+  .academy-btn:hover
+  {
+    text-decoration: none;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 83, 161)
+  }
+  
+  .phantom-cube-content
+  {
+    width: 330px;
+    height: 300px;
+    margin-top: 50px;
+    font-size: large;
+    font-family:'Times New Roman', Times, serif;
+    color: white;
+  }
+  
+  .cube-h1
+  {
+    color:whitesmoke;
+  }
+
+  .left-1
+  {
+   flex:1;
+   margin-left: 300px;
+   margin-top: 100px;
+  }
+  .right-1 img
+  {
+  max-width: 100%;
+  height: auto;
+  }
+
+  .right-1
+  {
+    flex: 2;
+    margin-left: 300px;
+    margin-top: 50px;
+  }
+
+  .left-4 img
+  {
+    max-width: 100%;
+    height: auto;
+  }
+  .left-4
+  {
+    flex: 1;
+    margin-left: 200px;
+    margin-top: 50px;
+  }
+  .right-4
+  {
+    flex: 2; 
+    margin-left: 300px;
+    margin-top: 100px;
+  }
