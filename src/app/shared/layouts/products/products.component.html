@@ -1,0 +1,25 @@
+<div class="page-container">
+    <div class="filter-container">
+      <h1 class="filter-title">Filter</h1>
+      <div class="filter-options">
+        @for(option of filter_options;track $index)
+        {
+        <label><input type="checkbox" name="filter1" [checked]="option.checked" (change)="toggleCheckBox(option)">{{option.name}}</label>
+        }
+        <div class="line"></div>
+        <div class ="clear-option-1">
+        <a class="clear-option" href="" onclick="return false;" (click)="clearAllCheckBox()">Clear All</a>
+        </div>
+        
+      </div>
+
+    </div>
+    <div class="product-container">
+    <div class="product-grid">
+        @for(item of rubik_list; track $index)
+        {
+        <div class="product"><app-items [rubik]="item"></app-items></div>
+        }
+    </div>
+    </div>
+  </div>
