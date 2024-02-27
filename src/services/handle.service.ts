@@ -9,6 +9,7 @@ import { PopupService } from './popup.service';
 export class HandleService {
   constructor(private popupService:PopupService) { }
    rubiks:IRubik[]=[];
+   rubik!:IRubik;
   async getAllRubiks()
    {
     var response =await axios.get(`${environment.server_url}/get-rubik`).then((res)=>
@@ -27,4 +28,19 @@ export class HandleService {
     });
     return this.rubiks; 
    }
+   
+  async getRubikById(id:string)
+  {
+   var response=await axios.get(`${environment.server_url}/product-details/${id}`).then((res)=>
+   {
+    this.rubik=res.data.data;
+    return this.rubik;
+   }).catch(err=>{
+       if(err.response.status == 401)
+       {
+        this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+       }
+   });
+   return this.rubik;
+  }
 }

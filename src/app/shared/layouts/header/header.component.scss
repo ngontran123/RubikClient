@@ -18,8 +18,14 @@
     height: 80px;
     margin-top: 20px; /* Adjust height as needed */
     margin-left: 20px;  
+    cursor: pointer;
 }
-  
+.logo
+{   
+    overflow: hidden;
+    transition: transform 0.2s;
+   
+}  
   .nav 
   {
     flex:1;
@@ -55,6 +61,11 @@
     cursor: pointer;
   }
   
+  .logo:hover
+  {
+   transform: scale(1.2);
+   transition-delay: 0s;
+  }
 
   .nav a:hover::after
   {

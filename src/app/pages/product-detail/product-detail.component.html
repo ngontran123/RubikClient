@@ -1,0 +1,24 @@
+<div class = "container">
+<div class ="main-content">
+<div class ="product-image">
+  <img src={{rubik.avatar}} alt={{rubik.avatar}}>
+</div>
+<div class ="product-info">
+    <h2>{{rubik.name}}</h2>
+    <div class ="spacing">
+    <p [innerHtml]="getDescription()"></p>
+    <a href="" onclick="return false;" (click)="toggleButton()">{{!showFullDescription?'Read more':'Read less'}}</a>
+    </div>
+</div>
+</div>
+<div class ="small-images-container">
+    <div class ="small-image">
+        <img src="assets/images/full1 (2).jpg" alt="phantom_cube">
+        </div>
+        <div class="small-image">
+        <img src="assets/images/full1 (4).jpg" alt="phantom_cube">
+        </div>
+        <div class="small-image">
+        <img src="assets/images/full1 (5).jpg" alt="phantom_cube">
+</div>
+</div>
