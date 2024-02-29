@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { environment } from '../../../environments/environment';
 import { PopupService } from '../../../services/popup.service';
 import { HeaderComponent } from '../../shared/layouts/header/header.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,7 +15,7 @@ import { HeaderComponent } from '../../shared/layouts/header/header.component';
 })
 export class LoginComponent implements OnInit {
       loginForm!:FormGroup;
-      constructor(private fb:FormBuilder,private popupService:PopupService)
+      constructor(private fb:FormBuilder,private popupService:PopupService,private router:Router)
       {
       }
       ngOnInit(): void {
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
           localStorage.setItem("TOKEN",res.data.token);
           localStorage.setItem("AVATAR",res.data.avatar);
+          this.router.navigate(['/about']);
           }).catch((err)=>{
               if(err!=null)
               {

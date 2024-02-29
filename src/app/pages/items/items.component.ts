@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IRubik } from '../../models/item.model';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-items',
   standalone: true,
@@ -10,4 +10,5 @@ import { IRubik } from '../../models/item.model';
 })
 export class ItemsComponent{
   @Input() rubik!:IRubik;
+  public environment=`${environment.client_url}`;
 }
