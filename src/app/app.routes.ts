@@ -10,7 +10,6 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
 export const routes: Routes = [
     {path:'login',component:DefaulComponent,children:[{path:'',component:LoginComponent}]},
     {path:"about",component:AboutComponent},
-    {path:'product',component:ItemsComponent},
     {path:'products',component:ProductsComponent,children:[{path:'',component:ItemsComponent}]},
     {path:'product-details/:id',component:ProductDetailComponent},
     {path:"**",component:NotFoundComponent}

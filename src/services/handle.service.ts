@@ -46,6 +46,17 @@ export class HandleService {
        }
    });
    return this.rubik;
-  
 }
+
+async getAboutPage()
+{
+  var response = await axios.get(`${environment.server_url}/about`,{headers:{'Authorization':this.token}}).catch(err=>{
+    if(err.response.status == 401)
+    {
+      this.route.navigate(['/login']);
+      //this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+    }
+  });
+}
+
 }
