@@ -11,17 +11,21 @@
     </div>
 </div>
 </div>
-<div class ="small-images-container">
-   <div class ="small-image">
-    <img src ={{rubik.avatar}} alt="{{rubik.avatar}}" (click)="imageChange(rubik.avatar)">
-   </div>
-    <div class ="small-image">
-        <img src="assets/images/full1 (2).jpg" alt="phantom_cube" (click)="imageChange('assets/images/full1 (2).jpg')">
+
+<button (click)="scrollImage(-1)"  class="scroll-left-btn"><img src="assets/images/left-arrow.png"></button>
+
+<div class ="small-images-container" #scrollableImages>
+    
+    
+    @for(image of detailImage;track $index)
+    {
+        <div class ="small-image">
+         <img src ={{image}} alt={{image}} (click)="imageChange(image)">
         </div>
-        <div class="small-image">
-        <img src="assets/images/full1 (4).jpg" alt="phantom_cube"(click)="imageChange('assets/images/full1 (4).jpg')">
-        </div>
-        <div class="small-image">
-        <img src="assets/images/full1 (5).jpg" alt="phantom_cube" (click)="imageChange('assets/images/full1 (5).jpg')">
+    }
 </div>
+
+    
+<button (click)="scrollImage(1)" class="scroll-right-btn"><img src="assets/images/right-arrow.png"></button>
+
 </div>

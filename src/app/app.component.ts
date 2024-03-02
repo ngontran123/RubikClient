@@ -42,8 +42,15 @@ export class AppComponent {
 
     else{
       if(e['url']=='/')
+      { 
+      if(token!=null && token!="")
       {
-       this.showHeader=false;
+       this.showHeader=true;
+      }
+      else
+      {
+        this.showHeader=false;
+      }
       }  
       else
       {

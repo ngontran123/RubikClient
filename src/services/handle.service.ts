@@ -59,4 +59,9 @@ async getAboutPage()
   });
 }
 
+async getSolvablerRubik()
+{
+  
+}
+
 }

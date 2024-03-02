@@ -44,13 +44,48 @@
  font-weight: bolder;
  font-size: medium;
   }
+  
+ .scroll-left-btn
+ {
+   position: absolute;
+   top:90%;
+   left:23%;
+   padding: auto;
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+ }
+ 
+ .scroll-left-btn img
+ {
+    width: 30px;
+    height: 30px;
+ }
 
+ .scroll-right-btn
+ {
+    position: absolute;
+    top:90%;
+    right: 50%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+ }
+
+ .scroll-right-btn img
+ {
+  width: 30px;
+  height: 30px;
+ }
   .small-images-container 
   {
-    overflow-x: auto;
-    display: flex;
+    overflow-x: hidden;
     margin-top: 10px;
-    margin-right:500px;
+    position: relative;
+    margin-right: 500px;
+    width: 390px;
+    display: flex;
+    flex-wrap:nowrap;
   }
   
   .small-image {
