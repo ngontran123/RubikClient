@@ -1,0 +1,13 @@
+<div class="palette-container" [style.background-color]="backgroundColor">
+   
+    @for(row of rows;track $index)
+    {
+        <div class="row">
+           @for(color of row;track $index)
+           {
+             
+               <button class="color" [style.background-color]="color" (click)="changeBackgroundColor(color)"></button>
+           }
+        </div>
+    }
+</div>

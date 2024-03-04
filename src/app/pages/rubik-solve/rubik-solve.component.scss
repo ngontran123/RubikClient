@@ -1,0 +1,115 @@
+.container
+{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.rubik-title
+{
+    margin-top: 100px;
+}
+
+.rubik-view-type
+{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+
+.threed-view-btn
+{
+    margin-right: 50px; 
+    border-radius: 10px;
+    width: 100px ;
+    height: 60px;
+    cursor: pointer;
+}
+
+
+.flat-view-btn
+{
+    
+    
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 60px;
+}
+
+.flat-view-btn img{
+    width: 50px;
+    height: 50px;
+}
+
+.threed-view-btn img
+{
+   width: 50px;
+   height: 50px;
+}
+
+.rubik-view
+{
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background-color: aqua;
+}
+
+.support-btn
+{  margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+}
+
+.sp-btn
+{
+  width: 100px;
+  height: 50px;
+  margin-left: 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.sp-btn img
+{
+display: inline-block;
+ width: 25px;
+ height: 25px;
+ position: relative;
+ margin-top: 10px;
+}
+
+.text
+{  display: inline-block;
+    margin-left: 10%;
+    font-size: 15px;
+    font-weight: bolder;
+    float: left;
+    margin-top: 15px;
+}
+
+.sp-btn-special
+{
+  width: 130px;
+  height: 50px;
+  margin-left: 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.sp-btn-special img
+{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin-top: 15px;
+    margin-left: 5px;
+}

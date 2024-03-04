@@ -1,0 +1,33 @@
+.container
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.row
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.solve-title
+{
+    margin-top: 100px;
+    font-weight: bolder;
+}
+.item
+{
+    margin-right: 50px;
+    padding: auto;
+}
+
+.intro
+{
+    width:500px;
+    height: auto;
+    margin-right: 100px;
+    font-weight: bold;
+    font-size: 20px;
+}

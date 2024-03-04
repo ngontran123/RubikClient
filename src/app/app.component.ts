@@ -35,7 +35,7 @@ export class AppComponent {
     { 
       this.showHeader=false;
       if(token!=null && token!="")
-      { 
+      {  
         router.navigate(['/about']);
       }
     }

@@ -1,0 +1,32 @@
+
+.palette-container
+{
+    border: 1px solid black;
+    width: 160px;
+    height: auto;
+    background:transparent;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 5px;
+    margin-top: 100px;
+}
+
+.row
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content:space-between;
+}
+
+.color
+{ 
+
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+}
+
+.color:hover{
+ opacity: 0.8;
+}

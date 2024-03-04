@@ -7,12 +7,15 @@ import { ItemsComponent } from './pages/items/items.component';
 import { ProductsComponent } from './shared/layouts/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { SolveComponent } from './pages/solve/solve.component';
-
+import { RubikSolveComponent } from './pages/rubik-solve/rubik-solve.component';
+import { ColorPaletteComponent } from './shared/layouts/color-palette/color-palette.component';
 export const routes: Routes = [
     {path:'login',component:DefaulComponent,children:[{path:'',component:LoginComponent}]},
     {path:"about",component:AboutComponent},
     {path:'products',component:ProductsComponent,children:[{path:'',component:ItemsComponent}]},
     {path:'product-details/:id',component:ProductDetailComponent},
     {path:'solve',component:SolveComponent},
+    {path:'rubik-solve',component:RubikSolveComponent},
+    {path:'color',component:ColorPaletteComponent},
     {path:"**",component:NotFoundComponent}
 ];

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class ="solve-title">
+    <h1>IOT Solutions For Rubik Cube</h1>
+    </div>
+    <div class ="intro">
+    <p>Welcome you come to visit our page.Below is the list of availalbe rubik which currenly can be solved using IoT solutions.</p>
+   </div>
+
+    @for(row of rows;track $index)
+    {
+        <div class="row">
+            @for(item of row;track $index)
+            {
+               <div class="item"><app-solve-items [rubik]="item"></app-solve-items></div>
+
+            }
+        </div>
+    }
+</div>
