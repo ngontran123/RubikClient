@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit,OnDestroy {
          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
           if(this.isLocked)
           { 
-           this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Error");
+           this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");
           }
           else
           {
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit,OnDestroy {
                } 
                 if(this.isLocked)
                  {
-                  this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Error");
+                  this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");
                  }
                 
                 if(this.loginRetryTime>5)
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit,OnDestroy {
                   {
                   this.lockedTime=new Date(Date.now()+2*60*1000);
                   this.isLocked=true;
-                  this.popupService.AlertErrorDialog(`You have been locked from logging in 2 minutes`,"Login Error");
+                  this.popupService.AlertErrorDialog(`You have been locked from logging in 2 minutes`,"Login Blocked");
                   }
                 }
                 else
@@ -116,6 +116,7 @@ export class LoginComponent implements OnInit,OnDestroy {
         catch(error)
         {
           console.log(error);
+          
         }
         }
       }
