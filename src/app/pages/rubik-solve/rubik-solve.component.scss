@@ -31,8 +31,6 @@
 
 .flat-view-btn
 {
-    
-    
     border-radius: 10px;
     cursor: pointer;
     width: 100px;
@@ -51,13 +49,153 @@
 }
 
 .rubik-view
-{
+{   position: relative;
     display: flex;
     justify-content: center;
-    width: 150px;
-    height: 150px;
-    background-color: aqua;
+    align-items: center;
+    margin-top: 100px;
+    transform-style: preserve-3d;
+    height: 50vh;
+    animation: spin 10s infinite linear;
 }
+
+
+.rubik-face
+{   
+    position: absolute;
+    width: 300px;
+    height: 300px;
+}
+
+.front
+{
+    transform: translateZ(150px); 
+}
+
+.front-color
+{
+    background-color: #008000;
+}
+
+.back
+{
+    transform: rotateY(180deg) translateZ(150px);
+}
+.back-color
+{
+    background-color: #0000ff;
+
+}
+.top
+{
+transform: rotateX(90deg) translateZ(150px);
+background-color:#fff;
+}
+
+.top-color
+{
+    background-color:#fff;
+
+}
+
+.bottom
+{
+    transform: rotateX(-90deg) translateZ(150px);
+}
+
+.bottom-color
+{
+    background-color:#ffff00;
+
+}
+
+.left
+{
+transform: rotateY(-90deg) translateZ(150px);
+}
+
+.left-color
+{
+    background-color: #ff8c00;
+
+}
+.right
+{
+ transform: rotateY(90deg) translateZ(150px);
+}
+
+.right-color
+{
+    background-color:#ff0000 ;
+
+}
+
+@keyframes spin {
+    from {
+      transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+      transform: rotateX(360deg) rotateY(360deg);
+    }
+  }
+
+
+.block
+{   position: absolute;
+    width: 100px;
+    height: 100px;
+    border:1px solid black;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.block:nth-child(1) {
+    top: 0;
+    left: 0;
+  }
+
+  .block:nth-child(2) {
+    top: 0;
+    left: 100px;
+  }
+
+  .block:nth-child(3) {
+    top: 0;
+    left: 200px;
+  }
+
+  .block:nth-child(4) {
+    top: 100px;
+    left: 0;
+  }
+
+  .block:nth-child(5) {
+    top: 100px;
+    left: 100px;
+  }
+
+  .block:nth-child(6) {
+    top: 100px;
+    left: 200px;
+  }
+
+  .block:nth-child(7) {
+    top: 200px;
+    left: 0;
+  }
+
+  .block:nth-child(8) {
+    top: 200px;
+    left: 100px;
+  }
+
+  .block:nth-child(9) {
+    top: 200px;
+    left: 200px;
+  }
+
+
 
 .support-btn
 {  margin-top: 30px;
@@ -65,6 +203,8 @@
     flex-wrap: wrap;
     justify-content:space-between;
 }
+
+
 
 .sp-btn
 {
@@ -83,6 +223,7 @@ display: inline-block;
  height: 25px;
  position: relative;
  margin-top: 10px;
+ z-index: -100000;
 }
 
 .text
@@ -91,7 +232,9 @@ display: inline-block;
     font-size: 15px;
     font-weight: bolder;
     float: left;
+    position: relative;
     margin-top: 15px;
+    z-index: -100000;
 }
 
 .sp-btn-special
@@ -112,4 +255,23 @@ display: inline-block;
     position: relative;
     margin-top: 15px;
     margin-left: 5px;
+    z-index: -100000;
 }
+
+.support-btn .sp-btn-border :hover
+{
+    transform: scale(1.1);
+    transition-delay: 0s;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.sp-btn-special :hover
+{
+    transform: scale(1.075);
+    transition-delay: 0s;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+}
+

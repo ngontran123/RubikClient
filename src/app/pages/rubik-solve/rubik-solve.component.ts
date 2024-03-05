@@ -9,5 +9,8 @@ import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-
   styleUrl: './rubik-solve.component.scss'
 })
 export class RubikSolveComponent {
-
+showValue()
+{
+  alert("clickable");
+}
 }
