@@ -88,7 +88,11 @@
           </div>
     </div>
     </div>
-
+    <div class="rotate-btn">
+      <button (click)="rotateLeftButton()">Rotate Left</button>
+      <button >Rotate Up/Down</button>
+      <button (click)="rotateRightButton()">Rotate Right</button>
+    </div>
 }   
    @else
    {
@@ -96,6 +100,7 @@
         <p>Damnnnnn</p>
     </div>
    }
+
     <div class="color-palette">
        <app-color-palette></app-color-palette>
     </div>

@@ -62,8 +62,17 @@
     height: 300px;
     position: absolute;
     transform-style: preserve-3d;
-    // transform: rotateX(320deg) rotateY(320deg) rotateZ(300deg);
+    transform: rotateX(-32deg) rotateY(-48deg);
     transition:transform 0.2s ease;
+} 
+
+
+.rotate-btn
+{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 200px;
 }
 
 
