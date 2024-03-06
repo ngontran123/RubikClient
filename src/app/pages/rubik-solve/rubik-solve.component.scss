@@ -54,9 +54,16 @@
     justify-content: center;
     align-items: center;
     margin-top: 100px;
-    transform-style: preserve-3d;
     height: 50vh;
-    animation: spin 10s infinite linear;
+}
+.rubik-cube
+{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    transform-style: preserve-3d;
+    // transform: rotateX(320deg) rotateY(320deg) rotateZ(300deg);
+    transition:transform 0.2s ease;
 }
 
 
@@ -89,7 +96,6 @@
 .top
 {
 transform: rotateX(90deg) translateZ(150px);
-background-color:#fff;
 }
 
 .top-color
@@ -274,4 +280,3 @@ display: inline-block;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
     background-color: transparent;
 }
-

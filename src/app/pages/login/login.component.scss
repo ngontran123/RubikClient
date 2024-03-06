@@ -24,32 +24,32 @@
   
   .front {
     transform: translateZ(50px);
-    background-color: #ffffff; 
+    background-color: #008000; 
   }
   
   .back {
     transform: rotateY(180deg) translateZ(50px);
-    background-color: #ff0000;  
+    background-color: #0000ff;  
   }
   
   .top {
     transform: rotateX(90deg) translateZ(50px);
-    background-color: #008000; 
+    background-color: #ffffff; 
   }
   
   .bottom {
     transform: rotateX(-90deg) translateZ(50px);
-    background-color: #ff8c00; 
+    background-color: #ffff00; 
   }
   
   .left {
     transform: rotateY(-90deg) translateZ(50px);
-    background-color: #0000ff;
+    background-color: #ff8c00;
   }
   
   .right {
     transform: rotateY(90deg) translateZ(50px);
-    background-color: #ffff00;
+    background-color: #ff0000;
   }
   
   .block {
