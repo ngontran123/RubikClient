@@ -25,6 +25,9 @@ export class RubikSolveComponent {
   is_upside_down:boolean=false;
   curr_left_img:string='assets/images/curved-left-arrow.png';
   curr_right_img:string='assets/images/next.png';
+  curr_up_down_img:string ='assets/images/down-arrow.png';
+  btn_color:string='';
+
 showValue()
 {
   alert("clickable");
@@ -77,7 +80,6 @@ rotateCube(event:MouseEvent)
     console.log('X'+this.rotationX);
     console.log('Y'+this.rotationY);
     this.cubeRotateStyle=`rotateX(${this.rotationX}deg) rotateY(${this.rotationY}deg)`;
-
   }
 }
 
@@ -123,7 +125,6 @@ switch(this.curr_horizontal_idx)
 }
 else
 {
-
 }
 }
 
@@ -135,10 +136,27 @@ rotateUpsideDown()
   }
 }
 
-changeImage(image:string)
+changeImage(image:string,direction:string)
 {
- this.curr_left_img=image;
+  switch(direction)
+  {
+    case 'left':this.curr_left_img=image;break;
+    case 'right':this.curr_right_img=image;break;
+    case 'up-down':this.curr_up_down_img=image;break;
+  }
 }
 
+
+changeBtnColor(event:string)
+{
+  this.btn_color=event;
+  alert(this.btn_color);
+}
+
+changeBlockColor(event:MouseEvent)
+{
+ const btn=event.currentTarget as HTMLButtonElement;
+ const id =btn.dataset['field'];
+}
 
 }

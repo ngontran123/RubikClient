@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-color-palette',
@@ -11,6 +11,7 @@ export class ColorPaletteComponent implements OnInit {
      rows:any=[];
      colors:string[]=['whitesmoke','orange','greenyellow','red','blue','yellow'];
      backgroundColor:string='transparent';
+     @Output("update-color") color:EventEmitter<string>=new EventEmitter<string>();
   ngOnInit(): void 
   {
     this.getColorRows();
@@ -27,5 +28,6 @@ export class ColorPaletteComponent implements OnInit {
   changeBackgroundColor(color:string)
   {
     this.backgroundColor=color;
+    this.color.emit(this.backgroundColor);
   }
 }
