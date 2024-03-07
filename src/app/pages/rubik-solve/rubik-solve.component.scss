@@ -219,6 +219,13 @@ transform: rotateY(-90deg) translateZ(150px);
     justify-content:space-between;
 }
 
+.rotate-btn
+{
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  justify-content: space-between;
+}
 
 .left-rotate-btn
 {
@@ -226,6 +233,7 @@ transform: rotateY(-90deg) translateZ(150px);
   padding:0;
   background: none;
   cursor: pointer;
+  margin-right: 100px;
 }
 
 .left-img
@@ -242,6 +250,7 @@ position: relative;
   padding:0;
   background:none;
   cursor:pointer;
+  margin-left: 100px;
 }
 
 .up-down-btn
@@ -250,7 +259,7 @@ position: relative;
   padding:0;
   background:none;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 
 .up-down-img

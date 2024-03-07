@@ -1,14 +1,16 @@
-import { Component,HostListener} from '@angular/core';
+import { Component,HostListener, OnInit} from '@angular/core';
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
+import { PopupService } from '../../../services/popup.service';
 
 @Component({
   selector: 'app-rubik-solve',
   standalone: true,
   imports: [ColorPaletteComponent],
   templateUrl: './rubik-solve.component.html',
-  styleUrl: './rubik-solve.component.scss'
+  styleUrl: './rubik-solve.component.scss',
+  providers:[PopupService]
 })
-export class RubikSolveComponent {
+export class RubikSolveComponent implements OnInit {
   isShowThreeD:boolean=true;
   threeDColor:string = '#3d81f6';
   flatColor:string = 'transparent';
@@ -27,6 +29,60 @@ export class RubikSolveComponent {
   curr_right_img:string='assets/images/next.png';
   curr_up_down_img:string ='assets/images/down-arrow.png';
   btn_color:string='';
+  rubik_block_color:string[]=[];
+  color_disable:string[]=[];
+   
+  constructor(private popupService:PopupService)
+  {}
+  ngOnInit(): void {
+   this.initRubikBlock();
+   this.initColorDisable();
+  }
+ 
+initColorDisable()
+{
+  for(let i=0;i<6;i++)
+  {
+    this.color_disable[i]='false';
+  }
+}
+
+checkFrequencyColor(color:string)
+{ var is_disable=this.countAllFrequency(color);
+  let idx=this.getIndexColor(color);
+  if(is_disable)
+  {
+    this.color_disable[idx]='true';
+  }
+  else{
+    this.color_disable[idx]='false';
+  }
+}
+
+getIndexColor(color:string)
+{ 
+  let idx=-1;
+  switch(color)
+  {
+    case 'whitesmoke':idx=0;break;
+    case 'orange':idx=1;break;
+    case 'green':idx=2;break;
+    case 'red':idx=3;break;
+    case 'blue':idx=4;break;
+    case 'yellow':idx=5;break;
+  }
+  return idx;
+}
+
+countAllFrequency(color:string):boolean
+{ 
+  let num_freq=this.rubik_block_color.filter(c=>c==color).length;
+  if(num_freq>=9)
+  {
+    return true;
+  }
+  return false;
+}
 
 showValue()
 {
@@ -57,6 +113,7 @@ stopRotate()
 { 
   this.isRotating=false;
 }
+
 
 @HostListener('document:mousemove',['$event'])
 rotateCube(event:MouseEvent)
@@ -150,13 +207,99 @@ changeImage(image:string,direction:string)
 changeBtnColor(event:string)
 {
   this.btn_color=event;
-  alert(this.btn_color);
 }
 
 changeBlockColor(event:MouseEvent)
 {
+
  const btn=event.currentTarget as HTMLButtonElement;
- const id =btn.dataset['field'];
+ const id =btn.dataset['field'] as string;
+ var num_id=parseInt(id);
+//  var current_color=this.rubik_block_color[num_id-1];
+//  var curr_idx=this.getIndexColor(current_color);
+//  var idx_new_color=this.getIndexColor(this.btn_color);
+//  if(this.color_disable[idx_new_color]=='true')
+//  {
+//   this.popupService.AlertErrorDialog('You have used this color more than 9 times','Pick too much');
+//   return;
+//  }
+//  if(this.color_disable[curr_idx]=='true' && idx_new_color!=curr_idx)
+//  {
+//   this.color_disable[curr_idx]='false';
+//  }
+ this.rubik_block_color[num_id-1]=this.btn_color;
+//  this.checkFrequencyColor(this.btn_color);
 }
+
+blankRubikBlock()
+{
+  for(let i=0;i<54;i++)
+  {
+    this.rubik_block_color[i]='grey';
+  }
+}
+  initRubikBlock()
+  {
+    for(let i=0;i<54;i++)
+    { 
+      if(i>=0 && i<9)
+      {
+      this.rubik_block_color.push('whitesmoke')
+      }
+      else if(i>=9 && i<18)
+      {
+        this.rubik_block_color.push('orange');
+      }
+      else if(i>=18 && i<27)
+      {
+        this.rubik_block_color.push('green');
+      }
+      else if(i>=27 && i<36)
+      {
+        this.rubik_block_color.push('red');
+      }
+      else if(i>=36 && i<45)
+      {
+        this.rubik_block_color.push('blue');
+      }
+      else
+      {
+        this.rubik_block_color.push('yellow');
+      }
+    }
+  }
+
+  resetRubikBlock()
+  {
+    for(let i=0;i<54;i++)
+    { 
+      if(i>=0 && i<9)
+      {
+      this.rubik_block_color[i]='whitesmoke'
+      }
+      else if(i>=9 && i<18)
+      {
+        this.rubik_block_color[i]='orange';
+      }
+      else if(i>=18 && i<27)
+      {
+        this.rubik_block_color[i]='green';
+      }
+      else if(i>=27 && i<36)
+      {
+        this.rubik_block_color[i]='red';
+      }
+      else if(i>=36 && i<45)
+      {
+        this.rubik_block_color[i]='blue';
+      }
+      else
+      {
+        this.rubik_block_color[i]='yellow';
+      }
+    }
+  }
+
+
 
 }

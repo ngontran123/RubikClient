@@ -1,4 +1,4 @@
-import { Component, OnInit,Output,EventEmitter} from '@angular/core';
+import { Component, OnInit,Output,EventEmitter,Input} from '@angular/core';
 
 @Component({
   selector: 'app-color-palette',
@@ -9,13 +9,43 @@ import { Component, OnInit,Output,EventEmitter} from '@angular/core';
 })
 export class ColorPaletteComponent implements OnInit {
      rows:any=[];
-     colors:string[]=['whitesmoke','orange','greenyellow','red','blue','yellow'];
+     colors:string[]=['whitesmoke','orange','green','red','blue','yellow'];
      backgroundColor:string='transparent';
+     @Input() color_disable!:string[];
      @Output("update-color") color:EventEmitter<string>=new EventEmitter<string>();
   ngOnInit(): void 
   {
     this.getColorRows();
   }
+
+
+  getIndexColor(color:string)
+  { 
+    let idx=-1;
+    switch(color)
+    {
+      case 'whitesmoke':idx=0;break;
+      case 'orange':idx=1;break;
+      case 'green':idx=2;break;
+      case 'red':idx=3;break;
+      case 'blue':idx=4;break;
+      case 'yellow':idx=5;break;
+    }
+    return idx;
+  }
+
+  checkDisableBtn(picked_color:string)
+  {
+   var idx=this.getIndexColor(picked_color);
+   if(this.color_disable[idx]=='true')
+   {
+    return true;
+   }
+   return false;
+  }
+  
+
+
   getColorRows()
   {
     for(let i=0;i<this.colors.length;i+=3)
