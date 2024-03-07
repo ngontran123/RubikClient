@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit
   avatar=localStorage.getItem("AVATAR");
   constructor(private router:Router)
   {
-
   }
   ngOnInit(): void 
   {
@@ -20,6 +19,7 @@ export class HeaderComponent implements OnInit
   signOut()
   {
     localStorage.removeItem("TOKEN");
+    
     this.router.navigate(["/login"]);
   }
 } 

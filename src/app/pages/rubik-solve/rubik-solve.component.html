@@ -89,9 +89,11 @@
     </div>
     </div>
     <div class="rotate-btn">
-      <button (click)="rotateLeftButton()">Rotate Left</button>
-      <button >Rotate Up/Down</button>
-      <button (click)="rotateRightButton()">Rotate Right</button>
+      <button class="left-rotate-btn"(click)="rotateLeftButton()">
+        <img class="left-img" src="assets/images/curved-left-arrow.png" (mouseover)="changeImage('assets/images/arrow-left.png')" (mouseout)="changeImage('assets/images/curved-left-arrow.png')" alt="curved-left-arrow.png" [src]="curr_left_img">
+    </button>
+      <button class="up-down-btn"><img class="up-down-img" src="assets/images/down-arrow (1).png" alt="down-arrow (1).png" (mouseover)="changeImage('down-arrow.png')" (mouseout)="changeImage('down-arrow (1).png')"></button>
+      <button class="right-rotate-btn" (click)="rotateRightButton()"><img class="right-img" src="assets/images/next.png" alt="next.png" (mouseover)="changeImage('assets/images/share.png')" (mouseout)="changeImage('assets/images/next.png')"></button>
     </div>
 }   
    @else
@@ -100,7 +102,6 @@
         <p>Damnnnnn</p>
     </div>
    }
-
     <div class="color-palette">
        <app-color-palette></app-color-palette>
     </div>

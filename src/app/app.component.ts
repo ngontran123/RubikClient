@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(private router:Router)
   {
     router.events.forEach((e)=>{
-
+      
   if(e instanceof NavigationStart)
   {  
    var token=localStorage.getItem('TOKEN');

@@ -23,6 +23,8 @@ export class RubikSolveComponent {
   curr_horizontal_idx:number=0;
   color_face:string[]=['green','red','blue','orange'];
   is_upside_down:boolean=false;
+  curr_left_img:string='assets/images/curved-left-arrow.png';
+  curr_right_img:string='assets/images/next.png';
 showValue()
 {
   alert("clickable");
@@ -75,6 +77,7 @@ rotateCube(event:MouseEvent)
     console.log('X'+this.rotationX);
     console.log('Y'+this.rotationY);
     this.cubeRotateStyle=`rotateX(${this.rotationX}deg) rotateY(${this.rotationY}deg)`;
+
   }
 }
 
@@ -85,11 +88,11 @@ rotateRightButton()
   {
     this.curr_horizontal_idx=3;
   }
- if(this.is_upside_down)
+ if(!this.is_upside_down)
  {
   switch(this.curr_horizontal_idx)
 {
-  case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(320deg)`;break;
+  case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(-48deg)`;break;
   case 1: this.cubeRotateStyle=`rotateX(-32deg) rotateY(225deg)`;break;
   case 2: this.cubeRotateStyle=`rotateX(-32deg) rotateY(130deg)`;break;
   case 3: this.cubeRotateStyle=`rotateX(-32deg) rotateY(45deg)`;break;
@@ -108,11 +111,11 @@ if(this.curr_horizontal_idx>3)
 {
   this.curr_horizontal_idx=0;
 }
-if(this.is_upside_down)
+if(!this.is_upside_down)
 {
 switch(this.curr_horizontal_idx)
 {
-  case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(320deg)`;break;
+  case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(-48deg)`;break;
   case 1: this.cubeRotateStyle=`rotateX(-32deg) rotateY(225deg)`;break;
   case 2: this.cubeRotateStyle=`rotateX(-32deg) rotateY(130deg)`;break;
   case 3: this.cubeRotateStyle=`rotateX(-32deg) rotateY(45deg)`;break;
@@ -131,5 +134,11 @@ rotateUpsideDown()
 
   }
 }
+
+changeImage(image:string)
+{
+ this.curr_left_img=image;
+}
+
 
 }

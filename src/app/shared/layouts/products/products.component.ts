@@ -24,7 +24,6 @@ export class ProductsComponent implements OnInit {
 
      constructor(private handleService:HandleService)
      {
-
      }
      ngOnInit(): void 
      {
