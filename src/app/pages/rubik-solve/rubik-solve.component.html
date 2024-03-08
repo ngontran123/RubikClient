@@ -68,7 +68,7 @@
             <button class="block left-color" data-field="11" id="11" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[10]"></button>
             <button class="block left-color" data-field="12" id="12" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[11]"></button>
             <button class="block left-color" data-field="13" id="13" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[12]"></button>
-            <button class="block left-color" data-field="14" id="14" (click)="changeBlockColor($event)" ></button>
+            <button class="block left-color" data-field="14" id="14" (click)="changeBlockColor($event)"></button>
             <button class="block left-color" data-field="15" id="15" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[14]"></button>
             <button class="block left-color" data-field="16" id="16" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[15]"></button>
             <button class="block left-color" data-field="17" id="17" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[16]"></button>
@@ -123,7 +123,7 @@
     </button>
     </div>
     <div class="sp-btn-border">
-    <button class="sp-btn-special">
+    <button class="sp-btn-special" (click)="scrambleRubikBlock()">
        <span class="text">Scramble</span>
        <img src="assets/images/icons8-double-arrow-64.png" alt="icons8-double-arrow-64.png">
     </button>

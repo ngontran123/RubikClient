@@ -31,11 +31,15 @@ export class RubikSolveComponent implements OnInit {
   btn_color:string='';
   rubik_block_color:string[]=[];
   color_disable:string[]=[];
+  rubik_temp_arr!:string[];
+  delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms))
+
    
   constructor(private popupService:PopupService)
   {}
   ngOnInit(): void {
    this.initRubikBlock();
+   this.rubik_temp_arr=Array(54).fill('');
    this.initColorDisable();
   }
  
@@ -232,11 +236,18 @@ changeBlockColor(event:MouseEvent)
 }
 
 blankRubikBlock()
-{
+{  
+  // var colors:string[]=['whitesmoke','orange','green','red','blue','yellow'];
+  // for(let i=0;i<colors.length;i++)
+  // {
+  //   var count_color=this.rubik_block_color.filter(b=>b==colors[i]).length;
+  //   alert(`Number of block of color ${colors[i]} is:${count_color}`);
+  // }
   for(let i=0;i<54;i++)
   {
     this.rubik_block_color[i]='grey';
   }
+  this.centerBlockColor(this.rubik_block_color);
 }
   initRubikBlock()
   {
@@ -267,6 +278,16 @@ blankRubikBlock()
         this.rubik_block_color.push('yellow');
       }
     }
+  }
+   
+  centerBlockColor(rubik_array:string[])
+  {
+    rubik_array[4]='whitesmoke';
+    rubik_array[13]='orange';
+    rubik_array[22]='green';
+    rubik_array[31]='red';
+    rubik_array[40]='blue';
+    rubik_array[49]='yellow';
   }
 
   resetRubikBlock()
@@ -299,7 +320,50 @@ blankRubikBlock()
       }
     }
   }
+  
 
-
+ assignRandomColor(rubik_array:string[])
+ {
+  var colors_obj:{[key:string]:number}={
+    'whitesmoke':8,
+    'orange':8,
+    'green':8,
+    'red':8,
+    'blue':8,
+    'yellow':8
+  };
+  const skip_idx:number[]=[4,13,22,31,40,49];
+  this.centerBlockColor(rubik_array);
+  for(let i=0;i<54;i++)
+  { 
+    if(skip_idx.includes(i))
+    {
+      continue;
+    }
+    var ob=Object.keys(colors_obj);
+    var ob_len:number=ob.length;
+    var random_idx:number=Math.round(Math.random()*(ob_len-1));
+    rubik_array[i]=ob[random_idx];
+    colors_obj[ob[random_idx]]-=1;
+    if(colors_obj[ob[random_idx]]==0)
+    {
+      colors_obj=Object.keys(colors_obj).filter(key=>
+        key!=ob[random_idx]).reduce((newObject,key)=>{
+          newObject[key]=colors_obj[key];
+          return newObject;
+        },{});
+    }
+  }
+}
+ async scrambleRubikBlock()
+  {
+    let round_count=4;
+    while(round_count>0)
+    { 
+     this.assignRandomColor(this.rubik_block_color);
+     round_count-=1;
+     await this.delay(300);
+    }
+  }
 
 }

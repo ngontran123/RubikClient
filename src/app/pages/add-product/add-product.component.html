@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="add-product-form">
+    <div class="add-product-title">
+    <h2>Add New Product</h2>
+    </div>
+
+        <form action="" [formGroup]="productForm" (ngSubmit)="onSubmitForm()" novalidate autocomplete="off">
+        <div class="form-group">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" placeholder="Input your product name" class="form-control" formControlName="productname" required>
+        @if(productForm.get('productname')?.hasError('required') && productForm.get('productname')?.touched){
+            <span class="form-error">Product name is required</span>
+        }
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea type="text" id="description" placeholder="Input the description for your product" class="form-control" formControlName="description" required></textarea>
+            @if(productForm.get('description')?.hasError('required') && productForm.get('description')?.touched)
+            {
+                <span class="form-error">Product description is required</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="avatar-url">Avatar Url:</label>
+            <input type="text" id="avatar-url" placeholder="Input Your Image Url" class="form-control" formControlName="url" required>
+            @if(productForm.get('url')?.hasError('required') && productForm.get('url')?.touched)
+            {
+                <span class="form-error">Avatar url is required</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="feature">Feature:</label>
+            <textarea id="feature" placeholder="Input Your Product Feature" class="form-control" formControlName="feature"></textarea>
+        </div>
+        <div class="submit">
+        <button class="submit-btn" type="submit">Add Product</button>
+        </div>
+        </form>
+    </div>
+</div>

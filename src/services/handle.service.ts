@@ -83,4 +83,30 @@ async getSolvableRubik()
   return this.solvable_rubiks;
 }
 
+async postProduct(formdata:any)
+{
+ var res=await axios.post(`${environment.server_url}/product`,formdata,{headers:{'Authorization':this.token}}).then((response)=>
+ {
+   this.popupService.AlertSuccessDialog(response.data.message,'Add product success');
+ }).catch(err=>{
+   if(err.response.status==401)
+  { 
+     this.popupService.AlertErrorDialog(err.response.data.message,'Add product failed');
+  }
+ });
+ 
+}
+
+
+async getAddProduct()
+{
+  var res=await axios.get(`${environment.server_url}/product`,{headers:{Authorization:this.token}}).catch(err=>{
+    if(err.response.status==401)
+    { localStorage.removeItem('TOKEN');
+      this.route.navigate(['/login']);
+      this.popupService.AlertErrorDialog(err.response.data.message,'Get data failed');
+    }
+  })
+}
+
 }
