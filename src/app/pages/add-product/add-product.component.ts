@@ -41,6 +41,10 @@ export class AddProductComponent implements OnInit {
     {
       this.productForm.markAllAsTouched();
     }
+    else
+    {
     await this.handleService.postProduct(this.productForm.value);
+    
+    }
   }
 }

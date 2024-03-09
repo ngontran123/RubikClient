@@ -10,6 +10,7 @@ import { SolveComponent } from './pages/solve/solve.component';
 import { RubikSolveComponent } from './pages/rubik-solve/rubik-solve.component';
 import { ColorPaletteComponent } from './shared/layouts/color-palette/color-palette.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
+import { AddAccountComponent } from './pages/add-account/add-account.component';
 export const routes: Routes = [
     {path:'login',component:DefaulComponent,children:[{path:'',component:LoginComponent}]},
     {path:"about",component:AboutComponent},
@@ -19,5 +20,6 @@ export const routes: Routes = [
     {path:'rubik-solve',component:RubikSolveComponent},
     {path:'color',component:ColorPaletteComponent},
     {path:'add-product',component:AddProductComponent},
+    {path:'add-account',component:AddAccountComponent},
     {path:"**",component:NotFoundComponent}
 ];

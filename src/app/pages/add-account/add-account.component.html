@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="add-product-form">
+    <div class="add-product-title">
+    <h2>Add New Product</h2>
+    </div>
+
+        <form action="" [formGroup]="accountForm" (ngSubmit)="onSubmitForm()" novalidate autocomplete="off">
+        <div class="form-group">
+        <label for="username">UserName:</label>
+        <input type="text" id="username" placeholder="Input Username" class="form-control" formControlName="username" required>
+        @if(accountForm.get('username')?.hasError('required') && accountForm.get('username')?.touched){
+            <span class="form-error">Username is required</span>
+        }
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Input Password" class="form-control" formControlName="password" required></textarea>
+            @if(accountForm.get('password')?.hasError('required') && accountForm.get('password')?.touched)
+            {
+                <span class="form-error">Password is required</span>
+            }
+        </div>
+        <div class ="form-group">
+            <label for="gender">Gender</label>
+             <datalist class="gender-list">
+            @for(gender of gender_list;track @index)
+            {
+                <option value="{{gender}}" formControlName="gender"></option>
+            }
+             </datalist>
+        </div>
+        <div class="form-group">
+            <label for="avatar-url">Avatar Url:</label>
+            <input type="text" id="avatar-url" placeholder="Input Your Avatar Url" class="form-control" formControlName="url" required>
+            @if(accountForm.get('url')?.hasError('required') && accountForm.get('url')?.touched)
+            {
+                <span class="form-error">Avatar url is required</span> 
+            }
+        </div>
+        <div class="form-group">
+            <label for="email">Feature:</label>
+            <input type="email" id="email" placeholder="Input Your Email" class="form-control" formControlName="email"></textarea>
+           @if(accountForm.get('email')?.hasError('required') && accountForm.get('email')?.touched)
+           {
+            <span class="form-error">Email is required</span>
+           } 
+        </div>
+        <div class="form-group">
+            <label for="role">Role Type:</label>
+          <datalist class="role-list">
+          @for(role of role_type_list;track @index)
+          {
+            <option value="{{role}}" formControlName="role_id"></option>
+          }
+          </datalist>
+        </div>
+        <div class="submit">
+        <button class="submit-btn" type="submit">Add Product</button>
+        </div>
+        </form>
+    </div>
+</div>
