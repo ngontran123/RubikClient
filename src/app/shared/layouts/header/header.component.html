@@ -17,9 +17,11 @@
         </button>
         <div class="dropdown-content">
           <a href="#">Profile</a>
-          <a href="#">Settings</a>
+        @if(user.role_id==1)
+        {
           <a href="/add-product">Add Product</a>
           <a href="/add-account">Add Account</a>
+        }
           <a href="" onclick="return false;" (click)="signOut()">Sign Out</a>
           <!-- Add more dropdown options as needed -->
         </div>

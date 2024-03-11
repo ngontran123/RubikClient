@@ -85,7 +85,7 @@ async getSolvableRubik()
 
 async postProduct(formdata:any)
 {
- var res=await axios.post(`${environment.server_url}/product`,formdata,{headers:{'Authorization':this.token}}).then((response)=>
+ var res=await axios.post(`${environment.server_url}/product`,formdata,{headers:{Authorization:this.token}}).then((response)=>
  {
    this.popupService.AlertSuccessDialog(response.data.message,'Add product success');
  }).catch(err=>{
@@ -97,6 +97,29 @@ async postProduct(formdata:any)
  
 }
 
+async postAccount(formdata:any)
+{
+  var res=await axios.post(`${environment.server_url}/add-account`,formdata,{headers:{Authorization:this.token}}).then((response)=>{
+this.popupService.AlertSuccessDialog(response.data.message,'Add account success');
+  }).catch(err=>{
+    if(err.response.status==401)
+    {
+      this.popupService.AlertErrorDialog(err.response.data.message,'Add account failed');
+    }
+  });
+} 
+
+async getAccountPage()
+{
+  var res=await axios.get(`${environment.server_url}/add-product`,{headers:{Authorization:this.token}}).catch(err=>{
+    if(err.response.status==401)
+    { 
+      localStorage.removeItem('TOKEN');
+      this.route.navigate(['/login']);
+      this.popupService.AlertErrorDialog(err.response.data.message,'Get data failed');
+    }
+  })
+}
 
 async getAddProduct()
 {

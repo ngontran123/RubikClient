@@ -78,8 +78,10 @@ export class LoginComponent implements OnInit,OnDestroy {
           }
           else
           {
+          var user=res.data.data;
           localStorage.setItem("TOKEN",res.data.token);
-          localStorage.setItem("AVATAR",res.data.avatar);
+          localStorage.setItem("AVATAR",user.avatar);
+          localStorage.setItem("ACCOUNT",JSON.stringify(user));
           this.router.navigate(['/about']);
           }
           }).catch((err)=>{

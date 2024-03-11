@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="add-product-form">
-    <div class="add-product-title">
+    <div class="add-account-form">
+    <div class="add-account-title">
     <h2>Add New Product</h2>
     </div>
 
@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Input Password" class="form-control" formControlName="password" required></textarea>
+            <input type="password" id="password" placeholder="Input Password" class="form-control" formControlName="password" required>
             @if(accountForm.get('password')?.hasError('required') && accountForm.get('password')?.touched)
             {
                 <span class="form-error">Password is required</span>
@@ -22,24 +22,29 @@
         </div>
         <div class ="form-group">
             <label for="gender">Gender</label>
-             <datalist class="gender-list">
-            @for(gender of gender_list;track @index)
+            <select class="gender-list" id="gender" formControlName="gender">
+            <option value="" disabled>Select gender:</option>
+            @for(gender of gender_list;track $index)
             {
-                <option value="{{gender}}" formControlName="gender"></option>
+                <option [value]="gender">{{gender}}</option>
             }
-             </datalist>
+        </select>
+        @if(accountForm.get('gender')?.hasError('required') && accountForm.get('gender')?.touched)
+        {
+         <span class="form-error">Gender is required</span>
+        } 
         </div>
         <div class="form-group">
             <label for="avatar-url">Avatar Url:</label>
-            <input type="text" id="avatar-url" placeholder="Input Your Avatar Url" class="form-control" formControlName="url" required>
-            @if(accountForm.get('url')?.hasError('required') && accountForm.get('url')?.touched)
+            <input type="text" id="avatar-url" placeholder="Input Your Avatar Url" class="form-control" formControlName="avatar" required>
+            @if(accountForm.get('avatar')?.hasError('required') && accountForm.get('avatar')?.touched)
             {
                 <span class="form-error">Avatar url is required</span> 
             }
         </div>
         <div class="form-group">
-            <label for="email">Feature:</label>
-            <input type="email" id="email" placeholder="Input Your Email" class="form-control" formControlName="email"></textarea>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Input Your Email" class="form-control" formControlName="email">
            @if(accountForm.get('email')?.hasError('required') && accountForm.get('email')?.touched)
            {
             <span class="form-error">Email is required</span>
@@ -47,12 +52,18 @@
         </div>
         <div class="form-group">
             <label for="role">Role Type:</label>
-          <datalist class="role-list">
-          @for(role of role_type_list;track @index)
+          <select class="role-list" id="role" formControlName="role_id">
+         <option value="" disabled>Select Role:</option>
+
+          @for(role of role_type_list;track $index)
           {
-            <option value="{{role}}" formControlName="role_id"></option>
+            <option [value]="role">{{role}}</option>
           }
-          </datalist>
+        </select>
+        @if(accountForm.get('role_id')?.hasError('required') && accountForm.get('role_id')?.touched)
+        {
+         <span class="form-error">Role is required</span>
+        } 
         </div>
         <div class="submit">
         <button class="submit-btn" type="submit">Add Product</button>

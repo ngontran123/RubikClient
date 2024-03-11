@@ -13,13 +13,15 @@ import { HeaderComponent } from '../../shared/layouts/header/header.component';
   providers:[PopupService,HandleService]
 })
 export class AddAccountComponent implements OnInit{
-  role_type_list:string[]=['User','Amin'];
+  role_type_list:string[]=['User','Admin'];
   gender_list:string[] =['Male','Female','Other'];
   accountForm!:FormGroup;
-  constructor(private fb:FormBuilder,private popupService:PopupService,private handleServe:HandleService)
+  constructor(private fb:FormBuilder,private handleService:HandleService)
   {
   }
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    this.getAccountPage();
     this.accountForm=this.fb.group({
        username:new FormControl('',[Validators.required]),
        password:new FormControl('',[Validators.required]),
@@ -28,5 +30,36 @@ export class AddAccountComponent implements OnInit{
        avatar:new FormControl('',[Validators.required]),
        role_id:new FormControl('',[Validators.required])
     });
+  }
+
+  convertRoleToId(role:string)
+  {
+    let role_id=0;
+    switch(role)
+    {
+      case 'User':role_id=0;break;
+      case 'Admin':role_id=1;break;
+    }
+    return role_id;
+  }
+
+
+  async getAccountPage()
+  {
+    await this.handleService.getAccountPage();
+  }
+
+  async onSubmitForm()
+  {
+   if(!this.accountForm.valid)
+   { 
+    this.accountForm.markAllAsTouched();
+   }
+   else
+   {
+   this.accountForm.value.role_id=this.convertRoleToId(this.accountForm.value.role_id);
+   await this.handleService.postAccount(this.accountForm.value);
+   this.accountForm.reset();
+   }
   }
 }

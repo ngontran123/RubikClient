@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit
 { 
   avatar=localStorage.getItem("AVATAR");
+  user=JSON.parse(localStorage.getItem("ACCOUNT") as string);
   constructor(private router:Router)
   {
   }

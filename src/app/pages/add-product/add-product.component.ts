@@ -14,7 +14,7 @@ import { HeaderComponent } from '../../shared/layouts/header/header.component';
 })
 export class AddProductComponent implements OnInit {
   productForm!:FormGroup;
-  constructor(private fb:FormBuilder,private handleService:HandleService,private popupService:PopupService)
+  constructor(private fb:FormBuilder,private handleService:HandleService)
   {
   }
 
@@ -44,7 +44,7 @@ export class AddProductComponent implements OnInit {
     else
     {
     await this.handleService.postProduct(this.productForm.value);
-    
+    this.productForm.reset();
     }
   }
 }
