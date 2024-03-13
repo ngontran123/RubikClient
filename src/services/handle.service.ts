@@ -33,6 +33,11 @@ export class HandleService {
     return this.rubiks; 
    }
    
+backHomePage()
+{
+  this.route.navigate(['/about']);
+}
+
   async getRubikById(id:string)
   {
 
@@ -111,7 +116,7 @@ this.popupService.AlertSuccessDialog(response.data.message,'Add account success'
 
 async getAccountPage()
 {
-  var res=await axios.get(`${environment.server_url}/add-product`,{headers:{Authorization:this.token}}).catch(err=>{
+  var res=await axios.get(`${environment.server_url}/add-account`,{headers:{Authorization:this.token}}).catch(err=>{
     if(err.response.status==401)
     { 
       localStorage.removeItem('TOKEN');
