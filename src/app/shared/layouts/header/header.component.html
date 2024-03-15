@@ -16,7 +16,7 @@
           <img class="avatar" src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" alt="Avatar">
         </button>
         <div class="dropdown-content">
-          <a href="#">Profile</a>
+          <a href="" onclick="return false;" (click)="navigateProfile()">Profile</a>
         @if(user.role_id==1)
         {
           <a href="/add-product">Add Product</a>

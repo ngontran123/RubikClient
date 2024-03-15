@@ -32,6 +32,19 @@ export class HandleService {
     });
     return this.rubiks; 
    }
+
+  async getProfilePage(username:string)
+  {
+  var response=await axios.get(`${environment.server_url}/profile/${username}`,{headers:{Authorization:this.token}}).then(res=>{
+  }).catch(err=>{
+   if(err.response.status==401)
+   {
+    localStorage.removeItem('TOKEN');
+    this.route.navigate(['/login']);
+    
+   }
+  });
+  }
    
 backHomePage()
 {

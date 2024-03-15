@@ -22,6 +22,6 @@ export const routes: Routes = [
     {path:'color',component:ColorPaletteComponent},
     {path:'add-product',component:AddProductComponent},
     {path:'add-account',component:AddAccountComponent},
-    {path:'profile',component:ProfileComponent},
+    {path:'profile/:username',component:ProfileComponent},
     {path:"**",component:NotFoundComponent}
 ];

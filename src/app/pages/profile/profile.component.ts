@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HandleService } from '../../../services/handle.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ import { HandleService } from '../../../services/handle.service';
   providers:[HandleService]
 })
 export class ProfileComponent implements OnInit{
-  constructor(private handleService:HandleService)
+  constructor(private handleService:HandleService,private route:ActivatedRoute)
   {
 
   }
@@ -29,7 +30,14 @@ export class ProfileComponent implements OnInit{
   {
     this.handleService.backHomePage();
   }
+
+  getProfilePage()
+  {
+    var username=this.route.snapshot.paramMap.get('username');
+    this.handleService.getProfilePage(username as string); 
+  }
    ngOnInit(): void 
    { 
+    this.getProfilePage();
     this.role=this.convertRole(this.user.role_id as number);   }
 }

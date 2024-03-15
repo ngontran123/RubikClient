@@ -23,6 +23,13 @@ export class HeaderComponent implements OnInit
     
     this.router.navigate(["/login"]);
   }
+  
+  navigateProfile()
+  {
+    var route=`/profile/${this.user.username}`;
+    this.router.navigate([route]);
+  }
+
 } 
 {
 }
