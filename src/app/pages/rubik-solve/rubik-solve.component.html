@@ -91,7 +91,7 @@
       <button class="left-rotate-btn"(click)="rotateLeftButton()">
         <img class="left-img" src="assets/images/curved-left-arrow.png" (mouseover)="changeImage('assets/images/arrow-left.png','left')" (mouseout)="changeImage('assets/images/curved-left-arrow.png','left')" alt="curved-left-arrow.png" [src]="curr_left_img">
     </button>
-      <button class="up-down-btn"><img class="up-down-img" src="assets/images/down-arrow.png" alt="down-arrow.png" (mouseover)="changeImage('assets/images/down-arrow (1).png','up-down')" (mouseout)="changeImage('assets/images/down-arrow.png','up-down')" [src]="curr_up_down_img"></button>
+      <button class="up-down-btn" (click)="rotateUpsideDown()"><img class="up-down-img" src="assets/images/down-arrow.png" alt="down-arrow.png" (mouseover)="changeImage('assets/images/down-arrow (1).png','up-down')" (mouseout)="changeImage('assets/images/down-arrow.png','up-down')" [src]="curr_up_down_img"></button>
       <button class="right-rotate-btn" (click)="rotateRightButton()"><img class="right-img" src="assets/images/next.png" alt="next.png" (mouseover)="changeImage('assets/images/share.png','right')" (mouseout)="changeImage('assets/images/next.png','right')" [src]="curr_right_img"></button>
     </div>
 }   

@@ -32,7 +32,9 @@ export class RubikSolveComponent implements OnInit {
   rubik_block_color:string[]=[];
   color_disable:string[]=[];
   rubik_temp_arr!:string[];
-  delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms))
+  upside_down_horizontal_rote:number=0;
+  horizontal_rotate:number=-48;
+  delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
 
    
   constructor(private popupService:PopupService)
@@ -154,7 +156,7 @@ rotateRightButton()
  if(!this.is_upside_down)
  {
   switch(this.curr_horizontal_idx)
-{
+{  
   case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(-48deg)`;break;
   case 1: this.cubeRotateStyle=`rotateX(-32deg) rotateY(225deg)`;break;
   case 2: this.cubeRotateStyle=`rotateX(-32deg) rotateY(130deg)`;break;
@@ -163,7 +165,18 @@ rotateRightButton()
  }
  else
  {
-
+  this.upside_down_horizontal_rote-=90;
+  switch(this.curr_horizontal_idx)
+{ 
+  case 0:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 1:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 2:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 3:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+}
+if(this.curr_horizontal_idx==0)
+{
+  this.upside_down_horizontal_rote=230;
+}
  }
 }
 
@@ -176,6 +189,7 @@ if(this.curr_horizontal_idx>3)
 }
 if(!this.is_upside_down)
 {
+ this.horizontal_rotate+=100;
 switch(this.curr_horizontal_idx)
 {
   case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(-48deg)`;break;
@@ -185,17 +199,44 @@ switch(this.curr_horizontal_idx)
 }
 }
 else
+{this.upside_down_horizontal_rote+=90;
+  switch(this.curr_horizontal_idx)
+{ 
+  case 0:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 1:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 2:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+  case 3:this.cubeRotateStyle=`rotateX(148deg) rotateY(${this.upside_down_horizontal_rote}deg)`;break;
+}
+if(this.curr_horizontal_idx==0)
 {
+  this.upside_down_horizontal_rote=230;
+}
 }
 }
 
 rotateUpsideDown()
 {  this.is_upside_down=!this.is_upside_down
+ if(this.is_upside_down)
+ {
   switch(this.curr_horizontal_idx)
   {
-
+   case 0:this.cubeRotateStyle=`rotateX(148deg) rotateY(230deg)`;this.upside_down_horizontal_rote=230;break;
+   case 1:this.cubeRotateStyle=`rotateX(148deg) rotateY(680deg)`;this.upside_down_horizontal_rote=680;break;
+   case 2:this.cubeRotateStyle=`rotateX(148deg) rotateY(410deg)`;this.upside_down_horizontal_rote=410;break;
+   case 3:this.cubeRotateStyle=`rotateX(148deg) rotateY(140deg)`;this.upside_down_horizontal_rote=230;break;
   }
 }
+else{
+  switch(this.curr_horizontal_idx)
+  {
+   case 0:this.cubeRotateStyle=`rotateX(-32deg) rotateY(-48deg)`;break;
+   case 1:this.cubeRotateStyle=`rotateX(-32deg) rotateY(225deg)`;break;
+   case 2:this.cubeRotateStyle=`rotateX(-32deg) rotateY(130deg)`;break;
+   case 3: this.cubeRotateStyle=`rotateX(-32deg) rotateY(45deg)`;break;
+  }
+}
+}
+
 
 changeImage(image:string,direction:string)
 {
