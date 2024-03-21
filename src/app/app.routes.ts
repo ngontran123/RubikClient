@@ -18,7 +18,7 @@ export const routes: Routes = [
     {path:'products',component:ProductsComponent,children:[{path:'',component:ItemsComponent}]},
     {path:'product-details/:id',component:ProductDetailComponent},
     {path:'solve',component:SolveComponent},
-    {path:'rubik-solve',component:RubikSolveComponent},
+    {path:'rubik-solve/:name',component:RubikSolveComponent},
     {path:'color',component:ColorPaletteComponent},
     {path:'add-product',component:AddProductComponent},
     {path:'add-account',component:AddAccountComponent},

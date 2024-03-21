@@ -54,7 +54,7 @@ backHomePage()
   async getRubikById(id:string)
   {
 
-   var response=await axios.get(`${environment.server_url}/product-details/${id}`,{headers:{'Authorization':this.token}}).then((res)=>
+   var response=await axios.get(`${environment.server_url}/product-details/${id}`,{headers:{Authorization:this.token}}).then((res)=>
    {
     this.rubik=res.data.data;
     return this.rubik;
@@ -79,6 +79,17 @@ async getAboutPage()
       this.route.navigate(['/login']);
       //this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
     }
+  });
+}
+
+async getDetailSolveRubikPage(name:string)
+{
+  var response = await axios.get(`${environment.server_url}/rubik-solve/${name}`,{headers:{Authorization:this.token}}).catch(err=>{
+   if(err.response.status==401)
+   {
+    localStorage.removeItem('TOKEN');
+    this.route.navigate(['/login']);
+   }
   });
 }
 

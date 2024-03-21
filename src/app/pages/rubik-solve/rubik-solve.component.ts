@@ -1,17 +1,20 @@
 import { Component,HostListener, OnInit} from '@angular/core';
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
 import { PopupService } from '../../../services/popup.service';
-
+import { HandleService } from '../../../services/handle.service';
+import { ActivatedRoute } from '@angular/router';
+import { NotFoundComponent } from '../not-found/not-found.component';
 @Component({
   selector: 'app-rubik-solve',
   standalone: true,
-  imports: [ColorPaletteComponent],
+  imports: [ColorPaletteComponent,NotFoundComponent],
   templateUrl: './rubik-solve.component.html',
   styleUrl: './rubik-solve.component.scss',
-  providers:[PopupService]
+  providers:[PopupService,HandleService]
 })
 export class RubikSolveComponent implements OnInit {
   isShowThreeD:boolean=true;
+  rubikName:string='';
   threeDColor:string = '#3d81f6';
   flatColor:string = 'transparent';
   startPosX!:number;
@@ -30,6 +33,7 @@ export class RubikSolveComponent implements OnInit {
   curr_up_down_img:string ='assets/images/down-arrow.png';
   btn_color:string='';
   rubik_block_color:string[]=[];
+  rubik_2x2_block_color:string[]=[];
   color_disable:string[]=[];
   rubik_temp_arr!:string[];
   upside_down_horizontal_rote:number=0;
@@ -37,14 +41,30 @@ export class RubikSolveComponent implements OnInit {
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
 
    
-  constructor(private popupService:PopupService)
-  {}
+  constructor(private popupService:PopupService,private handleService:HandleService,private route:ActivatedRoute)
+  {    
+  }
+
+
   ngOnInit(): void {
+  this.checkTokenValid();
+   this.getRubikName();
    this.initRubikBlock();
    this.rubik_temp_arr=Array(54).fill('');
    this.initColorDisable();
   }
  
+ 
+ getRubikName()
+ {
+   this.rubikName=this.route.snapshot.paramMap.get('name') as string;
+ }
+ 
+ async checkTokenValid()
+ {
+  await this.handleService.getDetailSolveRubikPage(this.rubikName);
+ }
+
 initColorDisable()
 {
   for(let i=0;i<6;i++)
@@ -272,7 +292,14 @@ changeBlockColor(event:MouseEvent)
 //  {
 //   this.color_disable[curr_idx]='false';
 //  }
+if(this.rubikName=="Rubik's 3x3")
+{
  this.rubik_block_color[num_id-1]=this.btn_color;
+}
+else if(this.rubikName=="Rubik’s Apprentice 2x2")
+{
+  this.rubik_2x2_block_color[num_id-1]=this.btn_color;
+}
 //  this.checkFrequencyColor(this.btn_color);
 }
 
@@ -284,14 +311,25 @@ blankRubikBlock()
   //   var count_color=this.rubik_block_color.filter(b=>b==colors[i]).length;
   //   alert(`Number of block of color ${colors[i]} is:${count_color}`);
   // }
+ if(this.rubikName=="Rubik's 3x3 ")
+ {
   for(let i=0;i<54;i++)
   {
     this.rubik_block_color[i]='grey';
+    this.centerBlockColor(this.rubik_block_color);
   }
-  this.centerBlockColor(this.rubik_block_color);
+}
+else if(this.rubikName="Rubik’s Apprentice 2x2")
+{ for(let i=0;i<24;i++)
+  {
+  this.rubik_2x2_block_color[i]='grey';
+  }
+}
 }
   initRubikBlock()
   {
+   if(this.rubikName=="Rubik's 3x3")
+   {
     for(let i=0;i<54;i++)
     { 
       if(i>=0 && i<9)
@@ -320,6 +358,36 @@ blankRubikBlock()
       }
     }
   }
+  else if(this.rubikName=="Rubik’s Apprentice 2x2")
+  {
+    for(let i=0;i<24;i++)
+    {
+      if(i>=0 && i<4)
+      {
+       this.rubik_2x2_block_color.push('whitesmoke');
+      }
+      else if(i>=4 && i<8)
+      {
+        this.rubik_2x2_block_color.push('orange');
+      }
+      else if(i>=8 && i<12)
+      {
+        this.rubik_2x2_block_color.push('green');
+      }
+      else if(i>=12 && i<16)
+      {
+        this.rubik_2x2_block_color.push('red');
+      }
+      else if(i>=16 && i<20)
+      {
+        this.rubik_2x2_block_color.push('blue');
+      }
+      else{
+        this.rubik_2x2_block_color.push('yellow');
+      }
+    }
+  }
+  }
    
   centerBlockColor(rubik_array:string[])
   {
@@ -333,6 +401,8 @@ blankRubikBlock()
 
   resetRubikBlock()
   {
+    if(this.rubikName=="Rubik's 3x3")
+    { 
     for(let i=0;i<54;i++)
     { 
       if(i>=0 && i<9)
@@ -361,9 +431,43 @@ blankRubikBlock()
       }
     }
   }
+  else if(this.rubikName=="Rubik’s Apprentice 2x2")
+  {
+    for(let i=0;i<24;i++)
+    { 
+      if(i>=0 && i<4)
+      {
+      this.rubik_2x2_block_color[i]='whitesmoke'
+      }
+      else if(i>=4 && i<8)
+      {
+        this.rubik_2x2_block_color[i]='orange';
+      }
+      else if(i>=8 && i<12)
+      {
+        this.rubik_2x2_block_color[i]='green';
+      }
+      else if(i>=12 && i<16)
+      {
+        this.rubik_2x2_block_color[i]='red';
+      }
+      else if(i>=16 && i<20)
+      {
+        this.rubik_2x2_block_color[i]='blue';
+      }
+      else
+      {
+        this.rubik_2x2_block_color[i]='yellow';
+      }
+    }
+  }
+
+  }
   
 
  assignRandomColor(rubik_array:string[])
+ {
+ if(this.rubikName=="Rubik's 3x3")
  {
   var colors_obj:{[key:string]:number}={
     'whitesmoke':8,
@@ -396,12 +500,48 @@ blankRubikBlock()
     }
   }
 }
+else if(this.rubikName=="Rubik’s Apprentice 2x2")
+{
+  var color_obj:{[key:string]:number}=
+  {
+   'whitesmoke':4,
+   'orange':4,
+   'green':4,
+   'red':4,
+   'blue':4,
+   'yellow':4
+  };
+  for(let i=0;i<24;i++)
+  {
+    var ob=Object.keys(color_obj);
+    var ob_len=ob.length;
+    var random_idx=Math.round(Math.random()*(ob_len-1));
+    this.rubik_2x2_block_color[i]=ob[random_idx];
+    color_obj[ob[random_idx]]-=1;
+    if(color_obj[ob[random_idx]]==0)
+    {
+      color_obj=Object.keys(color_obj).filter(key=>
+        key!=ob[random_idx]).reduce((newObj,key)=>{
+          newObj[key]=color_obj[key];
+          return newObj;
+        },{});
+    }
+  }
+}
+}
  async scrambleRubikBlock()
   {
     let round_count=4;
     while(round_count>0)
-    { 
+    {
+    if(this.rubikName=="Rubik's 3x3")
+    {
      this.assignRandomColor(this.rubik_block_color);
+    }
+    else if(this.rubikName=="Rubik’s Apprentice 2x2")
+    {
+      this.assignRandomColor(this.rubik_2x2_block_color);
+    }
      round_count-=1;
      await this.delay(300);
     }
