@@ -1,4 +1,4 @@
-import { Injectable,Inject } from '@angular/core';
+import { Injectable,Inject, ElementRef } from '@angular/core';
 import { IRubik } from '../app/models/item.model';
 import axios from 'axios';
 import { environment } from '../environments/environment';
@@ -71,7 +71,7 @@ backHomePage()
 
 async getAboutPage()
 {
-  var response = await axios.get(`${environment.server_url}/about`,{headers:{'Authorization':this.token}}).catch(err=>{
+  var response = await axios.get(`${environment.server_url}/about`,{headers:{Authorization:this.token}}).catch(err=>{
     if(err.response.status == 401)
     { 
    
@@ -98,7 +98,7 @@ async getSolvableRubik()
  var solvable_rubik_list=["Rubik's Coach Cube","Rubik's 3x3","Rubik’s Apprentice 2x2"];
  for(let i=0;i<solvable_rubik_list.length;i++)
  {  var rubik=solvable_rubik_list[i];
-    var res=await axios.get(`${environment.server_url}/product-details/${rubik}`,{headers:{'Authorization':this.token}}).then((response)=>{
+    var res=await axios.get(`${environment.server_url}/product-details/${rubik}`,{headers:{Authorization:this.token}}).then((response)=>{
       this.solvable_rubiks.push(response.data.data);
     }).catch(err=>{
       if(err.response.status == 401)
@@ -161,4 +161,13 @@ async getAddProduct()
   })
 }
 
+async loadVideo(video_ref:ElementRef)
+{
+  var response = await axios.get(`${environment.server_url}/load_video`,{headers:{Authorization:this.token},responseType:'blob'}).then((response)=>{ 
+    
+    const blob= new Blob([response.data],{type:'image/jpeg'});
+    const url= URL.createObjectURL(blob);
+    video_ref.nativeElement.src=url;
+  });
+}
 }

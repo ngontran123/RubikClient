@@ -38,13 +38,19 @@ export class RubikSolveComponent implements OnInit {
   rubik_temp_arr!:string[];
   upside_down_horizontal_rote:number=0;
   horizontal_rotate:number=-48;
+  is_camera_click:boolean=false;
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
 
    
   constructor(private popupService:PopupService,private handleService:HandleService,private route:ActivatedRoute)
   {    
   }
+ 
 
+  cameraClick()
+  {
+    this.is_camera_click=!this.is_camera_click;
+  }
 
   ngOnInit(): void {
   this.checkTokenValid();

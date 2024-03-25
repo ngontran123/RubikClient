@@ -11,8 +11,16 @@
          <img src="assets/images/Rubik's_cube_colors.png" alt="Rubik's_cube_colors.png">
         </button>
     </div>
+   
   @if(rubikName=="Rubik's 3x3")
   {
+    @if(is_camera_click)
+    {
+     <div class="show-video">
+      <h2>Hello man</h2>    
+      <!-- <video #video_player width="650" height="650" autoplay></video> -->
+     </div>
+    }
    @if(isShowThreeD)
    {
     <div class="rubik-view" (mousedown)="startRotate($event)" (mouseup)="stopRotate()" >
@@ -179,7 +187,13 @@
    }
 }
 @else if(rubikName=="Rubik’s Apprentice 2x2")
-{  
+{   @if(is_camera_click)
+  {
+   <div class="show-video">
+    <h2>Hello man</h2>    
+    <!-- <video #video_player width="650" height="650" autoplay></video> -->
+   </div>
+  }
   @if(isShowThreeD)
   {
     <div class="rubik-view" (mousedown)="startRotate($event)" (mouseup)="stopRotate()" >
@@ -245,7 +259,6 @@
             <button class="block_2x2 top-color" data-field="2" id="2" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[1]"></button>
             <button class="block_2x2 top-color" data-field="3" id="3" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[2]"></button>
             <button class="block_2x2 top-color" data-field="4" id="4" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[3]"></button>
-           
           </div>
         </div>
         <div class="row">
@@ -254,7 +267,6 @@
             <button class="block_2x2 left-color" data-field="6" id="6" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[5]"></button>
             <button class="block_2x2 left-color" data-field="7" id="7" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[6]"></button>
             <button class="block_2x2 left-color" data-field="8" id="8" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[7]"></button>
-           
         </div>
         <div class="rubik-flat-face front-flat">
           <button class="block_2x2 front-color" data-field="9" id="9" (click)="changeBlockColor($event)" [style.background-color]="rubik_2x2_block_color[8]"></button>
@@ -262,20 +274,17 @@
           <button class="block_2x2 front-color" data-field="11" id="11" (click)="changeBlockColor($event)" [style.background-color]="rubik_2x2_block_color[10]"></button>
           <button class="block_2x2 front-color" data-field="12" id="12" (click)="changeBlockColor($event)" [style.background-color]="rubik_2x2_block_color[11]"></button>
         </div>
-
           <div class="rubik-flat-face right-flat">
             <button class="block_2x2 right-color" data-field="13" id="13" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[12]"></button>
             <button class="block_2x2 right-color" data-field="14" id="14" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[13]"></button>
             <button class="block_2x2 right-color" data-field="15" id="15" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[14]"></button>
             <button class="block_2x2 right-color" data-field="16" id="16" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[15]"></button>
-
 </div>
 <div class="rubik-flat-face back-flat">
   <button class="block_2x2 back-color" data-field="17" id="17" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[16]"></button>
   <button class="block_2x2 back-color" data-field="18" id="18" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[17]"></button>
   <button class="block_2x2 back-color" data-field="19" id="19" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[18]"></button>
   <button class="block_2x2 back-color" data-field="20" id="20" (click)="changeBlockColor($event)"  [style.background-color]="rubik_2x2_block_color[19]"></button>
-  
 </div>
 </div>  
 
@@ -296,7 +305,12 @@
 <div class="not-found-view">
  <app-not-found></app-not-found> 
  </div>
-}
+}    
+   <div class="show-camera">
+   <button class="btn-camera" (click)="cameraClick()">
+    <img src="assets/images/dslr-camera.png" alt="dslr-camera.png">
+    </button>
+   </div>
     <div class="color-palette">
        <app-color-palette (update-color)="changeBtnColor($event)"></app-color-palette>
     </div>
