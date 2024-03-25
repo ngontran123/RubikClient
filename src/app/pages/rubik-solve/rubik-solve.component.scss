@@ -346,13 +346,15 @@ height: 50px;
 
 
 .show-video
-{ position: relative;
-  top:50%;
-  left:50%;
+{ position: absolute;
+  top:20%;
+  left:30%;
   z-index:1000;
   max-width: 100%;
   height: auto;
-  width: 100%;
+  width:auto;
+  box-shadow: 0px 0px 1px 5000px rgba(0,0,0,0.8);
+
 }
 
 
