@@ -93,8 +93,7 @@ export class LoginComponent implements OnInit,OnDestroy {
                } 
                 if(this.isLocked)
                  {
-                  this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");
-                  
+                  this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");               
                  }
                 
                 if(this.loginRetryTime>5)
@@ -119,7 +118,6 @@ export class LoginComponent implements OnInit,OnDestroy {
         catch(error)
         {
           console.log(error);
-          
         }
         }
       }

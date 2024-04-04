@@ -1,4 +1,4 @@
-import { Component,HostListener, OnInit} from '@angular/core';
+import { Component,ElementRef,HostListener, OnInit, ViewChild} from '@angular/core';
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
 import { PopupService } from '../../../services/popup.service';
 import { HandleService } from '../../../services/handle.service';
@@ -40,7 +40,8 @@ export class RubikSolveComponent implements OnInit {
   horizontal_rotate:number=-48;
   is_camera_click:boolean=false;
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
-
+   
+  @ViewChild('video_player',{static:true}) video_player!:ElementRef;
    
   constructor(private popupService:PopupService,private handleService:HandleService,private route:ActivatedRoute)
   {    
@@ -50,10 +51,14 @@ export class RubikSolveComponent implements OnInit {
   cameraClick()
   {
     this.is_camera_click=!this.is_camera_click;
+    if(this.is_camera_click)
+    {
+       this.handleService.loadVideo(this.video_player);
+    }
   }
 
   ngOnInit(): void {
-  this.checkTokenValid();
+   this.checkTokenValid();
    this.getRubikName();
    this.initRubikBlock();
    this.rubik_temp_arr=Array(54).fill('');
@@ -80,13 +85,15 @@ initColorDisable()
 }
 
 checkFrequencyColor(color:string)
-{ var is_disable=this.countAllFrequency(color);
+{   
+  var is_disable=this.countAllFrequency(color);
   let idx=this.getIndexColor(color);
   if(is_disable)
   {
     this.color_disable[idx]='true';
   }
-  else{
+  else
+  {
     this.color_disable[idx]='false';
   }
 }
@@ -552,5 +559,4 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
      await this.delay(300);
     }
   }
-
 }

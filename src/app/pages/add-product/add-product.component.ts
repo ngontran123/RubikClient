@@ -32,7 +32,6 @@ export class AddProductComponent implements OnInit {
      url:new FormControl('',[Validators.required]),
      feature:new FormControl('')
     });
-
   }
 
   async onSubmitForm()

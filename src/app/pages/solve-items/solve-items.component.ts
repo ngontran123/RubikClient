@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SolveItemsComponent {
    @Input() rubik!:IRubik;
-   
+
    constructor(private route:Router)
    {}
    navigateRubik()

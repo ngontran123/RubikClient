@@ -161,10 +161,21 @@ async getAddProduct()
   })
 }
 
+async solveRubik(name:string)
+{
+  var res=await axios.get(`${environment.server_url}/solve_rubik/${name}`,{headers:{Authorization:this.token}}).then(res=>{
+          this.popupService.AlertSuccessDialog(res.data.message,'Solve successfully');
+  }).catch(err=>{
+     if(err.response.status==401)
+     {
+      this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
+     }
+  });
+}
+
 async loadVideo(video_ref:ElementRef)
 {
-  var response = await axios.get(`${environment.server_url}/load_video`,{headers:{Authorization:this.token},responseType:'blob'}).then((response)=>{ 
-    
+  var response = await axios.get(`${environment.server_url}/load_video`,{headers:{Authorization:this.token},responseType:'blob'}).then((response)=>{   
     const blob= new Blob([response.data],{type:'image/jpeg'});
     const url= URL.createObjectURL(blob);
     video_ref.nativeElement.src=url;
