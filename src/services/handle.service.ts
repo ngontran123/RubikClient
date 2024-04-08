@@ -161,9 +161,10 @@ async getAddProduct()
   })
 }
 
-async solveRubik(name:string)
-{
-  var res=await axios.get(`${environment.server_url}/solve_rubik/${name}`,{headers:{Authorization:this.token}}).then(res=>{
+async solveRubik(name:string,colors:string[])
+{  
+  var req_data={colors:colors};
+  var res=await axios.post(`${environment.server_url}/solve_rubik/${name}`,req_data,{headers:{Authorization:this.token}}).then(res=>{
           this.popupService.AlertSuccessDialog(res.data.message,'Solve successfully');
   }).catch(err=>{
      if(err.response.status==401)

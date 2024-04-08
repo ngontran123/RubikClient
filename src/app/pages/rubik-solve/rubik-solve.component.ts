@@ -4,6 +4,7 @@ import { PopupService } from '../../../services/popup.service';
 import { HandleService } from '../../../services/handle.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { concat } from 'rxjs';
 @Component({
   selector: 'app-rubik-solve',
   standalone: true,
@@ -556,7 +557,21 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
       this.assignRandomColor(this.rubik_2x2_block_color);
     }
      round_count-=1;
-     await this.delay(300);
+    await this.delay(300);
     }
+  }
+  
+  async solveRubik()
+  { 
+  var rubik_cube=  this.rubik_block_color;
+  var upper_face=rubik_cube.slice(0,9);
+  var right_face = rubik_cube.slice(27,36);
+  var front_face=rubik_cube.slice(18,27);
+  var down_face= rubik_cube.slice(45,54);
+  var left_face=rubik_cube.slice(9,18);
+  var back_face=rubik_cube.slice(36,45);
+  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);
+  
+  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,this.rubik_block_color):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
   }
 }
