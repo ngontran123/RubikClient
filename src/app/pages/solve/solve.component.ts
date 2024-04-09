@@ -20,6 +20,7 @@ export class SolveComponent implements OnInit {
   ngOnInit(): void {
     this.getSolvableRubik();
   } 
+  
 
   async getSolvableRubik()
   {

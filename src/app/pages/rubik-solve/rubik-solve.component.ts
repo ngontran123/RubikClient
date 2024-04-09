@@ -543,8 +543,44 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
   }
 }
 }
+
+async cancel_move(first:string,second:string):Promise<number>
+{
+  var val=first+second;
+  if(val=='RL'||val=='LR'||val=='UD'||val=='DU'||val=='FB'||val=='BF')
+    {
+      return 1;
+    }
+    return -1;
+}
+
+async scramble_generator(nums_move:number,notations:string[])
+{
+  let move:string='';
+  let before_move:string='';
+  var res='';
+  for(let i=0;i<nums_move;i++)
+    {
+      do{
+        let index=Math.floor(Math.random()*6);
+        move=notations[index];
+      }while(move==before_move || await this.cancel_move(move,before_move)==1)
+     before_move=move;
+     let mod=Math.floor((Math.random()*3))+1;
+     switch(mod)
+     {
+      case 1:move+=' ';break;
+      case 2:move+='2 ';break;
+      case 3:move+="' ";break;
+     }
+     res+=move;
+    }
+    return res.trim();
+}
+
  async scrambleRubikBlock()
   {
+ 
     let round_count=4;
     while(round_count>0)
     {
@@ -563,6 +599,9 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
   
   async solveRubik()
   { 
+    var cube_notations=['U','F','R','L','D','B'];
+    var pattern=await this.scramble_generator(5,cube_notations);
+    alert(pattern);
   var rubik_cube=  this.rubik_block_color;
   var upper_face=rubik_cube.slice(0,9);
   var right_face = rubik_cube.slice(27,36);
@@ -572,6 +611,6 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
   var back_face=rubik_cube.slice(36,45);
   var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);
   
-  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,this.rubik_block_color):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
+  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
   }
 }
