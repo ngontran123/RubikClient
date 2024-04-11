@@ -2,8 +2,9 @@ import { Component,ElementRef,HostListener, OnInit, ViewChild} from '@angular/co
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
 import { PopupService } from '../../../services/popup.service';
 import { HandleService } from '../../../services/handle.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, mapToCanActivateChild } from '@angular/router';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import * as _ from 'lodash';
 import { concat } from 'rxjs';
 @Component({
   selector: 'app-rubik-solve',
@@ -330,7 +331,6 @@ blankRubikBlock()
   for(let i=0;i<54;i++)
   {
     this.rubik_block_color[i]='grey';
-    this.centerBlockColor(this.rubik_block_color);
   }
 }
 else if(this.rubikName="Rubik’s Apprentice 2x2")
@@ -578,6 +578,138 @@ async scramble_generator(nums_move:number,notations:string[])
     return res.trim();
 }
 
+async switchFront()
+{
+ if(this.rubikName =="Rubik's 3x3")
+  { 
+    var first_color=_.cloneDeep(this.rubik_block_color[11]);
+    var second_color=_.cloneDeep(this.rubik_block_color[14]);
+    var third_color=_.cloneDeep(this.rubik_block_color[17]);
+
+    this.rubik_block_color[11]=this.rubik_block_color[45];
+    this.rubik_block_color[14]=this.rubik_block_color[46];
+    this.rubik_block_color[17]=this.rubik_block_color[47];
+    this.rubik_block_color[45]=this.rubik_block_color[27];
+    this.rubik_block_color[46]=this.rubik_block_color[30];
+    this.rubik_block_color[47]=this.rubik_block_color[33];
+    this.rubik_block_color[27]=this.rubik_block_color[6];
+    this.rubik_block_color[30]=this.rubik_block_color[7];
+    this.rubik_block_color[33]=this.rubik_block_color[8];
+    this.rubik_block_color[6]=first_color
+    this.rubik_block_color[7]=second_color
+    this.rubik_block_color[8]=third_color
+  }
+}
+
+async switchBack()
+{
+  if(this.rubikName=="Rubik's 3x3")
+    {
+      var first_color=_.cloneDeep(this.rubik_block_color[29]);
+      var second_color=_.cloneDeep(this.rubik_block_color[32]);
+      var third_color=_.cloneDeep(this.rubik_block_color[35]);
+      this.rubik_block_color[29]=this.rubik_block_color[51];
+      this.rubik_block_color[32]=this.rubik_block_color[52];
+      this.rubik_block_color[35]=this.rubik_block_color[53];
+      this.rubik_block_color[51]=this.rubik_block_color[9];
+      this.rubik_block_color[52]=this.rubik_block_color[12];
+      this.rubik_block_color[53]=this.rubik_block_color[15];
+      this.rubik_block_color[9]=this.rubik_block_color[0];
+      this.rubik_block_color[12]=this.rubik_block_color[1];
+      this.rubik_block_color[15]=this.rubik_block_color[2];
+      this.rubik_block_color[0]=first_color;
+      this.rubik_block_color[1]=second_color;
+      this.rubik_block_color[2]=third_color;
+    }
+}
+async switchLeft()
+{
+if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color=_.cloneDeep(this.rubik_block_color[18]);
+    var second_color=_.cloneDeep(this.rubik_block_color[21]);
+    var third_color=_.cloneDeep(this.rubik_block_color[24]);
+    this.rubik_block_color[18]=this.rubik_block_color[0];
+    this.rubik_block_color[21]=this.rubik_block_color[3];
+    this.rubik_block_color[24]=this.rubik_block_color[6];
+    this.rubik_block_color[0]=this.rubik_block_color[38];
+    this.rubik_block_color[3]=this.rubik_block_color[41];
+    this.rubik_block_color[6]=this.rubik_block_color[44];
+    this.rubik_block_color[38]=this.rubik_block_color[51];
+    this.rubik_block_color[41]=this.rubik_block_color[48];
+    this.rubik_block_color[44]=this.rubik_block_color[45];
+    this.rubik_block_color[51]=first_color;
+    this.rubik_block_color[48]=second_color;
+    this.rubik_block_color[45]=third_color;
+  }
+}
+
+async switchRight()
+{
+if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color=_.cloneDeep(this.rubik_block_color[20]);
+    var second_color=_.cloneDeep(this.rubik_block_color[23]);
+    var third_color = _.cloneDeep(this.rubik_block_color[26]);
+    this.rubik_block_color[20]=this.rubik_block_color[47];
+    this.rubik_block_color[23]=this.rubik_block_color[50];
+    this.rubik_block_color[26]=this.rubik_block_color[53];
+    this.rubik_block_color[47]=this.rubik_block_color[42];
+    this.rubik_block_color[50]=this.rubik_block_color[39];
+    this.rubik_block_color[53]=this.rubik_block_color[36];
+    this.rubik_block_color[36]=this.rubik_block_color[8];
+    this.rubik_block_color[39]=this.rubik_block_color[5];
+    this.rubik_block_color[42]=this.rubik_block_color[2];
+    this.rubik_block_color[2]=first_color;
+    this.rubik_block_color[5]=second_color;
+    this.rubik_block_color[8]=third_color;
+  }
+
+}
+
+async switchUp()
+{
+ if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color =_.cloneDeep(this.rubik_block_color[18]);
+    var second_color =_.cloneDeep(this.rubik_block_color[19]);
+    var third_color=_.cloneDeep(this.rubik_block_color[20]);
+    this.rubik_block_color[18]=this.rubik_block_color[27];
+    this.rubik_block_color[19]=this.rubik_block_color[28];
+    this.rubik_block_color[20]=this.rubik_block_color[29];
+    this.rubik_block_color[27]=this.rubik_block_color[36];
+    this.rubik_block_color[28]=this.rubik_block_color[37];
+    this.rubik_block_color[29]=this.rubik_block_color[38];
+    this.rubik_block_color[36]=this.rubik_block_color[9];
+    this.rubik_block_color[37]=this.rubik_block_color[10];
+    this.rubik_block_color[38]=this.rubik_block_color[11];
+    this.rubik_block_color[9]=first_color;
+    this.rubik_block_color[10]=second_color;
+    this.rubik_block_color[11]=third_color;
+  }
+}
+async switchDown()
+{
+  if(this.rubikName=="Rubik's 3x3")
+    {
+      var first_color=_.cloneDeep(this.rubik_block_color[24]);
+      var second_color=_.cloneDeep(this.rubik_block_color[25]);
+      var third_color=_.cloneDeep(this.rubik_block_color[26]);
+      this.rubik_block_color[24]=this.rubik_block_color[15];
+      this.rubik_block_color[25]=this.rubik_block_color[16];
+      this.rubik_block_color[26]=this.rubik_block_color[17];
+      this.rubik_block_color[15]=this.rubik_block_color[42];
+      this.rubik_block_color[16]=this.rubik_block_color[43];
+      this.rubik_block_color[17]=this.rubik_block_color[44];
+      this.rubik_block_color[42]=this.rubik_block_color[33];
+      this.rubik_block_color[43]=this.rubik_block_color[34];
+      this.rubik_block_color[44]=this.rubik_block_color[35];
+      this.rubik_block_color[33]=first_color;
+      this.rubik_block_color[34]=second_color;
+      this.rubik_block_color[35]=third_color;
+    }
+}
+
  async scrambleRubikBlock()
   {
  
@@ -602,6 +734,7 @@ async scramble_generator(nums_move:number,notations:string[])
     var cube_notations=['U','F','R','L','D','B'];
     var pattern=await this.scramble_generator(5,cube_notations);
     alert(pattern);
+    await this.switchDown();
   var rubik_cube=  this.rubik_block_color;
   var upper_face=rubik_cube.slice(0,9);
   var right_face = rubik_cube.slice(27,36);
@@ -610,6 +743,7 @@ async scramble_generator(nums_move:number,notations:string[])
   var left_face=rubik_cube.slice(9,18);
   var back_face=rubik_cube.slice(36,45);
   var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);
+
   
   var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
   }
