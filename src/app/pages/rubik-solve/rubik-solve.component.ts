@@ -632,9 +632,9 @@ if(this.rubikName=="Rubik's 3x3")
     this.rubik_block_color[18]=this.rubik_block_color[0];
     this.rubik_block_color[21]=this.rubik_block_color[3];
     this.rubik_block_color[24]=this.rubik_block_color[6];
-    this.rubik_block_color[0]=this.rubik_block_color[38];
+    this.rubik_block_color[0]=this.rubik_block_color[44];
     this.rubik_block_color[3]=this.rubik_block_color[41];
-    this.rubik_block_color[6]=this.rubik_block_color[44];
+    this.rubik_block_color[6]=this.rubik_block_color[38];
     this.rubik_block_color[38]=this.rubik_block_color[51];
     this.rubik_block_color[41]=this.rubik_block_color[48];
     this.rubik_block_color[44]=this.rubik_block_color[45];
@@ -710,6 +710,103 @@ async switchDown()
     }
 }
 
+async switchReverseFront()
+{
+if(this.rubikName=="Rubik's 3x3")
+{
+  var first_color=_.cloneDeep(this.rubik_block_color[27]);
+  var second_color=_.cloneDeep(this.rubik_block_color[30]);
+  var third_color=_.cloneDeep(this.rubik_block_color[33]);
+  this.rubik_block_color[27]=this.rubik_block_color[47];
+  this.rubik_block_color[30]=this.rubik_block_color[46];
+  this.rubik_block_color[33]=this.rubik_block_color[45];
+  this.rubik_block_color[45]=this.rubik_block_color[11];
+  this.rubik_block_color[46]=this.rubik_block_color[14];
+  this.rubik_block_color[47]=this.rubik_block_color[17];
+  this.rubik_block_color[11]=this.rubik_block_color[8];
+  this.rubik_block_color[14]=this.rubik_block_color[7];
+  this.rubik_block_color[17]=this.rubik_block_color[6];
+  this.rubik_block_color[6]=first_color;
+  this.rubik_block_color[7]=second_color;
+  this.rubik_block_color[8]=third_color;
+}
+}
+
+async switchReverseBack()
+{
+  if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color=_.cloneDeep(this.rubik_block_color[0]);
+    var second_color=_.cloneDeep(this.rubik_block_color[1]);
+    var third_color=_.cloneDeep(this.rubik_block_color[2]);
+    this.rubik_block_color[0]=this.rubik_block_color[15];
+    this.rubik_block_color[1]=this.rubik_block_color[12];
+    this.rubik_block_color[2]=this.rubik_block_color[9];
+    this.rubik_block_color[9]=this.rubik_block_color[51];
+    this.rubik_block_color[12]=this.rubik_block_color[52];
+    this.rubik_block_color[15]=this.rubik_block_color[53];
+    this.rubik_block_color[51]=this.rubik_block_color[35];
+    this.rubik_block_color[52]=this.rubik_block_color[32];
+    this.rubik_block_color[53]=this.rubik_block_color[29];
+    this.rubik_block_color[29]=first_color;
+    this.rubik_block_color[32]=second_color;
+    this.rubik_block_color[35]=third_color;
+  }
+}
+
+async switchReverseLeft(){
+
+}
+
+async switchReverseRight()
+{
+
+}
+
+async switchReverseUp()
+{
+  if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color=_.cloneDeep(this.rubik_block_color[18]);
+    var second_color=_.cloneDeep(this.rubik_block_color[19]);
+    var third_color=_.cloneDeep(this.rubik_block_color[20]);
+    this.rubik_block_color[18]=this.rubik_block_color[9];
+    this.rubik_block_color[19]=this.rubik_block_color[10];
+    this.rubik_block_color[20]=this.rubik_block_color[11];
+    this.rubik_block_color[9]=this.rubik_block_color[36];
+    this.rubik_block_color[10]=this.rubik_block_color[37];
+    this.rubik_block_color[11]=this.rubik_block_color[38];
+    this.rubik_block_color[36]=this.rubik_block_color[27];
+    this.rubik_block_color[37]=this.rubik_block_color[28];
+    this.rubik_block_color[38]=this.rubik_block_color[29];
+    this.rubik_block_color[27]=first_color;
+    this.rubik_block_color[28]=second_color;
+    this.rubik_block_color[29]=third_color;
+  }
+}
+
+async switchReverseDown()
+{
+  if(this.rubikName=="Rubik's 3x3")
+  {
+    var first_color=_.cloneDeep(this.rubik_block_color[24]);
+    var second_color=_.cloneDeep(this.rubik_block_color[25]);
+    var third_color=_.cloneDeep(this.rubik_block_color[26]);
+    this.rubik_block_color[24]=this.rubik_block_color[33];
+    this.rubik_block_color[25]=this.rubik_block_color[34];
+    this.rubik_block_color[26]=this.rubik_block_color[35];
+    this.rubik_block_color[33]=this.rubik_block_color[42];
+    this.rubik_block_color[34]=this.rubik_block_color[43];
+    this.rubik_block_color[35]=this.rubik_block_color[44];
+    this.rubik_block_color[42]=this.rubik_block_color[15];
+    this.rubik_block_color[43]=this.rubik_block_color[16];
+    this.rubik_block_color[44]=this.rubik_block_color[17];
+    this.rubik_block_color[15]=first_color;
+    this.rubik_block_color[16]=second_color;
+    this.rubik_block_color[17]=third_color;
+  }
+}
+
  async scrambleRubikBlock()
   {
  
@@ -734,7 +831,23 @@ async switchDown()
     var cube_notations=['U','F','R','L','D','B'];
     var pattern=await this.scramble_generator(5,cube_notations);
     alert(pattern);
-    await this.switchDown();
+    await this.switchLeft();
+    await this.switchLeft();
+
+    await this.switchRight();
+    await this.switchRight();
+    await this.switchRight();
+    await this.switchLeft();
+
+    // await this.switchRight();
+    // await this.switchRight();
+    // await this.switchRight();
+
+     //await this.switchUp();
+    // await this.switchUp();
+    // await this.switchUp();
+
+    // await this.switchReverseFront();
   var rubik_cube=  this.rubik_block_color;
   var upper_face=rubik_cube.slice(0,9);
   var right_face = rubik_cube.slice(27,36);
