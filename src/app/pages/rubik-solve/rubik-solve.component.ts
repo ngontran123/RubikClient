@@ -651,12 +651,12 @@ if(this.rubikName=="Rubik's 3x3")
     var first_color=_.cloneDeep(this.rubik_block_color[20]);
     var second_color=_.cloneDeep(this.rubik_block_color[23]);
     var third_color = _.cloneDeep(this.rubik_block_color[26]);
-    this.rubik_block_color[20]=this.rubik_block_color[47];
+    this.rubik_block_color[20]=this.rubik_block_color[53];
     this.rubik_block_color[23]=this.rubik_block_color[50];
-    this.rubik_block_color[26]=this.rubik_block_color[53];
-    this.rubik_block_color[47]=this.rubik_block_color[42];
+    this.rubik_block_color[26]=this.rubik_block_color[47];
+    this.rubik_block_color[47]=this.rubik_block_color[36];
     this.rubik_block_color[50]=this.rubik_block_color[39];
-    this.rubik_block_color[53]=this.rubik_block_color[36];
+    this.rubik_block_color[53]=this.rubik_block_color[42];
     this.rubik_block_color[36]=this.rubik_block_color[8];
     this.rubik_block_color[39]=this.rubik_block_color[5];
     this.rubik_block_color[42]=this.rubik_block_color[2];
@@ -754,8 +754,8 @@ async switchReverseBack()
   }
 }
 
-async switchReverseLeft(){
-
+async switchReverseLeft()
+{
 }
 
 async switchReverseRight()
@@ -809,7 +809,6 @@ async switchReverseDown()
 
  async scrambleRubikBlock()
   {
- 
     let round_count=4;
     while(round_count>0)
     {
@@ -832,18 +831,21 @@ async switchReverseDown()
     var pattern=await this.scramble_generator(5,cube_notations);
     alert(pattern);
     await this.switchLeft();
+
+    // await this.switchLeft();
+    await this.switchRight();
+    await this.switchRight();
     await this.switchLeft();
 
-    await this.switchRight();
-    await this.switchRight();
-    await this.switchRight();
-    await this.switchLeft();
+    // await this.switchRight();
+    // await this.switchRight();
+    // await this.switchLeft();
 
     // await this.switchRight();
     // await this.switchRight();
     // await this.switchRight();
 
-     //await this.switchUp();
+    //  await this.switchUp();
     // await this.switchUp();
     // await this.switchUp();
 
