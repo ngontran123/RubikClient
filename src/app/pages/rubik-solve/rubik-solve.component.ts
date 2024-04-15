@@ -585,38 +585,57 @@ async switchFront()
     var first_color=_.cloneDeep(this.rubik_block_color[11]);
     var second_color=_.cloneDeep(this.rubik_block_color[14]);
     var third_color=_.cloneDeep(this.rubik_block_color[17]);
-
+    var second_face_color =_.cloneDeep(this.rubik_block_color[19]);
+    var third_face_color = _.cloneDeep(this.rubik_block_color[20]);
+    this.rubik_block_color[20]=this.rubik_block_color[18];
+    this.rubik_block_color[18]=this.rubik_block_color[24];
+    this.rubik_block_color[19]=this.rubik_block_color[21];
+    this.rubik_block_color[21]=this.rubik_block_color[25];
+    this.rubik_block_color[24]=this.rubik_block_color[26];
+    this.rubik_block_color[25]=this.rubik_block_color[23];
+    this.rubik_block_color[26]=third_face_color;
+    this.rubik_block_color[23]=second_face_color;
     this.rubik_block_color[11]=this.rubik_block_color[45];
     this.rubik_block_color[14]=this.rubik_block_color[46];
     this.rubik_block_color[17]=this.rubik_block_color[47];
-    this.rubik_block_color[45]=this.rubik_block_color[27];
+    this.rubik_block_color[45]=this.rubik_block_color[33];
     this.rubik_block_color[46]=this.rubik_block_color[30];
-    this.rubik_block_color[47]=this.rubik_block_color[33];
+    this.rubik_block_color[47]=this.rubik_block_color[27];
     this.rubik_block_color[27]=this.rubik_block_color[6];
     this.rubik_block_color[30]=this.rubik_block_color[7];
     this.rubik_block_color[33]=this.rubik_block_color[8];
-    this.rubik_block_color[6]=first_color
-    this.rubik_block_color[7]=second_color
-    this.rubik_block_color[8]=third_color
+    this.rubik_block_color[6]=third_color;
+    this.rubik_block_color[7]=second_color;
+    this.rubik_block_color[8]=first_color;
   }
 }
 
 async switchBack()
 {
   if(this.rubikName=="Rubik's 3x3")
-    {
+    { 
       var first_color=_.cloneDeep(this.rubik_block_color[29]);
       var second_color=_.cloneDeep(this.rubik_block_color[32]);
+      var second_face_color=_.cloneDeep(this.rubik_block_color[37]);
+      var third_face_color = _.cloneDeep(this.rubik_block_color[38]);
+      this.rubik_block_color[38]=this.rubik_block_color[36];
+      this.rubik_block_color[36]=this.rubik_block_color[42];
+      this.rubik_block_color[37]=this.rubik_block_color[39];
+      this.rubik_block_color[39]=this.rubik_block_color[43];
+      this.rubik_block_color[42]=this.rubik_block_color[44];
+      this.rubik_block_color[43]=this.rubik_block_color[41];
+      this.rubik_block_color[44]=third_face_color;
+      this.rubik_block_color[41]=second_face_color;
       var third_color=_.cloneDeep(this.rubik_block_color[35]);
       this.rubik_block_color[29]=this.rubik_block_color[51];
-      this.rubik_block_color[32]=this.rubik_block_color[52];
+      this.rubik_block_color[32]=this.rubik_block_color[52 ];
       this.rubik_block_color[35]=this.rubik_block_color[53];
       this.rubik_block_color[51]=this.rubik_block_color[9];
       this.rubik_block_color[52]=this.rubik_block_color[12];
       this.rubik_block_color[53]=this.rubik_block_color[15];
-      this.rubik_block_color[9]=this.rubik_block_color[0];
+      this.rubik_block_color[9]=this.rubik_block_color[2];
       this.rubik_block_color[12]=this.rubik_block_color[1];
-      this.rubik_block_color[15]=this.rubik_block_color[2];
+      this.rubik_block_color[15]=this.rubik_block_color[0];
       this.rubik_block_color[0]=first_color;
       this.rubik_block_color[1]=second_color;
       this.rubik_block_color[2]=third_color;
@@ -629,6 +648,16 @@ if(this.rubikName=="Rubik's 3x3")
     var first_color=_.cloneDeep(this.rubik_block_color[18]);
     var second_color=_.cloneDeep(this.rubik_block_color[21]);
     var third_color=_.cloneDeep(this.rubik_block_color[24]);
+    var second_face_color =_.cloneDeep(this.rubik_block_color[10]);
+    var third_face_color =_.cloneDeep(this.rubik_block_color[11]);
+    this.rubik_block_color[11]=this.rubik_block_color[9];
+    this.rubik_block_color[9]=this.rubik_block_color[15];
+    this.rubik_block_color[10]=this.rubik_block_color[12];
+    this.rubik_block_color[12]=this.rubik_block_color[16];
+    this.rubik_block_color[15]=this.rubik_block_color[17];
+    this.rubik_block_color[16]=this.rubik_block_color[14];
+    this.rubik_block_color[17]=third_face_color;
+    this.rubik_block_color[14]=second_face_color;
     this.rubik_block_color[18]=this.rubik_block_color[0];
     this.rubik_block_color[21]=this.rubik_block_color[3];
     this.rubik_block_color[24]=this.rubik_block_color[6];
@@ -638,9 +667,9 @@ if(this.rubikName=="Rubik's 3x3")
     this.rubik_block_color[38]=this.rubik_block_color[51];
     this.rubik_block_color[41]=this.rubik_block_color[48];
     this.rubik_block_color[44]=this.rubik_block_color[45];
-    this.rubik_block_color[51]=first_color;
+    this.rubik_block_color[45]=first_color;
     this.rubik_block_color[48]=second_color;
-    this.rubik_block_color[45]=third_color;
+    this.rubik_block_color[51]=third_color;
   }
 }
 
@@ -651,12 +680,22 @@ if(this.rubikName=="Rubik's 3x3")
     var first_color=_.cloneDeep(this.rubik_block_color[20]);
     var second_color=_.cloneDeep(this.rubik_block_color[23]);
     var third_color = _.cloneDeep(this.rubik_block_color[26]);
-    this.rubik_block_color[20]=this.rubik_block_color[53];
+    var second_face_color = _.cloneDeep(this.rubik_block_color[28]);
+    var third_face_color = _.cloneDeep(this.rubik_block_color[29]);
+    this.rubik_block_color[29]=this.rubik_block_color[27];
+    this.rubik_block_color[27]=this.rubik_block_color[33];
+    this.rubik_block_color[28]=this.rubik_block_color[30];
+    this.rubik_block_color[30]=this.rubik_block_color[34];
+    this.rubik_block_color[33]=this.rubik_block_color[35];
+    this.rubik_block_color[34]=this.rubik_block_color[32];
+    this.rubik_block_color[35]=third_face_color;
+    this.rubik_block_color[32]=second_face_color;
+    this.rubik_block_color[20]=this.rubik_block_color[47];
     this.rubik_block_color[23]=this.rubik_block_color[50];
-    this.rubik_block_color[26]=this.rubik_block_color[47];
-    this.rubik_block_color[47]=this.rubik_block_color[36];
+    this.rubik_block_color[26]=this.rubik_block_color[53];
+    this.rubik_block_color[47]=this.rubik_block_color[42];
     this.rubik_block_color[50]=this.rubik_block_color[39];
-    this.rubik_block_color[53]=this.rubik_block_color[42];
+    this.rubik_block_color[53]=this.rubik_block_color[36];
     this.rubik_block_color[36]=this.rubik_block_color[8];
     this.rubik_block_color[39]=this.rubik_block_color[5];
     this.rubik_block_color[42]=this.rubik_block_color[2];
@@ -674,6 +713,16 @@ async switchUp()
     var first_color =_.cloneDeep(this.rubik_block_color[18]);
     var second_color =_.cloneDeep(this.rubik_block_color[19]);
     var third_color=_.cloneDeep(this.rubik_block_color[20]);
+    var face_second_color=_.cloneDeep(this.rubik_block_color[1]);
+    var face_third_color=_.cloneDeep(this.rubik_block_color[2]);
+    this.rubik_block_color[1]=this.rubik_block_color[3];
+    this.rubik_block_color[2]=this.rubik_block_color[0];
+    this.rubik_block_color[0]=this.rubik_block_color[6];
+    this.rubik_block_color[3]=this.rubik_block_color[7];
+    this.rubik_block_color[6]=this.rubik_block_color[8];
+    this.rubik_block_color[7]=this.rubik_block_color[5];
+    this.rubik_block_color[8]=face_third_color;
+    this.rubik_block_color[5]=face_second_color;
     this.rubik_block_color[18]=this.rubik_block_color[27];
     this.rubik_block_color[19]=this.rubik_block_color[28];
     this.rubik_block_color[20]=this.rubik_block_color[29];
@@ -686,6 +735,7 @@ async switchUp()
     this.rubik_block_color[9]=first_color;
     this.rubik_block_color[10]=second_color;
     this.rubik_block_color[11]=third_color;
+    
   }
 }
 async switchDown()
@@ -695,6 +745,16 @@ async switchDown()
       var first_color=_.cloneDeep(this.rubik_block_color[24]);
       var second_color=_.cloneDeep(this.rubik_block_color[25]);
       var third_color=_.cloneDeep(this.rubik_block_color[26]);
+      var second_face_color=_.cloneDeep(this.rubik_block_color[46]);
+      var third_face_color=_.cloneDeep(this.rubik_block_color[47]);
+      this.rubik_block_color[47]=this.rubik_block_color[45];
+      this.rubik_block_color[45]=this.rubik_block_color[51];
+      this.rubik_block_color[46]=this.rubik_block_color[48];
+      this.rubik_block_color[48]=this.rubik_block_color[52];
+      this.rubik_block_color[51]=this.rubik_block_color[53];
+      this.rubik_block_color[52]=this.rubik_block_color[50];
+      this.rubik_block_color[53]=third_face_color;
+      this.rubik_block_color[50]=second_face_color;
       this.rubik_block_color[24]=this.rubik_block_color[15];
       this.rubik_block_color[25]=this.rubik_block_color[16];
       this.rubik_block_color[26]=this.rubik_block_color[17];
@@ -717,6 +777,16 @@ if(this.rubikName=="Rubik's 3x3")
   var first_color=_.cloneDeep(this.rubik_block_color[27]);
   var second_color=_.cloneDeep(this.rubik_block_color[30]);
   var third_color=_.cloneDeep(this.rubik_block_color[33]);
+  var second_face_color =_.cloneDeep(this.rubik_block_color[19]);
+  var third_face_color = _.cloneDeep(this.rubik_block_color[18]);
+  this.rubik_block_color[18]=this.rubik_block_color[20];
+  this.rubik_block_color[20]=this.rubik_block_color[26];
+  this.rubik_block_color[19]=this.rubik_block_color[23];
+  this.rubik_block_color[23]=this.rubik_block_color[25];
+  this.rubik_block_color[26]=this.rubik_block_color[24];
+  this.rubik_block_color[25]=this.rubik_block_color[21];
+  this.rubik_block_color[21]=second_face_color;
+  this.rubik_block_color[24]=third_face_color;
   this.rubik_block_color[27]=this.rubik_block_color[47];
   this.rubik_block_color[30]=this.rubik_block_color[46];
   this.rubik_block_color[33]=this.rubik_block_color[45];
@@ -739,6 +809,16 @@ async switchReverseBack()
     var first_color=_.cloneDeep(this.rubik_block_color[0]);
     var second_color=_.cloneDeep(this.rubik_block_color[1]);
     var third_color=_.cloneDeep(this.rubik_block_color[2]);
+    var second_face_color=_.cloneDeep(this.rubik_block_color[37]);
+    var third_face_color=_.cloneDeep(this.rubik_block_color[36]);
+    this.rubik_block_color[36]=this.rubik_block_color[38];
+    this.rubik_block_color[37]=this.rubik_block_color[41];
+    this.rubik_block_color[38]=this.rubik_block_color[44];
+    this.rubik_block_color[41]=this.rubik_block_color[43];
+    this.rubik_block_color[44]=this.rubik_block_color[42];
+    this.rubik_block_color[43]=this.rubik_block_color[39];
+    this.rubik_block_color[42]=third_face_color;
+    this.rubik_block_color[39]=second_face_color;
     this.rubik_block_color[0]=this.rubik_block_color[15];
     this.rubik_block_color[1]=this.rubik_block_color[12];
     this.rubik_block_color[2]=this.rubik_block_color[9];
@@ -770,6 +850,16 @@ async switchReverseUp()
     var first_color=_.cloneDeep(this.rubik_block_color[18]);
     var second_color=_.cloneDeep(this.rubik_block_color[19]);
     var third_color=_.cloneDeep(this.rubik_block_color[20]);
+    var second_face_color=_.cloneDeep(this.rubik_block_color[1]);
+    var third_face_color = _.cloneDeep(this.rubik_block_color[0]);
+    this.rubik_block_color[0]=this.rubik_block_color[2];
+    this.rubik_block_color[1]=this.rubik_block_color[5];
+    this.rubik_block_color[2]=this.rubik_block_color[8];
+    this.rubik_block_color[5]=this.rubik_block_color[7];
+    this.rubik_block_color[8]=this.rubik_block_color[6];
+    this.rubik_block_color[7]=this.rubik_block_color[3];
+    this.rubik_block_color[6]=third_face_color;
+    this.rubik_block_color[3]=second_face_color;
     this.rubik_block_color[18]=this.rubik_block_color[9];
     this.rubik_block_color[19]=this.rubik_block_color[10];
     this.rubik_block_color[20]=this.rubik_block_color[11];
@@ -792,6 +882,16 @@ async switchReverseDown()
     var first_color=_.cloneDeep(this.rubik_block_color[24]);
     var second_color=_.cloneDeep(this.rubik_block_color[25]);
     var third_color=_.cloneDeep(this.rubik_block_color[26]);
+    var second_face_color = _.cloneDeep(this.rubik_block_color[46]);
+    var third_face_color = _.cloneDeep(this.rubik_block_color[45]);
+    this.rubik_block_color[45] = this.rubik_block_color[47];
+    this.rubik_block_color[46]=this.rubik_block_color[50];
+    this.rubik_block_color[47]=this.rubik_block_color[53];
+    this.rubik_block_color[50]=this.rubik_block_color[52];
+    this.rubik_block_color[53]=this.rubik_block_color[51];
+    this.rubik_block_color[52]=this.rubik_block_color[48];
+    this.rubik_block_color[51]=third_face_color;
+    this.rubik_block_color[48]=second_face_color;
     this.rubik_block_color[24]=this.rubik_block_color[33];
     this.rubik_block_color[25]=this.rubik_block_color[34];
     this.rubik_block_color[26]=this.rubik_block_color[35];
@@ -829,26 +929,14 @@ async switchReverseDown()
   { 
     var cube_notations=['U','F','R','L','D','B'];
     var pattern=await this.scramble_generator(5,cube_notations);
-    alert(pattern);
-    await this.switchLeft();
-
-    // await this.switchLeft();
-    await this.switchRight();
-    await this.switchRight();
-    await this.switchLeft();
-
-    // await this.switchRight();
-    // await this.switchRight();
-    // await this.switchLeft();
-
-    // await this.switchRight();
-    // await this.switchRight();
-    // await this.switchRight();
-
-    //  await this.switchUp();
-    // await this.switchUp();
-    // await this.switchUp();
-
+  await this.switchRight();
+  await this.switchDown();
+  await this.switchRight();
+  await this.switchReverseDown();
+  await this.switchReverseFront();
+  await this.switchLeft();
+  //await this.switchRight();
+  // await this.switchLeft();
     // await this.switchReverseFront();
   var rubik_cube=  this.rubik_block_color;
   var upper_face=rubik_cube.slice(0,9);
@@ -857,9 +945,7 @@ async switchReverseDown()
   var down_face= rubik_cube.slice(45,54);
   var left_face=rubik_cube.slice(9,18);
   var back_face=rubik_cube.slice(36,45);
-  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);
-
-  
+  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
   var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
   }
 }
