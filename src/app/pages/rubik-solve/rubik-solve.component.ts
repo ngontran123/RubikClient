@@ -836,11 +836,67 @@ async switchReverseBack()
 
 async switchReverseLeft()
 {
+  if(this.rubikName=="Rubik's 3x3")
+    {
+      var first_color = _.cloneDeep(this.rubik_block_color[18]);
+      var second_color =_.cloneDeep(this.rubik_block_color[21]);
+      var third_color = _.cloneDeep(this.rubik_block_color[24]);
+      var second_face_color =_.cloneDeep(this.rubik_block_color[10]);
+      var third_face_color = _.cloneDeep(this.rubik_block_color[9]);
+
+      this.rubik_block_color[9]=this.rubik_block_color[11];
+      this.rubik_block_color[10]=this.rubik_block_color[14];
+      this.rubik_block_color[11]=this.rubik_block_color[17];
+      this.rubik_block_color[14]=this.rubik_block_color[16];
+      this.rubik_block_color[17]=this.rubik_block_color[15];
+      this.rubik_block_color[16]=this.rubik_block_color[12];
+      this.rubik_block_color[15]=third_face_color;
+      this.rubik_block_color[12]=second_face_color;
+
+      this.rubik_block_color[18]=this.rubik_block_color[45];
+      this.rubik_block_color[21]=this.rubik_block_color[48];    
+      this.rubik_block_color[24]=this.rubik_block_color[51];
+      this.rubik_block_color[45]=this.rubik_block_color[38];
+      this.rubik_block_color[48]=this.rubik_block_color[41];
+      this.rubik_block_color[51]=this.rubik_block_color[44];
+      this.rubik_block_color[38]=this.rubik_block_color[6];
+      this.rubik_block_color[41]=this.rubik_block_color[0];
+      this.rubik_block_color[44]=this.rubik_block_color[3];
+      this.rubik_block_color[0]=first_color;
+      this.rubik_block_color[3]=second_color;
+      this.rubik_block_color[6]=third_color;
+    }
 }
 
 async switchReverseRight()
 {
+  var first_color = _.cloneDeep(this.rubik_block_color[20]);
+  var second_color =_.cloneDeep(this.rubik_block_color[23]);
+  var third_color = _.cloneDeep(this.rubik_block_color[26]);
+  var second_face_color =_.cloneDeep(this.rubik_block_color[28]);
+  var third_face_color = _.cloneDeep(this.rubik_block_color[27]);
 
+  this.rubik_block_color[27]=this.rubik_block_color[29];
+  this.rubik_block_color[28]=this.rubik_block_color[32];
+  this.rubik_block_color[29]=this.rubik_block_color[35];
+  this.rubik_block_color[32]=this.rubik_block_color[34];
+  this.rubik_block_color[35]=this.rubik_block_color[33];
+  this.rubik_block_color[34]=this.rubik_block_color[30];
+  this.rubik_block_color[33]=third_face_color;
+  this.rubik_block_color[30]=second_face_color;
+
+  this.rubik_block_color[20]=this.rubik_block_color[2];
+  this.rubik_block_color[23]=this.rubik_block_color[5];    
+  this.rubik_block_color[26]=this.rubik_block_color[8];
+  this.rubik_block_color[2]=this.rubik_block_color[44];
+  this.rubik_block_color[5]=this.rubik_block_color[41];
+  this.rubik_block_color[8]=this.rubik_block_color[36];
+  this.rubik_block_color[36]=this.rubik_block_color[53];
+  this.rubik_block_color[41]=this.rubik_block_color[50];
+  this.rubik_block_color[44]=this.rubik_block_color[47];
+  this.rubik_block_color[47]=first_color;
+  this.rubik_block_color[50]=second_color;
+  this.rubik_block_color[53]=third_color;
 }
 
 async switchReverseUp()
@@ -907,34 +963,54 @@ async switchReverseDown()
   }
 }
 
+ async rotationDirection(direct:string)
+ {
+  switch(direct)
+  {
+    case "F":this.switchFront();break;
+    case "B":this.switchBack();break;
+    case "L":this.switchLeft();break;
+    case "R":this.switchRight();break;
+    case "U":this.switchUp();break;
+    case "D":this.switchDown();break;
+    case "F'":this.switchReverseFront();break;
+    case "B'":this.switchReverseBack();break;
+    case "L'":this.switchReverseLeft();break;
+    case "R'":this.switchReverseRight();break;
+    case "U'":this.switchReverseUp();break;
+    case "D'":this.switchReverseDown();break;
+  }
+ }
+
  async scrambleRubikBlock()
   {
-    let round_count=4;
-    while(round_count>0)
-    {
-    if(this.rubikName=="Rubik's 3x3")
-    {
-     this.assignRandomColor(this.rubik_block_color);
-    }
-    else if(this.rubikName=="Rubik’s Apprentice 2x2")
-    {
-      this.assignRandomColor(this.rubik_2x2_block_color);
-    }
-     round_count-=1;
-    await this.delay(300);
-    }
+    var cube_notations=['U','F','R','L','D','B'];
+    var pattern=await this.scramble_generator(30,cube_notations);  
+    var val=pattern.split(' ');
+    for(let direct of val)
+      {
+        if(direct.includes('2'))
+          {
+            direct=direct.replace(/\d/g,"");
+            await this.rotationDirection(direct);
+            await this.rotationDirection(direct);
+          }
+        else
+        {
+         await this.rotationDirection(direct);
+        }
+        await this.delay(100);
+      }
   }
   
   async solveRubik()
   { 
-    var cube_notations=['U','F','R','L','D','B'];
-    var pattern=await this.scramble_generator(5,cube_notations);
-  await this.switchRight();
-  await this.switchDown();
-  await this.switchRight();
-  await this.switchReverseDown();
-  await this.switchReverseFront();
-  await this.switchLeft();
+  //    await this.switchRight();
+  // await this.switchDown();
+  // await this.switchRight();
+  // await this.switchReverseDown();
+  // await this.switchReverseFront();
+  // await this.switchLeft();
   //await this.switchRight();
   // await this.switchLeft();
     // await this.switchReverseFront();
