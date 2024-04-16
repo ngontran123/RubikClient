@@ -627,9 +627,9 @@ async switchBack()
       this.rubik_block_color[44]=third_face_color;
       this.rubik_block_color[41]=second_face_color;
       var third_color=_.cloneDeep(this.rubik_block_color[35]);
-      this.rubik_block_color[29]=this.rubik_block_color[51];
-      this.rubik_block_color[32]=this.rubik_block_color[52 ];
-      this.rubik_block_color[35]=this.rubik_block_color[53];
+      this.rubik_block_color[29]=this.rubik_block_color[53];
+      this.rubik_block_color[32]=this.rubik_block_color[52];
+      this.rubik_block_color[35]=this.rubik_block_color[51];
       this.rubik_block_color[51]=this.rubik_block_color[9];
       this.rubik_block_color[52]=this.rubik_block_color[12];
       this.rubik_block_color[53]=this.rubik_block_color[15];
@@ -856,12 +856,12 @@ async switchReverseLeft()
       this.rubik_block_color[18]=this.rubik_block_color[45];
       this.rubik_block_color[21]=this.rubik_block_color[48];    
       this.rubik_block_color[24]=this.rubik_block_color[51];
-      this.rubik_block_color[45]=this.rubik_block_color[38];
+      this.rubik_block_color[45]=this.rubik_block_color[44];
       this.rubik_block_color[48]=this.rubik_block_color[41];
-      this.rubik_block_color[51]=this.rubik_block_color[44];
+      this.rubik_block_color[51]=this.rubik_block_color[38];
       this.rubik_block_color[38]=this.rubik_block_color[6];
-      this.rubik_block_color[41]=this.rubik_block_color[0];
-      this.rubik_block_color[44]=this.rubik_block_color[3];
+      this.rubik_block_color[41]=this.rubik_block_color[3];
+      this.rubik_block_color[44]=this.rubik_block_color[0];
       this.rubik_block_color[0]=first_color;
       this.rubik_block_color[3]=second_color;
       this.rubik_block_color[6]=third_color;
@@ -888,12 +888,12 @@ async switchReverseRight()
   this.rubik_block_color[20]=this.rubik_block_color[2];
   this.rubik_block_color[23]=this.rubik_block_color[5];    
   this.rubik_block_color[26]=this.rubik_block_color[8];
-  this.rubik_block_color[2]=this.rubik_block_color[44];
-  this.rubik_block_color[5]=this.rubik_block_color[41];
+  this.rubik_block_color[2]=this.rubik_block_color[42];
+  this.rubik_block_color[5]=this.rubik_block_color[39];
   this.rubik_block_color[8]=this.rubik_block_color[36];
   this.rubik_block_color[36]=this.rubik_block_color[53];
-  this.rubik_block_color[41]=this.rubik_block_color[50];
-  this.rubik_block_color[44]=this.rubik_block_color[47];
+  this.rubik_block_color[39]=this.rubik_block_color[50];
+  this.rubik_block_color[42]=this.rubik_block_color[47];
   this.rubik_block_color[47]=first_color;
   this.rubik_block_color[50]=second_color;
   this.rubik_block_color[53]=third_color;
@@ -1004,16 +1004,37 @@ async switchReverseDown()
   }
   
   async solveRubik()
-  { 
+  {    
   //    await this.switchRight();
   // await this.switchDown();
   // await this.switchRight();
-  // await this.switchReverseDown();
-  // await this.switchReverseFront();
+  // await this.switchDown();
+  // await this.switchFront();
   // await this.switchLeft();
   //await this.switchRight();
   // await this.switchLeft();
     // await this.switchReverseFront();
+    //await this.switchRight();
+    // await this.switchUp();
+    // await this.switchReverseLeft();
+    // await this.switchDown();
+    // await this.switchUp();
+    // await this.switchLeft();
+    // await this.switchDown();
+    // await this.switchBack();
+    // await this.switchLeft();
+    // await this.switchBack();
+    // await this.switchLeft();
+    // await this.switchFront();
+    // await this.switchUp();
+    // await this.switchRight();
+    // await this.switchLeft();
+    // await this.switchDown();
+
+    //await this.switchReverseRight();
+
+    //await this.switchReverseLeft();
+
   var rubik_cube=  this.rubik_block_color;
   var upper_face=rubik_cube.slice(0,9);
   var right_face = rubik_cube.slice(27,36);
