@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import axios, { AxiosError } from 'axios';
 import { environment } from '../../../environments/environment';
@@ -6,6 +6,7 @@ import { PopupService } from '../../../services/popup.service';
 import { HeaderComponent } from '../../shared/layouts/header/header.component';
 import { Subscription,timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { ICapcha } from '../../models/capcha.model';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -21,11 +22,16 @@ export class LoginComponent implements OnInit,OnDestroy {
       lockedTime!:Date;
       remainingTime!:number;
       isLocked:boolean=false;
+      capcha!:ICapcha;
       standard_remaing_time:string='';
-      constructor(private fb:FormBuilder,private popupService:PopupService,private router:Router)
+      is_valid_capcha:boolean=true;
+      @ViewChild('capchaInput') capchaInput!:ElementRef;
+
+     constructor(private fb:FormBuilder,private popupService:PopupService,private router:Router)
       {
       }
       ngOnInit(): void {
+        this.capcha=this.generateCapchaForm();
         this.loginForm = this.fb.group(
           {
             username:new FormControl('',[Validators.required]),
@@ -62,15 +68,52 @@ export class LoginComponent implements OnInit,OnDestroy {
           this.timerSubcribe.unsubscribe();
         }
       }
+
+      generateCapchaForm():ICapcha
+      {
+      var operators =['+','-','x'];
+      var first_number=Math.floor(Math.random()*(100-1)+1);
+      var second_number=Math.floor(Math.random()*(100-1)+1);
+      var operator = operators[Math.floor(Math.random()*operators.length)];
+      if(operator == "x")
+      {
+        operator = "*";
+      }
+      var prob=`${first_number} ${operator} ${second_number}`;
+      var result=eval(prob);
+      var gen_capcha:ICapcha={first_number:first_number,result_number:result,operator:operator,second_number:second_number};
+      return gen_capcha;  
+      }
+
+      refreshCapcha():void
+      {
+        this.capcha=this.generateCapchaForm();
+      }
+
       async onSubmitForm()
       { 
+       
         if(!this.loginForm.valid)
         {
           this.loginForm.markAllAsTouched();
         }
         else
-        { 
-        try{
+        {
+        
+        try
+        {
+          const capcha_input_value=this.capchaInput.nativeElement.value;
+         if(parseInt(capcha_input_value)!=this.capcha.second_number)
+          {
+           this.is_valid_capcha=false;
+
+           this.capcha = this.generateCapchaForm();
+           return;
+          }
+          else
+          {
+          this.is_valid_capcha=true;
+          }
          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
           if(this.isLocked)
           { 
@@ -111,7 +154,6 @@ export class LoginComponent implements OnInit,OnDestroy {
                   this.popupService.AlertErrorDialog(err.response.data.message,"Login Error");                 
                 }
               }
-              
               }
           });
         }

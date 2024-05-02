@@ -84,8 +84,28 @@
         <label for="password">Password:</label>
         <input type="password" id="password" placeholder="Password" class="form-control" name="password" formControlName="password" required>
         @if(loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {<span class="form-error">Password is required</span>}
-        <button type="submit" class="btn btn-primary center-button">Login</button>
         </div>
+        <div class="capcha">
+          <div class="capcha-detail">
+          <div class="capcha-item">
+            <span class="capcha-content">{{capcha.first_number}} {{capcha.operator}} ? = {{capcha.result_number}}</span>
+          </div>
+         </div>
+         <div class="capcha-input">
+          <div class="capcha-input-row">
+          <label for="capcha-res">Your result is:</label>
+          <input type="number" id="capcha-res" name="capcha-res" class="capcha-res" #capchaInput required>
+     
+          <button class="refresh-capcha-btn" type="button" (click)="refreshCapcha()">
+            <img src="assets/images/refresh.png">
+          </button>
+        </div>
+       @if(!is_valid_capcha){<span class="form-error capcha-break-row"><p>Your result is incorrect</p></span>}
+         </div>
+
+         </div>
+
+        <button type="submit" class="btn btn-primary center-button">Login</button>  
       </form>
     </div>
   </div>
