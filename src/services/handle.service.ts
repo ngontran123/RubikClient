@@ -33,6 +33,31 @@ export class HandleService {
     return this.rubiks; 
    }
 
+  async initMqtt()
+  {
+    var response=await axios.get(`${environment.server_url}/mqtt_connect`,{headers:{'Authorization':this.token}}).catch(err=>{
+      if(err.response.status==401)
+        {
+          this.popupService.AlertErrorDialog(err.response.data.message,"Init Mqtt failed");
+
+        }
+    });
+  }
+
+  async transmitMqtt(command:string)
+  {
+    var content={command:command};
+    var response =await axios.post(`${environment.server_url}/mqtt_transmit`,content,{headers:{'Authorization':this.token}}).then((res)=>{
+      this.popupService.AlertSuccessDialog(res.data.message,"Success");
+
+    }).catch(err=>{
+      if(err.response.status==401)
+        {
+          this.popupService.AlertErrorDialog(err.response.data.message,"Transmit Mqtt failed");
+        }
+      });
+  }
+
   async getProfilePage(username:string)
   {
   var response=await axios.get(`${environment.server_url}/profile/${username}`,{headers:{Authorization:this.token}}).then(res=>{
@@ -164,14 +189,16 @@ async getAddProduct()
 async solveRubik(name:string,colors:string[])
 {  
   var req_data={colors:colors};
-  var res=await axios.post(`${environment.server_url}/solve_rubik/${name}`,req_data,{headers:{Authorization:this.token}}).then(res=>{
-          this.popupService.AlertSuccessDialog(res.data.message,'Solve successfully');
+  var data:string='';
+  const res=await axios.post(`${environment.server_url}/solve_rubik/${name}`,req_data,{headers:{Authorization:this.token}}).then(response=>{
+    data=response.data.message;
   }).catch(err=>{
      if(err.response.status==401)
      {
       this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
      }
   });
+  return data;
 }
 
 async loadVideo(video_ref:ElementRef)

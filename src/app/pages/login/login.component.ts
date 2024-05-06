@@ -30,16 +30,16 @@ export class LoginComponent implements OnInit,OnDestroy {
      constructor(private fb:FormBuilder,private popupService:PopupService,private router:Router)
       {
       }
-      ngOnInit(): void {
+       ngOnInit(): void {
         this.capcha=this.generateCapchaForm();
+   
         this.loginForm = this.fb.group(
           {
             username:new FormControl('',[Validators.required]),
             password:new FormControl('',[Validators.required])
-            
           });
           this.timerSubcribe=timer(0,1000).subscribe(()=>{
-           const current_time=new Date(Date.now());
+          const current_time=new Date(Date.now());
            if(this.isLocked)
            {
                 this.remainingTime=Math.ceil((this.lockedTime.getTime()-current_time.getTime())/1000);
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       var prob=`${first_number} ${operator} ${second_number}`;
       var result=eval(prob);
       var gen_capcha:ICapcha={first_number:first_number,result_number:result,operator:operator,second_number:second_number};
-      return gen_capcha;  
+      return gen_capcha;
       }
 
       refreshCapcha():void
@@ -92,21 +92,18 @@ export class LoginComponent implements OnInit,OnDestroy {
 
       async onSubmitForm()
       { 
-       
         if(!this.loginForm.valid)
         {
           this.loginForm.markAllAsTouched();
         }
         else
-        {
-        
+        {       
         try
         {
           const capcha_input_value=this.capchaInput.nativeElement.value;
          if(parseInt(capcha_input_value)!=this.capcha.second_number)
           {
            this.is_valid_capcha=false;
-
            this.capcha = this.generateCapchaForm();
            return;
           }
@@ -114,6 +111,15 @@ export class LoginComponent implements OnInit,OnDestroy {
           {
           this.is_valid_capcha=true;
           }
+          var ip_addr='';
+          var city = '';
+          await axios.get('https://api.db-ip.com/v2/free/self').then((res)=>{
+            ip_addr= res.data.ipAddress;
+            city = res.data.city;
+          });
+          
+          this.loginForm.addControl('ip_addr',new FormControl(ip_addr));
+          this.loginForm.addControl('city',new FormControl(city));
          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
           if(this.isLocked)
           { 
@@ -150,7 +156,7 @@ export class LoginComponent implements OnInit,OnDestroy {
                 else
                 {
                 if(err.response?.status===401)
-                { 
+                { this.capcha = this.generateCapchaForm();
                   this.popupService.AlertErrorDialog(err.response.data.message,"Login Error");                 
                 }
               }
