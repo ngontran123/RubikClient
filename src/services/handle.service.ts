@@ -4,11 +4,12 @@ import axios from 'axios';
 import { environment } from '../environments/environment';
 import { PopupService } from './popup.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class HandleService {
-  constructor(private popupService:PopupService,private route:Router){}//private route:Router) { }
+  constructor(private popupService:PopupService,private route:Router,private enventSource:EventSource){}//private route:Router) { }
    rubiks:IRubik[]=[];
    rubik!:IRubik;
    solvable_rubiks:IRubik[]=[];
@@ -200,6 +201,72 @@ async solveRubik(name:string,colors:string[])
   });
   return data;
 }
+
+async getDeviceList(username:string):Promise<any>
+{  
+  var list;
+  await axios.get<any>(`${environment.server_url}/device/${username}`,{headers:{Authorization:this.token}}).then(response=>{
+  list=response.data.message;
+  }).catch(err=>{
+    if(err.response.status==401 || err.response.status==400)
+      {
+       this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
+      }
+  });
+  return list;
+}
+
+
+async addNewDevice(username:string,device_name:string)
+{
+
+  var data={username:username,device_name:device_name};
+  await axios.post(`${environment.server_url}/add_device`,data,{headers:{Authorization:this.token}}).then(response=>{
+    this.popupService.AlertSuccessDialog(response.data.message,"Add Device");
+  }).catch(err=>{
+     if(err.response.status==401 || err.response.status==400)
+      {
+        this.popupService.AlertErrorDialog(err.response.data.message,"Add Device Failed");
+      }
+  });
+}
+
+async deleteDevice(username:string,device_name:string)
+{
+ var data={username:username,device_name:device_name};
+ await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:this.token}}).then(response=>{
+  this.popupService.AlertSuccessDialog(response.data.message,"Delete Device");
+ }).catch(err=>{
+  if(err.response.status==401 || err.response.status==400)
+    {
+      this.popupService.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
+    }
+ });
+}
+
+readStreamKafka():Observable<any>
+{
+  this.enventSource=new EventSource(`${environment.server_url}/mqtt_transmit`);
+  return new Observable(observer=>{
+     this.enventSource.onmessage=event=>
+     {
+      observer.next(event.data);
+     }
+     this.enventSource.onerror=err=>
+     {
+      observer.error(err);
+     }
+  });
+}
+
+closeStreamKafka()
+{
+  if(this.enventSource)
+    {
+      this.enventSource.close();
+    }
+}
+
 
 async loadVideo(video_ref:ElementRef)
 {

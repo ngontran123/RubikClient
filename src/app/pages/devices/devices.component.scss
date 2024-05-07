@@ -1,0 +1,79 @@
+
+
+.container
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.table-info
+{
+    width: 80%;
+    border-collapse: collapse;
+}
+th,td
+{
+  border:1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+.no-item
+{
+    text-align: center;
+    font-weight: bold;
+}
+
+.add-device-btn
+{
+    gap: 10px;
+    margin-top: 25px;
+    padding: 0.5rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.8px;
+    width: fit-content ;
+    height: 60px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    transition: all 250ms ease 0s;
+    text-decoration: none;
+    background-color:#0053a1;
+    box-shadow: (0, 0, 0, 0.3) 0px 3px 7px 2px;
+    cursor: pointer;
+    margin-left:20px;
+}
+
+.add-device-btn:hover
+{
+    text-decoration: none;
+    background-color:#162d43;
+}
+
+.del-btn
+{
+    border-radius: 5px;
+    border:2px solid black;
+    width: 80px;
+    height: 35px;
+    background-color: indianred;
+    color: azure;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.del-btn:hover
+{
+background-color: #a94444;
+text-decoration: none;
+}
+
+.status-icon
+{
+    width: 25px;
+    height: 25px;
+}

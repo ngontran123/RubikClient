@@ -12,6 +12,7 @@ import { ColorPaletteComponent } from './shared/layouts/color-palette/color-pale
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { AddAccountComponent } from './pages/add-account/add-account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { DevicesComponent } from './pages/devices/devices.component';
 export const routes: Routes = [
     {path:'login',component:DefaulComponent,children:[{path:'',component:LoginComponent}]},
     {path:"about",component:AboutComponent},
@@ -23,5 +24,6 @@ export const routes: Routes = [
     {path:'add-product',component:AddProductComponent},
     {path:'add-account',component:AddAccountComponent},
     {path:'profile/:username',component:ProfileComponent},
+    {path:'device/:username',component:DevicesComponent},
     {path:"**",component:NotFoundComponent}
 ];

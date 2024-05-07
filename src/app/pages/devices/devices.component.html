@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="profile-title">
+        <h2>Device List:</h2>
+    </div> 
+     <table class="table-info">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Device Name</th>
+            <th>Created Date</th>
+            <th>Function</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+<tbody>
+    @if(listDevices==null || listDevices.length==0)
+    {
+     <tr>
+        <td colspan="5" class="no-item">There is no device found for this user</td>
+     </tr>
+    }
+     @else
+    {
+      @for(device of listDevices;track $index)
+      {<tr>
+        <td>{{$index+1}}</td>
+        <td>{{device.device_name}}</td>
+        <td>{{device.created_date}}</td>
+        <td><button class="del-btn" (click)="deleteDevice(device.username,device.device_name)">Delete</button></td>
+        <td>
+         <img src="assets/image/icons8-red-circle-48.png" alt="red-circle" class="status-icon">
+        </td>
+        </tr>
+      }
+    }
+    </tbody>
+ </table>
+    <button class="add-device-btn">Add New Device</button>
+</div>

@@ -1055,7 +1055,6 @@ async switchReverseDown()
       }
       sol_res=sol_res.trim();
   }
-  alert(sol_res);
   // var init_ers=await this.handleService.initMqtt();
   // var transmit=await this.handleService.transmitMqtt("gud sier");
   }
