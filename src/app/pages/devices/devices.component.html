@@ -1,7 +1,26 @@
 <div class="container">
     <div class="profile-title">
-        <h2>Device List:</h2>
+        <h1>Device List:</h1>
     </div> 
+    <div class="excel-file">
+     <div class="excel-btn">
+        <input type="file" #fileInput style="display:none;"(change)="onFileChanges($event)">
+        <button class="btn-excel" (click)="fileInput.click()">
+            <img class="btn-img" src="assets/images/excel.png" alt="excel">
+            <span class="text">
+                Import Excel
+            </span>
+        </button>
+     </div>
+     <div class="excel-btn">
+        <button class="btn-excel" (click)="exportTableToExcel()">
+            <img class="btn-img" src="assets/images/excel.png" alt="excel">
+            <span class="text">
+                Export Excel
+            </span>
+        </button>
+     </div>
+    </div>
      <table class="table-info">
     <thead>
         <tr>
@@ -28,12 +47,12 @@
         <td>{{device.created_date}}</td>
         <td><button class="del-btn" (click)="deleteDevice(device.username,device.device_name)">Delete</button></td>
         <td>
-         <img src="assets/image/icons8-red-circle-48.png" alt="red-circle" class="status-icon">
+         <img src="assets/images/icons8-red-circle-48.png" alt="red-circle" class="status-icon">
         </td>
         </tr>
       }
     }
     </tbody>
  </table>
-    <button class="add-device-btn">Add New Device</button>
+    <button class="add-device-btn" (click)="addDevice()">Add New Device</button>
 </div>

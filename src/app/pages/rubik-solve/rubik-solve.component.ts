@@ -1035,27 +1035,27 @@ async switchReverseDown()
 
     //await this.switchReverseLeft();
 
-  var rubik_cube=  this.rubik_block_color;
-  var upper_face=rubik_cube.slice(0,9);
-  var right_face = rubik_cube.slice(27,36);
-  var front_face=rubik_cube.slice(18,27);
-  var down_face= rubik_cube.slice(45,54);
-  var left_face=rubik_cube.slice(9,18);
-  var back_face=rubik_cube.slice(36,45);
-  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
-  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
-  var sol_res='';
-  if(res!=null)
-  {  
-     var res_handle=res.split(' ');
-     for(let i=0;i<res_handle.length-1;i++)
-      {
-        var command=Array.from(res_handle[i]);
-        sol_res+=command[0].repeat(parseInt(command[1]));
-      }
-      sol_res=sol_res.trim();
-  }
-  // var init_ers=await this.handleService.initMqtt();
-  // var transmit=await this.handleService.transmitMqtt("gud sier");
+  // var rubik_cube=  this.rubik_block_color;
+  // var upper_face=rubik_cube.slice(0,9);
+  // var right_face = rubik_cube.slice(27,36);
+  // var front_face=rubik_cube.slice(18,27);
+  // var down_face= rubik_cube.slice(45,54);
+  // var left_face=rubik_cube.slice(9,18);
+  // var back_face=rubik_cube.slice(36,45);
+  // var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
+  // var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
+  // var sol_res='';
+  // if(res!=null)
+  // {  
+  //    var res_handle=res.split(' ');
+  //    for(let i=0;i<res_handle.length-1;i++)
+  //     {
+  //       var command=Array.from(res_handle[i]);
+  //       sol_res+=command[0].repeat(parseInt(command[1]));
+  //     }
+  //     sol_res=sol_res.trim();
+  // }
+  var init_ers=await this.handleService.initMqtt();
+  var transmit=await this.handleService.transmitMqtt("gud sier","test");
   }
 }

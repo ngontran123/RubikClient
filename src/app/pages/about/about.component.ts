@@ -11,12 +11,13 @@ import { HandleService } from '../../../services/handle.service';
 export class AboutComponent implements OnInit {
 
   constructor(private handleService:HandleService)
-  {}
+  {
+  }
   ngOnInit(): void {
     this.getAboutPage();
   }
   getAboutPage()
-  {
+  {  
     this.handleService.getAboutPage();
   }
 }

@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           
           this.loginForm.addControl('ip_addr',new FormControl(ip_addr));
           this.loginForm.addControl('city',new FormControl(city));
-         await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
+          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
           if(this.isLocked)
           { 
            this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");

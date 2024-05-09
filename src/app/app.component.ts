@@ -15,7 +15,7 @@ export class AppComponent {
  
   constructor(private router:Router)
   {
-    router.events.forEach((e)=>{
+    router.events.forEach((e:any)=>{
       
   if(e instanceof NavigationStart)
   {  

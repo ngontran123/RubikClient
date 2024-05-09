@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HandleService {
-  constructor(private popupService:PopupService,private route:Router,private enventSource:EventSource){}//private route:Router) { }
+  constructor(private popupService:PopupService,private route:Router){}//private route:Router) { }
    rubiks:IRubik[]=[];
    rubik!:IRubik;
    solvable_rubiks:IRubik[]=[];
    token=localStorage.getItem('TOKEN');
+   enventSource!:EventSource;
   async getAllRubiks()
    {
     var response =await axios.get(`${environment.server_url}/get-rubik`,{headers:{'Authorization':this.token}}).then((res)=>
@@ -45,9 +46,9 @@ export class HandleService {
     });
   }
 
-  async transmitMqtt(command:string)
+  async transmitMqtt(command:string,topic:string)
   {
-    var content={command:command};
+    var content={command:command,topic:topic};
     var response =await axios.post(`${environment.server_url}/mqtt_transmit`,content,{headers:{'Authorization':this.token}}).then((res)=>{
       this.popupService.AlertSuccessDialog(res.data.message,"Success");
 
@@ -96,14 +97,25 @@ backHomePage()
 }
 
 async getAboutPage()
-{
+{  
   var response = await axios.get(`${environment.server_url}/about`,{headers:{Authorization:this.token}}).catch(err=>{
     if(err.response.status == 401)
     { 
-   
       localStorage.removeItem("TOKEN");
       this.route.navigate(['/login']);
-      //this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+      this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+    }
+  });
+}
+
+async getDevicePage(username:string)
+{ 
+  var response = await axios.get(`${environment.server_url}/device/${username}`,{headers:{Authorization:this.token}}).catch(err=>{
+    if(err.response.status == 401)
+    { 
+      localStorage.removeItem("TOKEN");
+      this.route.navigate(['/login']);
+      this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
     }
   });
 }
@@ -219,29 +231,37 @@ async getDeviceList(username:string):Promise<any>
 
 async addNewDevice(username:string,device_name:string)
 {
-
+ try{
   var data={username:username,device_name:device_name};
-  await axios.post(`${environment.server_url}/add_device`,data,{headers:{Authorization:this.token}}).then(response=>{
-    this.popupService.AlertSuccessDialog(response.data.message,"Add Device");
-  }).catch(err=>{
+  var token=localStorage.getItem("TOKEN");
+  await axios.post(`${environment.server_url}/add_device`,data,{headers:{Authorization:token}}).catch(err=>{
      if(err.response.status==401 || err.response.status==400)
       {
         this.popupService.AlertErrorDialog(err.response.data.message,"Add Device Failed");
       }
   });
+  }
+  catch(err)
+  {
+    alert(err.message);
+  }
 }
 
 async deleteDevice(username:string,device_name:string)
 {
+try{
  var data={username:username,device_name:device_name};
- await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:this.token}}).then(response=>{
-  this.popupService.AlertSuccessDialog(response.data.message,"Delete Device");
- }).catch(err=>{
+ var token=localStorage.getItem("TOKEN");
+ const response=await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:token}}).catch(err=>{
   if(err.response.status==401 || err.response.status==400)
     {
       this.popupService.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
     }
  });
+}
+catch(err)
+{
+}
 }
 
 readStreamKafka():Observable<any>
@@ -263,7 +283,7 @@ closeStreamKafka()
 {
   if(this.enventSource)
     {
-      this.enventSource.close();
+      this.enventSource.close(); 
     }
 }
 

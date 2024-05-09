@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ICallbackFunction } from '../app/models/callback.model';
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
-  constructor() {}
+  constructor(private router:Router) {}
   AlertErrorDialog(data:string,title:string)
   { 
    Swal.fire({
@@ -62,14 +63,38 @@ export class PopupService {
       confirmButton: 'order-2',
       denyButton: 'order-3',
     },
-   }).then(res=>{
+   }).then(async res=>{
       if(res.isConfirmed)
          {
-         cb(username,device_name);
-         Swal.fire("Delete Device successfully",'Success','success');
+         await cb(username,device_name);
+         location.reload();
          }
    });
   }
-
+   
+  PrompAddDeviceDialog(cb:ICallbackFunction,username:string,title:string)
+  {
+   Swal.fire({
+      title:title,
+      input:'text',
+      showCancelButton:true,
+      confirmButtonText:'Add',
+      cancelButtonText:'Cancel',
+      preConfirm:(val)=>{
+         if(!val)
+            {
+               Swal.showValidationMessage("Please enter your device name");
+            }
+         return val;
+      }
+   }).then(async(res)=>{
+      if(res.isConfirmed)
+         {
+            const device_name=res.value;
+            await cb(username,device_name);
+            location.reload();
+         }
+   });
+  }
  
 }

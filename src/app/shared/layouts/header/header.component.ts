@@ -30,6 +30,12 @@ export class HeaderComponent implements OnInit
     this.router.navigate([route]);
   }
 
+  navigateDevices()
+  {
+    var route = `/device/${this.user.username}`;
+    this.router.navigate([route]);
+  }
+
 } 
 {
 }

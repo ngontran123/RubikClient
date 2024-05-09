@@ -11,8 +11,9 @@
 
 .table-info
 {
-    width: 80%;
+    width: 90%;
     border-collapse: collapse;
+    margin-top: 25px;
 }
 th,td
 {
@@ -76,4 +77,47 @@ text-decoration: none;
 {
     width: 25px;
     height: 25px;
+}
+
+.excel-file
+{
+display: flex;
+}
+
+.excel-btn
+{
+    padding:20px;
+    box-sizing: border-box;
+}
+
+.btn-excel
+{
+    display: inline-block;
+    background-color: #0ba6ff; 
+    border: 1px solid #cccccc; 
+    width: 150px;
+    height: 50px;
+    color: whitesmoke;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.btn-excel:hover
+{
+background-color: #24a0ed;
+}
+
+.btn-img
+{
+    vertical-align: middle;
+    margin-right:5px;
+    width:25px;
+    height: 25px;
+}
+.text
+{
+    vertical-align: middle;
 }
