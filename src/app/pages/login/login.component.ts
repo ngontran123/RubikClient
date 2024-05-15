@@ -7,6 +7,7 @@ import { HeaderComponent } from '../../shared/layouts/header/header.component';
 import { Subscription,timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { ICapcha } from '../../models/capcha.model';
+import { HandleService } from '../../../services/handle.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       is_valid_capcha:boolean=true;
       @ViewChild('capchaInput') capchaInput!:ElementRef;
 
-     constructor(private fb:FormBuilder,private popupService:PopupService,private router:Router)
+     constructor(private fb:FormBuilder,private popupService:PopupService,private handleService:HandleService,private router:Router)
       {
       }
        ngOnInit(): void {
@@ -120,7 +121,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           
           this.loginForm.addControl('ip_addr',new FormControl(ip_addr));
           this.loginForm.addControl('city',new FormControl(city));
-          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then((res)=>{
+          await axios.post(`${environment.server_url}/login`,this.loginForm.value).then(async(res)=>{
           if(this.isLocked)
           { 
            this.popupService.AlertErrorDialog(`You have been locked from logging in ${this.standard_remaing_time}`,"Login Blocked");
@@ -131,7 +132,9 @@ export class LoginComponent implements OnInit,OnDestroy {
           localStorage.setItem("TOKEN",res.data.token);
           localStorage.setItem("AVATAR",user.avatar);
           localStorage.setItem("ACCOUNT",JSON.stringify(user));
-          this.router.navigate(['/about']);
+          await this.handleService.initMqtt(user.username); 
+          await this.handleService.checkStatus(user.username);
+   this.router.navigate(['/about']);
           }
           }).catch((err)=>{
               if(err!=null)

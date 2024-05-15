@@ -12,7 +12,7 @@ import * as XLSX from 'xlsx';
   imports: [],
   templateUrl: './devices.component.html',
   styleUrl: './devices.component.scss',
-  providers:[HandleService,PopupService]
+  providers:[PopupService,HandleService]
 })
 export class DevicesComponent {
    listDevices!:any[];
@@ -20,21 +20,20 @@ export class DevicesComponent {
    username:string='';
    
     constructor(private handleService:HandleService,private popupService:PopupService)
-    {
-      
+    { 
     } 
 
 ngOnInit():void
  {  this.getDevicePage();
    var user=JSON.parse(localStorage.getItem('ACCOUNT')||'{}');
    this.username=user.username;
-   this.handleService.getDeviceList("helloman123").then(device=>{
+   this.handleService.getDeviceList(this.username).then(device=>{
    this.listDevices=device;
  });
-  this.handleService.readStreamKafka().subscribe(data=>{
-    var message =JSON.parse(data).message;
-    alert(message);
-  });
+//   this.handleService.readStreamKafka().subscribe(data=>{
+//     var message =JSON.parse(data).message;
+//     alert(message);
+//   });
  }
 
 

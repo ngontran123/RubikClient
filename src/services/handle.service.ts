@@ -9,15 +9,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HandleService {
-  constructor(private popupService:PopupService,private route:Router){}//private route:Router) { }
+
+  constructor(private popupService:PopupService,private route:Router){
+  }//private route:Router) { }
    rubiks:IRubik[]=[];
    rubik!:IRubik;
    solvable_rubiks:IRubik[]=[];
    token=localStorage.getItem('TOKEN');
-   enventSource!:EventSource;
+   EventSource: any = window['EventSource'];
+   eventSource!:EventSource;
+   socket!:any;
   async getAllRubiks()
    {
-    var response =await axios.get(`${environment.server_url}/get-rubik`,{headers:{'Authorization':this.token}}).then((res)=>
+    var response=await axios.get(`${environment.server_url}/get-rubik`,{headers:{'Authorization':this.token}}).then((res)=>
    {
   this.rubiks=res.data.list;
   return this.rubiks;
@@ -35,15 +39,26 @@ export class HandleService {
     return this.rubiks; 
    }
 
-  async initMqtt()
-  {
-    var response=await axios.get(`${environment.server_url}/mqtt_connect`,{headers:{'Authorization':this.token}}).catch(err=>{
+  async initMqtt(username:string)
+  { 
+    var token=localStorage.getItem("TOKEN");
+    var response=await axios.get(`${environment.server_url}/mqtt_connect/${username}`,{headers:{'Authorization':token}}).catch(err=>{
       if(err.response.status==401)
         {
           this.popupService.AlertErrorDialog(err.response.data.message,"Init Mqtt failed");
-
         }
     });
+  }
+
+  checkStatus(username:string)
+  {
+    var token = localStorage.getItem('TOKEN');
+    var response = axios.get(`${environment.server_url}/mqtt_check_device_status/${username}`,{headers:{Authorization:token}}).catch(err=>{
+      if(err.response.status==401)
+        {
+          this.popupService.AlertErrorDialog(err.response.data.message,"Check status device failed");
+        }
+    })
   }
 
   async transmitMqtt(command:string,topic:string)
@@ -51,8 +66,8 @@ export class HandleService {
     var content={command:command,topic:topic};
     var response =await axios.post(`${environment.server_url}/mqtt_transmit`,content,{headers:{'Authorization':this.token}}).then((res)=>{
       this.popupService.AlertSuccessDialog(res.data.message,"Success");
-
-    }).catch(err=>{
+    }).catch(err=>
+      {
       if(err.response.status==401)
         {
           this.popupService.AlertErrorDialog(err.response.data.message,"Transmit Mqtt failed");
@@ -68,10 +83,11 @@ export class HandleService {
    {
     localStorage.removeItem('TOKEN');
     this.route.navigate(['/login']);
-    
    }
   });
   }
+
+
    
 backHomePage()
 {
@@ -80,7 +96,6 @@ backHomePage()
 
   async getRubikById(id:string)
   {
-
    var response=await axios.get(`${environment.server_url}/product-details/${id}`,{headers:{Authorization:this.token}}).then((res)=>
    {
     this.rubik=res.data.data;
@@ -88,8 +103,8 @@ backHomePage()
    }).catch(err=>{
        if(err.response.status == 401)
        {
-       localStorage.removeItem("TOKEN");
-       this.route.navigate(['/login']);
+        localStorage.removeItem("TOKEN");
+        this.route.navigate(['/login']);
         this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
        }
    });
@@ -234,10 +249,11 @@ async addNewDevice(username:string,device_name:string)
  try{
   var data={username:username,device_name:device_name};
   var token=localStorage.getItem("TOKEN");
+  var popupService_tmp:PopupService;
   await axios.post(`${environment.server_url}/add_device`,data,{headers:{Authorization:token}}).catch(err=>{
      if(err.response.status==401 || err.response.status==400)
       {
-        this.popupService.AlertErrorDialog(err.response.data.message,"Add Device Failed");
+        popupService_tmp.AlertErrorDialog(err.response.data.message,"Add Device Failed");
       }
   });
   }
@@ -252,10 +268,12 @@ async deleteDevice(username:string,device_name:string)
 try{
  var data={username:username,device_name:device_name};
  var token=localStorage.getItem("TOKEN");
+ var popupService_tmp:PopupService;
+
  const response=await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:token}}).catch(err=>{
   if(err.response.status==401 || err.response.status==400)
     {
-      this.popupService.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
+      popupService_tmp.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
     }
  });
 }
@@ -265,25 +283,46 @@ catch(err)
 }
 
 readStreamKafka():Observable<any>
-{
-  this.enventSource=new EventSource(`${environment.server_url}/mqtt_transmit`);
-  return new Observable(observer=>{
-     this.enventSource.onmessage=event=>
-     {
+{  
+  return new Observable(observer=>
+    {
+      try{
+    this.closeStreamKafka();
+    this.eventSource=new EventSource(`${environment.server_url}/mqtt_transmit`);
+     this.eventSource.onmessage=(event)=>
+     { alert(event.data);
       observer.next(event.data);
      }
-     this.enventSource.onerror=err=>
-     {
-      observer.error(err);
-     }
+     this.eventSource.onerror=(err)=>
+    {
+    
+    console.log(err);
+    console.log("Connection has been closed.");
+    alert("Error");
+    observer.error(err);
+    }
+     this.eventSource.onopen = (e) => {
+      alert("open:"+this.eventSource.readyState);
+      console.log('connection open');
+      console.log("open:"+e);
+    }
+  }
+  catch(exp)
+  {
+    alert("EXCEPTION HERE IS:"+exp.message);
+  }
   });
+  
+ 
+
+   
 }
 
 closeStreamKafka()
 {
-  if(this.enventSource)
+  if(this.eventSource)
     {
-      this.enventSource.close(); 
+      this.eventSource.close(); 
     }
 }
 
@@ -292,7 +331,7 @@ async loadVideo(video_ref:ElementRef)
 {
   var response = await axios.get(`${environment.server_url}/load_video`,{headers:{Authorization:this.token},responseType:'blob'}).then((response)=>{   
     const blob= new Blob([response.data],{type:'image/jpeg'});
-    const url= URL.createObjectURL(blob);
+    const url= URL.createObjectURL(blob);0
     video_ref.nativeElement.src=url;
   });
 }

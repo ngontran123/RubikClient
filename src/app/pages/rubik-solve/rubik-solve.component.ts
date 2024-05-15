@@ -1,11 +1,11 @@
-import { Component,ElementRef,HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component,ElementRef,HostListener, OnInit, OnDestroy,ViewChild} from '@angular/core';
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
 import { PopupService } from '../../../services/popup.service';
 import { HandleService } from '../../../services/handle.service';
 import { ActivatedRoute, mapToCanActivateChild } from '@angular/router';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import * as _ from 'lodash';
-import { combineAll, concat } from 'rxjs';
+import { Subscription, combineAll, concat } from 'rxjs';
 @Component({
   selector: 'app-rubik-solve',
   standalone: true,
@@ -44,7 +44,7 @@ export class RubikSolveComponent implements OnInit {
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
    
   @ViewChild('video_player',{static:true}) video_player!:ElementRef;
-   
+   eventSubsribe!:Subscription;
   constructor(private popupService:PopupService,private handleService:HandleService,private route:ActivatedRoute)
   {    
   }
@@ -66,7 +66,10 @@ export class RubikSolveComponent implements OnInit {
    this.rubik_temp_arr=Array(54).fill('');
    this.initColorDisable();
   }
- 
+  ngOnDestroy():void{
+    this.eventSubsribe.unsubscribe();
+    this.handleService.closeStreamKafka();
+  }
  
  getRubikName()
  {
@@ -1055,7 +1058,13 @@ async switchReverseDown()
   //     }
   //     sol_res=sol_res.trim();
   // }
-  var init_ers=await this.handleService.initMqtt();
-  var transmit=await this.handleService.transmitMqtt("gud sier","test");
+  //var init_ers=await this.handleService.initMqtt();
+  this.handleService.readStreamKafka().subscribe(data=>{
+    alert(data);
+  },err=>{
+    alert("Error:"+err);
+  });
+
+  // var transmit=await this.handleService.transmitMqtt("gud sier","test");
   }
 }

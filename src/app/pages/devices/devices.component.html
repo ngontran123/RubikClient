@@ -47,7 +47,14 @@
         <td>{{device.created_date}}</td>
         <td><button class="del-btn" (click)="deleteDevice(device.username,device.device_name)">Delete</button></td>
         <td>
+        @if(!device.status)
+        {
          <img src="assets/images/icons8-red-circle-48.png" alt="red-circle" class="status-icon">
+        }
+        @else
+        {
+            <img src="assets/images/icons8-green-dot-48.png" alt="red-circle" class="status-icon">
+        }
         </td>
         </tr>
       }
