@@ -27,6 +27,7 @@ ngOnInit():void
  {  this.getDevicePage();
    var user=JSON.parse(localStorage.getItem('ACCOUNT')||'{}');
    this.username=user.username;
+   this.checkStatus();
    this.handleService.getDeviceList(this.username).then(device=>{
    this.listDevices=device;
  });
@@ -40,6 +41,12 @@ ngOnInit():void
 getDevicePage()
 {
   this.handleService.getDevicePage(this.username);  
+}
+
+
+checkStatus()
+{
+  this.handleService.checkStatus(this.username);
 }
 onFileChanges(event:any)
 {

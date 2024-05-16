@@ -133,8 +133,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           localStorage.setItem("AVATAR",user.avatar);
           localStorage.setItem("ACCOUNT",JSON.stringify(user));
           await this.handleService.initMqtt(user.username); 
-          await this.handleService.checkStatus(user.username);
-   this.router.navigate(['/about']);
+       this.router.navigate(['/about']);
           }
           }).catch((err)=>{
               if(err!=null)
