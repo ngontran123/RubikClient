@@ -24,17 +24,18 @@ export class DevicesComponent {
     } 
 
 ngOnInit():void
- {  this.getDevicePage();
+ { 
+   this.getDevicePage();
    var user=JSON.parse(localStorage.getItem('ACCOUNT')||'{}');
    this.username=user.username;
    this.checkStatus();
    this.handleService.getDeviceList(this.username).then(device=>{
    this.listDevices=device;
  });
-//   this.handleService.readStreamKafka().subscribe(data=>{
-//     var message =JSON.parse(data).message;
-//     alert(message);
-//   });
+  // this.handleService.readStreamKafka().subscribe(data=>{
+  //   var message =JSON.parse(data).message;
+  //   alert(message);
+  // });
  }
 
 
@@ -132,6 +133,5 @@ onFileChanges(event:any)
  {  
   this.popupService.ConfirmDeleteDeviceDialog(this.handleService.deleteDevice,username,device_name,"Are you sure?");
  }
-
 
 }

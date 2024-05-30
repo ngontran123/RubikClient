@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
      {
      }
      ngOnInit(): void 
-     {
+     {  this.handleService.checkProductToken();
         this.getAllRubik();
      }
      toggleCheckBox(option:IOption)

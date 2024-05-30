@@ -8,6 +8,7 @@ import { Subscription,timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { ICapcha } from '../../models/capcha.model';
 import { HandleService } from '../../../services/handle.service';
+import { SesService } from '../../../services/ses.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       is_valid_capcha:boolean=true;
       @ViewChild('capchaInput') capchaInput!:ElementRef;
 
-     constructor(private fb:FormBuilder,private popupService:PopupService,private handleService:HandleService,private router:Router)
+     constructor(private fb:FormBuilder,private popupService:PopupService,private handleService:HandleService,private router:Router,private sesService:SesService)
       {
       }
        ngOnInit(): void {
@@ -69,17 +70,16 @@ export class LoginComponent implements OnInit,OnDestroy {
           this.timerSubcribe.unsubscribe();
         }
       }
+     
+
+
 
       generateCapchaForm():ICapcha
       {
-      var operators =['+','-','x'];
+      var operators =['+','-','*'];
       var first_number=Math.floor(Math.random()*(100-1)+1);
       var second_number=Math.floor(Math.random()*(100-1)+1);
       var operator = operators[Math.floor(Math.random()*operators.length)];
-      if(operator == "x")
-      {
-        operator = "*";
-      }
       var prob=`${first_number} ${operator} ${second_number}`;
       var result=eval(prob);
       var gen_capcha:ICapcha={first_number:first_number,result_number:result,operator:operator,second_number:second_number};
@@ -132,8 +132,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           localStorage.setItem("TOKEN",res.data.token);
           localStorage.setItem("AVATAR",user.avatar);
           localStorage.setItem("ACCOUNT",JSON.stringify(user));
-          await this.handleService.initMqtt(user.username); 
-       this.router.navigate(['/about']);
+          this.router.navigate(['/about']);
           }
           }).catch((err)=>{
               if(err!=null)

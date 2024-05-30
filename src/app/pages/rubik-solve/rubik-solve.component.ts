@@ -2,6 +2,7 @@ import { Component,ElementRef,HostListener, OnInit, OnDestroy,ViewChild} from '@
 import { ColorPaletteComponent } from '../../shared/layouts/color-palette/color-palette.component';
 import { PopupService } from '../../../services/popup.service';
 import { HandleService } from '../../../services/handle.service';
+import { SesService } from '../../../services/ses.service';
 import { ActivatedRoute, mapToCanActivateChild } from '@angular/router';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import * as _ from 'lodash';
@@ -40,12 +41,14 @@ export class RubikSolveComponent implements OnInit {
   rubik_temp_arr!:string[];
   upside_down_horizontal_rote:number=0;
   horizontal_rotate:number=-48;
+  list_device:any[]=[];
   is_camera_click:boolean=false;
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
    
   @ViewChild('video_player',{static:true}) video_player!:ElementRef;
+  @ViewChild('log_area',{static:true}) log_area!:ElementRef;
    eventSubsribe!:Subscription;
-  constructor(private popupService:PopupService,private handleService:HandleService,private route:ActivatedRoute)
+  constructor(private popupService:PopupService,private handleService:HandleService,private sseService:SesService,private route:ActivatedRoute)
   {    
   }
  
@@ -59,17 +62,43 @@ export class RubikSolveComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-   this.checkTokenValid();
-   this.getRubikName();
+  ngOnInit(): void 
+  {
+  this.getRubikName();
+  this.checkTokenValid();
+   this.getListDevice();
    this.initRubikBlock();
    this.rubik_temp_arr=Array(54).fill('');
    this.initColorDisable();
+   var user=JSON.parse(localStorage.getItem("ACCOUNT") as string);
+   var username=user.username;
+  //  const text=this.log_area.nativeElement.value;
+  //  this.log_area.nativeElement.value=text+'hello'+'\n';
+  //  this.log_area.nativeElement.value=text+'fuck'+'\n';
+
+   this.sseService.initEventSource(username).subscribe((data)=>
+   {
+  
+    var val=data.data.split(':');
+    var username_values=val[0].split('_');
+    var username_value=username_values[0];
+    
+    var command=username_values[1]+':'+val[1];
+   
+   if(username_value==username)
+    { 
+     const text=this.log_area.nativeElement.value;
+     this.log_area.nativeElement.value=text+command+'\n';
+    }
+   },error=>{
+   });
+  //  this.handleService.readStreamKafka().subscribe(data=>{
+  //   alert(data);
+  // },err=>{
+  //   alert("Error:"+err);
+  // });
   }
-  ngOnDestroy():void{
-    this.eventSubsribe.unsubscribe();
-    this.handleService.closeStreamKafka();
-  }
+ 
  
  getRubikName()
  {
@@ -286,6 +315,14 @@ changeImage(image:string,direction:string)
   }
 }
 
+getListDevice()
+{
+  var user=JSON.parse(localStorage.getItem('ACCOUNT')||'{}');
+  var username=user.username;
+this.handleService.getDeviceList(username).then((list)=>{
+  this.list_device=list;
+});
+}
 
 changeBtnColor(event:string)
 {
@@ -985,6 +1022,21 @@ async switchReverseDown()
   }
  }
 
+
+
+ async rotationSolveRubik(solve_value:string)
+ { 
+
+ var num_times=parseInt(solve_value.replace(/\D/g,''));
+      for(let i =0;i<num_times;i++)
+        {
+      solve_value=solve_value.replace(/\d/g,'');
+      this.rotationDirection(solve_value);
+      await this.delay(200);
+        }
+    
+ }
+
  async scrambleRubikBlock()
   {
     var cube_notations=['U','F','R','L','D','B'];
@@ -1008,7 +1060,7 @@ async switchReverseDown()
   
   async solveRubik()
   {    
-  //    await this.switchRight();
+  // await this.switchRight();
   // await this.switchDown();
   // await this.switchRight();
   // await this.switchDown();
@@ -1038,15 +1090,21 @@ async switchReverseDown()
 
     //await this.switchReverseLeft();
 
-  // var rubik_cube=  this.rubik_block_color;
-  // var upper_face=rubik_cube.slice(0,9);
-  // var right_face = rubik_cube.slice(27,36);
-  // var front_face=rubik_cube.slice(18,27);
-  // var down_face= rubik_cube.slice(45,54);
-  // var left_face=rubik_cube.slice(9,18);
-  // var back_face=rubik_cube.slice(36,45);
-  // var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
-  // var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
+  var rubik_cube=  this.rubik_block_color;
+  var upper_face=rubik_cube.slice(0,9);
+  var right_face = rubik_cube.slice(27,36);
+  var front_face=rubik_cube.slice(18,27);
+  var down_face= rubik_cube.slice(45,54);
+  var left_face=rubik_cube.slice(9,18);
+  var back_face=rubik_cube.slice(36,45);
+  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
+  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
+  var solve_res=res.split(' ');
+  for(let i=0;i<solve_res.length-1;i++)
+    { 
+      await this.rotationSolveRubik(solve_res[i]);
+    }
+  
   // var sol_res='';
   // if(res!=null)
   // {  
@@ -1059,11 +1117,7 @@ async switchReverseDown()
   //     sol_res=sol_res.trim();
   // }
   //var init_ers=await this.handleService.initMqtt();
-  this.handleService.readStreamKafka().subscribe(data=>{
-    alert(data);
-  },err=>{
-    alert("Error:"+err);
-  });
+
 
   // var transmit=await this.handleService.transmitMqtt("gud sier","test");
   }

@@ -8,11 +8,8 @@
 .rubik-title
 {
     margin-top: 100px;
-}
-
-h1
-{
-font-weight: bolder;
+    width:fit-content;
+    font-weight: bolder;
 }
 
 .rubik-view-type
@@ -325,9 +322,29 @@ transform: rotateY(-90deg) translateZ(150px);
   }
 
 
+.result-logs
+{
+  margin-left:50%;
+  bottom: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.logs
+{
+  width: 450px;
+  height: 300px;
+  position:absolute;
+  font-size: 20px;
+  font-weight: bold;
+  color:#66afe9;
+}
+
+
+
 .show-camera
 {
- margin-left:70%;
+ margin-right:75%;
  margin-top: 50px;
 }
 
@@ -337,6 +354,7 @@ transform: rotateY(-90deg) translateZ(150px);
  height: 75px;
  border-radius: 5px;
  cursor: pointer;
+ position: relative;
 }
 .btn-camera img
 {
@@ -358,8 +376,42 @@ height: 50px;
 }
 
 
+.device
+{
+  margin-top:10px;
+}
+
+.custom-select
+{
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 15px;
+  color: #333;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.custom-select:focus
+{
+border-color: #66afe9;
+outline: none;
+box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.custom-select option
+{
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
 .support-btn
-{  margin-top: 30px;
+{   margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content:space-between;
@@ -433,6 +485,7 @@ position: relative;
   cursor: pointer;
   background-color: transparent;
 }
+
 
 .sp-btn img
 {

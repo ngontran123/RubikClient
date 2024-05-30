@@ -39,9 +39,23 @@ export class HandleService {
     return this.rubiks; 
    }
 
+   async checkProductToken()
+   {
+    var response = await axios.get(`${environment.server_url}/products`,{headers:{Authorization:this.token}}).catch(err=>{
+      if(err.response.status==400 || err.response.status==401)
+        {
+          localStorage.removeItem("TOKEN");
+          this.route.navigate(['/login']);  
+          this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+        }
+      }
+    )
+   }
+
   async initMqtt(username:string)
   { 
     var token=localStorage.getItem("TOKEN");
+    this.eventSource=new EventSource(`${environment.server_url}/mqtt_connect/${username}`);
     var response=await axios.get(`${environment.server_url}/mqtt_connect/${username}`,{headers:{'Authorization':token}}).catch(err=>{
       if(err.response.status==401)
         {
@@ -243,6 +257,16 @@ async getDeviceList(username:string):Promise<any>
   return list;
 }
 
+async resetCheckingStatus(username:string)
+{ 
+  var payload={username:username};
+  var token=localStorage.getItem("TOKEN");
+  await axios.post(`${environment.server_url}/reset_checking_status`,payload,{headers:{Authorization:token}}).catch(err=>{
+    if(err.response.status==401 || err.response.status==400)
+      {
+       this.popupService.AlertErrorDialog(err.response.data.message,'Reset Status Failed');
+      }});
+}
 
 async addNewDevice(username:string,device_name:string)
 {
@@ -270,7 +294,7 @@ try{
  var token=localStorage.getItem("TOKEN");
  var popupService_tmp:PopupService;
 
- const response=await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:token}}).catch(err=>{
+ await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:token}}).catch(err=>{
   if(err.response.status==401 || err.response.status==400)
     {
       popupService_tmp.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
@@ -282,26 +306,26 @@ catch(err)
 }
 }
 
-readStreamKafka():Observable<any>
+readStreamKafka(username:string):Observable<any>
 {  
   return new Observable(observer=>
     {
-      try{
+  try
+   {
     this.closeStreamKafka();
-    this.eventSource=new EventSource(`${environment.server_url}/mqtt_transmit`);
      this.eventSource.onmessage=(event)=>
      { alert(event.data);
       observer.next(event.data);
      }
      this.eventSource.onerror=(err)=>
     {
-    
     console.log(err);
     console.log("Connection has been closed.");
     alert("Error");
     observer.error(err);
     }
-     this.eventSource.onopen = (e) => {
+     this.eventSource.onopen = (e) => 
+    {
       alert("open:"+this.eventSource.readyState);
       console.log('connection open');
       console.log("open:"+e);

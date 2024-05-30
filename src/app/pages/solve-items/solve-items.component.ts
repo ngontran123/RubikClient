@@ -1,7 +1,7 @@
 import { Component ,Input} from '@angular/core';
 import { IRubik } from '../../models/item.model';
 import { Router } from '@angular/router';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-solve-items',
   standalone: true,
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SolveItemsComponent {
    @Input() rubik!:IRubik;
+   public environment=`${environment.client_url}`;
 
    constructor(private route:Router)
    {}

@@ -2,8 +2,16 @@
     <div class ="rubik-title">
         <h1>{{rubikName}}</h1>
     </div>
+    <div class="device">
+     <select class="custom-select">
+     <option disabled selected>Select Device:</option>
+      @for(device of list_device;track $index)
+      {
+        <option [value]="device.device_name">{{device.device_name}}</option>
+      }
+     </select>
+    </div>
     <div class="rubik-view-type">
-      
         <button class="threed-view-btn" (click)="switchThreeD()" [style.background-color]="threeDColor">
             <img src="assets/images/rubik.png" alt="rubik.png">
         </button>    
@@ -30,7 +38,7 @@
           <button class="block front-color" data-field="20" id="20" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[19]"></button>
           <button class="block front-color" data-field="21" id="21" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[20]"></button>
           <button class="block front-color" data-field="22" id="22" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[21]"></button>
-          <button class="block front-color" data-field="23" id="23" (click)="changeBlockColor($event)"[style.background-color]="rubik_block_color[22]"></button>
+          <button class="block front-color" data-field="23" id="23" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[22]"></button>
           <button class="block front-color" data-field="24" id="24" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[23]"></button>
           <button class="block front-color" data-field="25" id="25" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[24]"></button>
           <button class="block front-color" data-field="26" id="26" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[25]"></button>
@@ -41,7 +49,7 @@
             <button class="block back-color" data-field="38" id="38" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[37]"></button>
             <button class="block back-color" data-field="39" id="39" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[38]"></button>
             <button class="block back-color" data-field="40" id="40" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[39]"></button>
-            <button class="block back-color" data-field="41" id="41" (click)="changeBlockColor($event)" [style.background-color]="rubik_block_color[40]"></button>
+            <button class="block back-color" data-field="41" id="41" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[40]"></button>
             <button class="block back-color" data-field="42" id="42" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[41]"></button>
             <button class="block back-color" data-field="43" id="43" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[42]"></button>
             <button class="block back-color" data-field="44" id="44" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[43]"></button>
@@ -53,7 +61,7 @@
             <button class="block top-color" data-field="2" id="2" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[1]"></button>
             <button class="block top-color" data-field="3" id="3" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[2]"></button>
             <button class="block top-color" data-field="4" id="4" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[3]"></button>
-            <button class="block top-color" data-field="5" id="5" (click)="changeBlockColor($event)"[style.background-color]="rubik_block_color[4]"></button>
+            <button class="block top-color" data-field="5" id="5" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[4]"></button>
             <button class="block top-color" data-field="6" id="6" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[5]"></button>
             <button class="block top-color" data-field="7" id="7" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[6]"></button>
             <button class="block top-color" data-field="8" id="8" (click)="changeBlockColor($event)"  [style.background-color]="rubik_block_color[7]"></button>
@@ -306,8 +314,11 @@
  <app-not-found></app-not-found>
  </div>
 }    
+  <div class="result-logs">
+    <textarea #log_area class="logs" readonly></textarea>
+  </div>
    <div class="show-camera">
-   <button class="btn-camera" (click)="cameraClick()">
+    <button class="btn-camera" (click)="cameraClick()">
     <img src="assets/images/dslr-camera.png" alt="dslr-camera.png">
     </button>
    </div>
