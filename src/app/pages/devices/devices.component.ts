@@ -100,7 +100,6 @@ onFileChanges(event:any)
   exportTableToExcel()
   {
     var tableData:any[]=[];
-    var tableDta:any[]=[];
     for(let i=0;i<this.listDevices.length;i++)
       {
        var device={Id:(i+1),Name:this.listDevices[i].device_name,Created_Date:this.listDevices[i].created_date};

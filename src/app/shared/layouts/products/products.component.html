@@ -13,11 +13,15 @@
       </div>
     </div>
     <div class="product-container">
-    <div class="product-grid">
-        @for(item of rubik_list; track $index)
-        {
+
+        @for(row of rows; track $index)
+        { 
+          <div class="product-grid">
+         @for(item of row;track $index)
+         {
         <div class="product"><app-items [rubik]="item"></app-items></div>
+         }
+        </div>
         }
-    </div>
     </div>
   </div>

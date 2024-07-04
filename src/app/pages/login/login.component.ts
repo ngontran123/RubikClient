@@ -9,10 +9,11 @@ import { Router } from '@angular/router';
 import { ICapcha } from '../../models/capcha.model';
 import { HandleService } from '../../../services/handle.service';
 import { SesService } from '../../../services/ses.service';
+import { ForgotPasswordFormComponent } from '../forgot-password-form/forgot-password-form.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,HeaderComponent],
+  imports: [ReactiveFormsModule,HeaderComponent,ForgotPasswordFormComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [PopupService]
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       capcha!:ICapcha;
       standard_remaing_time:string='';
       is_valid_capcha:boolean=true;
+      show_form:boolean = false;
       @ViewChild('capchaInput') capchaInput!:ElementRef;
 
      constructor(private fb:FormBuilder,private popupService:PopupService,private handleService:HandleService,private router:Router,private sesService:SesService)
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit,OnDestroy {
       }
        ngOnInit(): void {
         this.capcha=this.generateCapchaForm();
-   
+        
         this.loginForm = this.fb.group(
           {
             username:new FormControl('',[Validators.required]),
@@ -72,7 +74,15 @@ export class LoginComponent implements OnInit,OnDestroy {
       }
      
 
+    showForm()
+    {
+      this.show_form=true;
+    }
 
+    closeForm()
+    {
+      this.show_form = false;
+    }
 
       generateCapchaForm():ICapcha
       {
@@ -157,7 +167,8 @@ export class LoginComponent implements OnInit,OnDestroy {
                 else
                 {
                 if(err.response?.status===401)
-                { this.capcha = this.generateCapchaForm();
+                { 
+                  this.capcha = this.generateCapchaForm();
                   this.popupService.AlertErrorDialog(err.response.data.message,"Login Error");                 
                 }
               }

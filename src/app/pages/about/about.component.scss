@@ -1,20 +1,30 @@
 .video-section {
+    position: relative;
+    height: 500px; 
     width: 100%;
-    height: 500px;  
     top: 0;
     left: 0;
     max-width: 100%;
   }
-//   .full-container
-//   {
-//     display: flex;
-//     justify-content: space-between;
-//     padding: 10px 20px;
-//     position:relative;
-//     width: 100%;
-//     height: 100%;
+  
+  video {
+    object-fit: cover;
+    background-size: cover;
+    width:100%;
+    height: 100%; 
+    position: absolute;    
+   }
+ 
+  // .full-container
+  // {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   padding: 10px 20px;
+  //   position:relative;
+  //   width: 100%;
+  //   height: 100%;
 
-//   }
+  // }
   
 //   .section {
 //     height: 60vh;

@@ -9,9 +9,11 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: fit-content;
     box-sizing: border-box;
-  }
+    cursor: pointer;
+   }
   
-  .item img {
+  .item img 
+  {
     width:250px; /* Adjust the image width as needed */
     height: auto; /* Maintain aspect ratio */
     margin-right: 10px;
@@ -22,7 +24,6 @@
     flex: 1;
   }
   
-
   
  .detail-btn
   {

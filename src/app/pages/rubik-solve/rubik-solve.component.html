@@ -204,7 +204,7 @@
   }
   @if(isShowThreeD)
   {
-    <div class="rubik-view" (mousedown)="startRotate($event)" (mouseup)="stopRotate()" >
+    <div class="rubik-view" (mousedown)="startRotate($event)" (mouseup)="stopRotate()">
       <div class="rubik-cube" [style.transform]="cubeRotateStyle">    
       <div class="rubik-face front">
         <button class="block_2x2 front-color" data-field="9" id="9" (click)="changeBlockColor($event)" [style.background-color]="rubik_2x2_block_color[8]"></button>
@@ -318,9 +318,15 @@
     <textarea #log_area class="logs" readonly></textarea>
   </div>
    <div class="show-camera">
-    <button class="btn-camera" (click)="cameraClick()">
+    <!-- <button class="btn-camera" (click)="cameraClick()">
     <img src="assets/images/dslr-camera.png" alt="dslr-camera.png">
-    </button>
+    </button> -->
+    @for(num of nums_of_face;track $index)
+    {<div class="image-item">
+      <app-image-detect (imageSelected)="onSelectedImage($event,$index+1)" (fileSelected)="onSelectedFile($event,$index+1)"></app-image-detect>
+      <div class="description">{{num}}</div>
+    </div>
+    }
    </div>
     <div class="color-palette">
        <app-color-palette (update-color)="changeBtnColor($event)"></app-color-palette>
@@ -353,10 +359,10 @@
   <div class="sp-btn-border">
     <button class ="sp-btn" (click)="solveRubik()">
       <span class="text">
-        Solve
+        Solve 
       </span>
       <img src="assets/images/rubik_solve.png" alt="rubik_solve">
     </button>
   </div>
-    </div>
+  </div>
 </div>

@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import { PopupService } from './popup.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +37,7 @@ export class HandleService {
       }
     }
     });
-    return this.rubiks; 
+    return this.rubiks;
    }
 
    async checkProductToken()
@@ -60,6 +61,7 @@ export class HandleService {
       if(err.response.status==401)
         {
           this.popupService.AlertErrorDialog(err.response.data.message,"Init Mqtt failed");
+          
         }
     });
   }
@@ -74,7 +76,25 @@ export class HandleService {
         }
     })
   }
+  
 
+  async sendImage(image_list:FormData)
+  {  
+    var res = await axios.post(`${environment.server_url}/add_images`,image_list,{headers:{Authorization:this.token}}).then((res)=>{
+      this.popupService.AlertSuccessDialog(res.data.message,"Success");
+    }).catch(err=>{
+      if(err.response.status==400 || err.response.status==401)
+        {
+          this.popupService.AlertErrorDialog(err.response.data.message,"Send Images Failed");
+         if(err.response.status==401)
+          {
+          this.route.navigate(['/login']);
+          }
+        }
+    })
+  }
+
+  
   async transmitMqtt(command:string,topic:string)
   {
     var content={command:command,topic:topic};
@@ -106,6 +126,31 @@ export class HandleService {
 backHomePage()
 {
   this.route.navigate(['/about']);
+}
+
+
+ async forgotPassword(data:FormGroup)
+ {
+  var response = await axios.post(`${environment.server_url}/forgot_password`,data.value).then(res=>{
+    this.popupService.AlertSuccessDialog(res.data.message,"Send OTP");
+  }).catch(err=>{
+    if(err.response.status==400)
+      {
+        this.popupService.AlertErrorDialog(err.response.data.message,"Send OTP");
+      }
+  });
+ }
+
+async resetPassword(data:FormGroup)
+{
+  var response= await axios.post(`${environment.server_url}/reset-password`,data.value).then((res)=>{
+    this.popupService.AlertSuccessDialog(res.data.message,"Reset Password");
+  }).catch(err=>{
+   if(err.response.status==400)
+    {
+      this.popupService.AlertErrorDialog(err.response.data.message,"Reset Password");
+    }
+  });
 }
 
   async getRubikById(id:string)
@@ -151,7 +196,8 @@ async getDevicePage(username:string)
 
 async getDetailSolveRubikPage(name:string)
 {
-  var response = await axios.get(`${environment.server_url}/rubik-solve/${name}`,{headers:{Authorization:this.token}}).catch(err=>{
+  var response = await axios.get(`${environment.server_url}/rubik-solve/${name}`,{headers:{Authorization:this.token}}).catch(err=>
+  {
    if(err.response.status==401)
    {
     localStorage.removeItem('TOKEN');
@@ -172,7 +218,7 @@ async getSolvableRubik()
       {
       localStorage.removeItem("TOKEN");
       this.route.navigate(['/login']);
-       this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
+      this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
       }
     });
   }
@@ -190,7 +236,6 @@ async postProduct(formdata:any)
      this.popupService.AlertErrorDialog(err.response.data.message,'Add product failed');
   }
  });
- 
 }
 
 async postAccount(formdata:any)
@@ -237,6 +282,7 @@ async solveRubik(name:string,colors:string[])
   }).catch(err=>{
      if(err.response.status==401)
      {
+      this.route.navigate(['/login']);
       this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
      }
   });
@@ -251,6 +297,10 @@ async getDeviceList(username:string):Promise<any>
   }).catch(err=>{
     if(err.response.status==401 || err.response.status==400)
       {
+      if(err.response.status ==401)
+        {
+          this.route.navigate(['/login']);
+        }
        this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
       }
   });
@@ -277,6 +327,10 @@ async addNewDevice(username:string,device_name:string)
   await axios.post(`${environment.server_url}/add_device`,data,{headers:{Authorization:token}}).catch(err=>{
      if(err.response.status==401 || err.response.status==400)
       {
+        if(err.response.status ==401)
+          {
+            this.route.navigate(['/login']);
+          }
         popupService_tmp.AlertErrorDialog(err.response.data.message,"Add Device Failed");
       }
   });
@@ -297,6 +351,10 @@ try{
  await axios.post(`${environment.server_url}/delete_device`,data,{headers:{Authorization:token}}).catch(err=>{
   if(err.response.status==401 || err.response.status==400)
     {
+      if(err.response.status ==401)
+        {
+          this.route.navigate(['/login']);
+        }
       popupService_tmp.AlertErrorDialog(err.response.data.message,"Delete Device Failed");
     }
  });
@@ -355,7 +413,7 @@ async loadVideo(video_ref:ElementRef)
 {
   var response = await axios.get(`${environment.server_url}/load_video`,{headers:{Authorization:this.token},responseType:'blob'}).then((response)=>{   
     const blob= new Blob([response.data],{type:'image/jpeg'});
-    const url= URL.createObjectURL(blob);0
+    const url= URL.createObjectURL(blob);
     video_ref.nativeElement.src=url;
   });
 }

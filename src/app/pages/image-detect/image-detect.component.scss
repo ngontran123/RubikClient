@@ -1,0 +1,33 @@
+.image-input-container {
+    text-align: center;
+    margin-top: 80px;
+  }
+  
+  .file-input-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-input-label:hover {
+    background-color: #0056b3;
+  }
+  
+  .image-preview {
+    margin-top: 20px;
+  }
+  
+  .image-preview img {
+    max-width: 100%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #fff;
+    cursor: pointer;
+  }

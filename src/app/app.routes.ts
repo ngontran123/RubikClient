@@ -13,6 +13,7 @@ import { AddProductComponent } from './pages/add-product/add-product.component';
 import { AddAccountComponent } from './pages/add-account/add-account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DevicesComponent } from './pages/devices/devices.component';
+import { ImageDetectComponent } from './pages/image-detect/image-detect.component';
 export const routes: Routes = [
     {path:'login',component:DefaulComponent,children:[{path:'',component:LoginComponent}]},
     {path:"about",component:AboutComponent},
@@ -25,5 +26,6 @@ export const routes: Routes = [
     {path:'add-account',component:AddAccountComponent},
     {path:'profile/:username',component:ProfileComponent},
     {path:'device/:username',component:DevicesComponent},
+    {path:'image-result',component:ImageDetectComponent},
     {path:"**",component:NotFoundComponent}
 ];

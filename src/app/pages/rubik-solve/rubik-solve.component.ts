@@ -7,10 +7,11 @@ import { ActivatedRoute, mapToCanActivateChild } from '@angular/router';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import * as _ from 'lodash';
 import { Subscription, combineAll, concat } from 'rxjs';
+import { ImageDetectComponent } from '../image-detect/image-detect.component';
 @Component({
   selector: 'app-rubik-solve',
   standalone: true,
-  imports: [ColorPaletteComponent,NotFoundComponent],
+  imports: [ColorPaletteComponent,ImageDetectComponent,NotFoundComponent],
   templateUrl: './rubik-solve.component.html',
   styleUrl: './rubik-solve.component.scss',
   providers:[PopupService,HandleService]
@@ -43,7 +44,11 @@ export class RubikSolveComponent implements OnInit {
   horizontal_rotate:number=-48;
   list_device:any[]=[];
   is_camera_click:boolean=false;
+  selected_images:any=[];
+  img_file:File[]=[];
+  nums_of_face:string[]=['Up face','Right face','Front face','Down face','Left face','Back face'];
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
+
    
   @ViewChild('video_player',{static:true}) video_player!:ElementRef;
   @ViewChild('log_area',{static:true}) log_area!:ElementRef;
@@ -179,7 +184,6 @@ startRotate(event:MouseEvent)
   this.isRotating=true;
   this.startPosX=event.clientX;
   this.startPostY=event.clientY;
-
 }
 
 stopRotate()
@@ -388,7 +392,7 @@ else if(this.rubikName="Rubik’s Apprentice 2x2")
     { 
       if(i>=0 && i<9)
       {
-      this.rubik_block_color.push('whitesmoke')
+      this.rubik_block_color.push('whitesmoke');
       }
       else if(i>=9 && i<18)
       {
@@ -582,6 +586,15 @@ else if(this.rubikName=="Rubik’s Apprentice 2x2")
     }
   }
 }
+}
+
+onSelectedImage(image_url:any,index:number):void
+{
+  this.selected_images[index-1]=image_url;
+}
+
+onSelectedFile(file:File,index:number):void{
+  this.img_file[index-1]=file;
 }
 
 async cancel_move(first:string,second:string):Promise<number>
@@ -1026,19 +1039,38 @@ async switchReverseDown()
 
  async rotationSolveRubik(solve_value:string)
  { 
-
  var num_times=parseInt(solve_value.replace(/\D/g,''));
-      for(let i =0;i<num_times;i++)
+      for(let i=0;i<num_times;i++)
         {
       solve_value=solve_value.replace(/\d/g,'');
       this.rotationDirection(solve_value);
       await this.delay(200);
-        }
-    
+        }    
  }
 
  async scrambleRubikBlock()
+  { 
+   
+   if(this.selected_images.length==1)
+    { 
+   var formData= new FormData();
+   try{
+    this.img_file.forEach((file, index) => 
+    {
+    formData.append('images', file, file.name);
+    });
+    for(let i=0;i<6;i++)
+      { 
+        formData.append('arr[]',this.nums_of_face[i]);
+      }
+    }
+  catch(error)
   {
+    alert(error.message);
+  }
+    await this.handleService.sendImage(formData);
+    }
+  else{
     var cube_notations=['U','F','R','L','D','B'];
     var pattern=await this.scramble_generator(30,cube_notations);  
     var val=pattern.split(' ');
@@ -1056,6 +1088,7 @@ async switchReverseDown()
         }
         await this.delay(100);
       }
+    }
   }
   
   async solveRubik()

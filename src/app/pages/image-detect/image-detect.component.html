@@ -1,0 +1,13 @@
+<div class="image-input-container">
+    <input type="file" id="fileInput" #fileInput (change)="onFileSelected($event)" accept="image/*" hidden>
+    <!-- <label for="fileInput" class="file-input-label">Choose Image</label> -->
+
+    <div class="image-preview" (click)="triggerFileInput()">
+      @if(imageUrl==null)
+      {<img src="assets/images/5220596.png"  alt="Image Preview">
+    }
+    @else{
+        <img [src]="imageUrl" alt ="Image Preview">
+    }
+    </div>
+  </div>

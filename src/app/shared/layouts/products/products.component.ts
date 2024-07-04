@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
       {name:'Speed Cubes',checked:false},
       {name:'Bundles',checked:false},
     ]
+    rows:any[]=[];
 
      constructor(private handleService:HandleService)
      {
@@ -40,5 +41,9 @@ export class ProductsComponent implements OnInit {
      async getAllRubik()
      {
        this.rubik_list=await this.handleService.getAllRubiks();
+       for(let i=0;i<this.rubik_list.length;i+=3)
+        {
+          this.rows.push(this.rubik_list.slice(i,i+3));
+        }
      }
 }

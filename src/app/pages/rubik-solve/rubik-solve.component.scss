@@ -344,8 +344,31 @@ transform: rotateY(-90deg) translateZ(150px);
 
 .show-camera
 {
- margin-right:75%;
- margin-top: 50px;
+//  margin-right:75%;
+//  margin-top: 50px;
+display: flex;
+flex-wrap:wrap;
+overflow-x: auto;
+overflow-y: auto;
+margin-top: 20px;
+padding: 10px;
+margin-right: 60%;
+border: 1px solid #ddd;
+border-radius: 4px;
+background-color: #f9f9f9;
+}
+
+
+.image-item
+{
+  margin-right: 5px;
+  margin-bottom: 50px;
+}
+
+.description
+{
+  text-align: center;
+  padding:10px;
 }
 
 .btn-camera
