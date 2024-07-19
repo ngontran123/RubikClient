@@ -46,7 +46,9 @@ export class HandleService {
       if(err.response.status==400 || err.response.status==401)
         {
           localStorage.removeItem("TOKEN");
+
           this.route.navigate(['/login']);  
+
           this.popupService.AlertErrorDialog(err.response.data.message,"Get data failed");
         }
       }
@@ -56,12 +58,12 @@ export class HandleService {
   async initMqtt(username:string)
   { 
     var token=localStorage.getItem("TOKEN");
+    
     this.eventSource=new EventSource(`${environment.server_url}/mqtt_connect/${username}`);
     var response=await axios.get(`${environment.server_url}/mqtt_connect/${username}`,{headers:{'Authorization':token}}).catch(err=>{
       if(err.response.status==401)
         {
           this.popupService.AlertErrorDialog(err.response.data.message,"Init Mqtt failed");
-          
         }
     });
   }
@@ -69,6 +71,7 @@ export class HandleService {
   checkStatus(username:string)
   {
     var token = localStorage.getItem('TOKEN');
+
     var response = axios.get(`${environment.server_url}/mqtt_check_device_status/${username}`,{headers:{Authorization:token}}).catch(err=>{
       if(err.response.status==401)
         {
@@ -81,7 +84,8 @@ export class HandleService {
   async sendImage(image_list:FormData)
   {  
     var res = await axios.post(`${environment.server_url}/add_images`,image_list,{headers:{Authorization:this.token}}).then((res)=>{
-      this.popupService.AlertSuccessDialog(res.data.message,"Success");
+    this.popupService.AlertSuccessDialog(res.data.message,"Success");
+    alert(res.data.data);
     }).catch(err=>{
       if(err.response.status==400 || err.response.status==401)
         {
@@ -273,16 +277,16 @@ async getAddProduct()
   })
 }
 
-async solveRubik(name:string,colors:string[])
+async solveRubik(name:string,username:string,colors:string[])
 {  
-  var req_data={colors:colors};
+  var req_data={username:username,colors:colors};
   var data:string='';
   const res=await axios.post(`${environment.server_url}/solve_rubik/${name}`,req_data,{headers:{Authorization:this.token}}).then(response=>{
     data=response.data.message;
   }).catch(err=>{
      if(err.response.status==401)
      {
-      this.route.navigate(['/login']);
+      //this.route.navigate(['/login']);
       this.popupService.AlertErrorDialog(err.response.data.message,'Solve failed');
      }
   });
@@ -393,11 +397,7 @@ readStreamKafka(username:string):Observable<any>
   {
     alert("EXCEPTION HERE IS:"+exp.message);
   }
-  });
-  
- 
-
-   
+  });  
 }
 
 closeStreamKafka()

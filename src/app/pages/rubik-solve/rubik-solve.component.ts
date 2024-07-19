@@ -47,6 +47,7 @@ export class RubikSolveComponent implements OnInit {
   selected_images:any=[];
   img_file:File[]=[];
   nums_of_face:string[]=['Up face','Right face','Front face','Down face','Left face','Back face'];
+  username:string='';
   delay=(ms:number)=>new Promise(rs=>setTimeout(rs,ms));
 
    
@@ -76,12 +77,12 @@ export class RubikSolveComponent implements OnInit {
    this.rubik_temp_arr=Array(54).fill('');
    this.initColorDisable();
    var user=JSON.parse(localStorage.getItem("ACCOUNT") as string);
-   var username=user.username;
+   this.username=user.username;
   //  const text=this.log_area.nativeElement.value;
   //  this.log_area.nativeElement.value=text+'hello'+'\n';
   //  this.log_area.nativeElement.value=text+'fuck'+'\n';
 
-   this.sseService.initEventSource(username).subscribe((data)=>
+   this.sseService.initEventSource(this.username).subscribe((data)=>
    {
   
     var val=data.data.split(':');
@@ -90,7 +91,7 @@ export class RubikSolveComponent implements OnInit {
     
     var command=username_values[1]+':'+val[1];
    
-   if(username_value==username)
+   if(username_value==this.username)
     { 
      const text=this.log_area.nativeElement.value;
      this.log_area.nativeElement.value=text+command+'\n';
@@ -127,6 +128,7 @@ checkFrequencyColor(color:string)
 {   
   var is_disable=this.countAllFrequency(color);
   let idx=this.getIndexColor(color);
+
   if(is_disable)
   {
     this.color_disable[idx]='true';
@@ -151,6 +153,24 @@ getIndexColor(color:string)
   }
   return idx;
 }
+
+convertColorToNotation(color:string)
+{ 
+switch(color)
+{
+  case 'whitesmoke':return 'U';
+  case 'yellow':return 'D';
+  case 'red':return 'R';
+  case 'orange':return 'L';
+  case 'green':return 'F';
+  case 'blue':return 'B';
+}
+return '';
+}
+
+
+
+
 
 countAllFrequency(color:string):boolean
 { 
@@ -370,15 +390,16 @@ blankRubikBlock()
   //   var count_color=this.rubik_block_color.filter(b=>b==colors[i]).length;
   //   alert(`Number of block of color ${colors[i]} is:${count_color}`);
   // }
- if(this.rubikName=="Rubik's 3x3 ")
+ if(this.rubikName==="Rubik's 3x3".trim())
  {
   for(let i=0;i<54;i++)
   {
     this.rubik_block_color[i]='grey';
   }
 }
-else if(this.rubikName="Rubik’s Apprentice 2x2")
-{ for(let i=0;i<24;i++)
+else if(this.rubikName==="Rubik’s Apprentice 2x2")
+{
+  for(let i=0;i<24;i++)
   {
   this.rubik_2x2_block_color[i]='grey';
   }
@@ -465,7 +486,7 @@ else if(this.rubikName="Rubik’s Apprentice 2x2")
     { 
       if(i>=0 && i<9)
       {
-      this.rubik_block_color[i]='whitesmoke'
+      this.rubik_block_color[i]='whitesmoke';
       }
       else if(i>=9 && i<18)
       {
@@ -495,7 +516,7 @@ else if(this.rubikName="Rubik’s Apprentice 2x2")
     { 
       if(i>=0 && i<4)
       {
-      this.rubik_2x2_block_color[i]='whitesmoke'
+      this.rubik_2x2_block_color[i]='whitesmoke';
       }
       else if(i>=4 && i<8)
       {
@@ -756,7 +777,6 @@ if(this.rubikName=="Rubik's 3x3")
     this.rubik_block_color[5]=second_color;
     this.rubik_block_color[8]=third_color;
   }
-
 }
 
 async switchUp()
@@ -788,7 +808,6 @@ async switchUp()
     this.rubik_block_color[9]=first_color;
     this.rubik_block_color[10]=second_color;
     this.rubik_block_color[11]=third_color;
-    
   }
 }
 async switchDown()
@@ -1054,11 +1073,15 @@ async switchReverseDown()
    if(this.selected_images.length==1)
     { 
    var formData= new FormData();
-   try{
+   var original_state = this.getCurrentCubeState(this.rubik_block_color);
+   formData.append('original_cube',original_state);
+   try
+   {
     this.img_file.forEach((file, index) => 
     {
     formData.append('images', file, file.name);
     });
+
     for(let i=0;i<6;i++)
       { 
         formData.append('arr[]',this.nums_of_face[i]);
@@ -1091,6 +1114,33 @@ async switchReverseDown()
     }
   }
   
+  getCurrentFaceState(rb_face:string[])
+  {
+    var face_state='';
+    for(let i =0;i<rb_face.length;i++)
+      {
+       face_state+=this.convertColorToNotation(rb_face[i]);
+      }
+      return face_state;
+  }
+
+  getCurrentCubeState(rubik_cube:string[])
+{
+  var upper_face=rubik_cube.slice(0,9);
+  var right_face = rubik_cube.slice(27,36);
+  var front_face=rubik_cube.slice(18,27);
+  var down_face= rubik_cube.slice(45,54);
+  var left_face=rubik_cube.slice(9,18);
+  var back_face=rubik_cube.slice(36,45);
+  var face_list = [upper_face,right_face,front_face,down_face,left_face,back_face];
+  var original_face = '';
+
+  for(let face of face_list)
+    {
+    original_face+=this.getCurrentFaceState(face);
+    }
+    return original_face;
+}
   async solveRubik()
   {    
   // await this.switchRight();
@@ -1130,9 +1180,11 @@ async switchReverseDown()
   var down_face= rubik_cube.slice(45,54);
   var left_face=rubik_cube.slice(9,18);
   var back_face=rubik_cube.slice(36,45);
-  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);  
-  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.rubik_2x2_block_color);
+  var manual_ordered_face =upper_face.concat(right_face,front_face,down_face,left_face,back_face);
+  
+  var res=this.rubikName=="Rubik's 3x3"?await this.handleService.solveRubik(this.rubikName,this.username,manual_ordered_face):await this.handleService.solveRubik(this.rubikName,this.username,this.rubik_2x2_block_color);
   var solve_res=res.split(' ');
+
   for(let i=0;i<solve_res.length-1;i++)
     { 
       await this.rotationSolveRubik(solve_res[i]);
